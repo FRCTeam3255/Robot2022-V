@@ -4,21 +4,15 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.util.Units;
+import java.nio.file.Path;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean
- * constants. This class should not be used for any other purpose. All constants
- * should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the
- * constants are needed, to reduce verbosity.
- */
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Filesystem;
+
 public final class Constants {
+
+  // ALL LENGTH MEASUREMENTS MUST BE IN METERS
 
   public static final class constDrivetrain {
 
@@ -26,6 +20,16 @@ public final class Constants {
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
+    public static final double WHEELBASE = 0.67; // length
+    public static final double TRACKWIDTH = 0.55; // width
+    public static final DifferentialDriveKinematics KINEMATICS = new DifferentialDriveKinematics(TRACKWIDTH);
+
+    public static final Path PATH_T1toB1thenB2 = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/T1toB1thenB2.wpilib.json");
+    public static final Path PATH_B2toB4andB5 = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/B2toB4andB5.wpilib.json");
+    public static final Path PATH_B4toB2 = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/B4toB2.wpilib.json");
   }
 
 }
