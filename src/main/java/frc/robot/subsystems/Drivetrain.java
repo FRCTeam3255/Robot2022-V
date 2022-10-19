@@ -14,10 +14,15 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.utils.SN_Math;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.constDrivetrain;
 import frc.robot.RobotMap.mapDrivetrain;
@@ -41,6 +46,10 @@ public class Drivetrain extends SubsystemBase {
   double arcadeDriveTurnMultiplier;
   boolean displayOnDashboard;
 
+  Trajectory TRAJ_T1toB1thenB2;
+  Trajectory TRAJ_B2toB4andB5;
+  Trajectory TRAJ_B4toB2;
+
   public Drivetrain() {
 
     leftLead = new TalonFX(mapDrivetrain.LEFT_LEAD_MOTOR_CAN);
@@ -60,6 +69,8 @@ public class Drivetrain extends SubsystemBase {
 
     config = new TalonFXConfiguration();
 
+    configure();
+    loadTrajectories();
   }
 
   public void configure() {
@@ -164,6 +175,52 @@ public class Drivetrain extends SubsystemBase {
     leftLead.set(ControlMode.Velocity, leftVelocity);
     rightLead.set(ControlMode.Velocity, rightVelocity);
 
+  }
+
+  private void loadTrajectories() {
+    try {
+
+      TRAJ_T1toB1thenB2 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_T1toB1thenB2);
+      TRAJ_B2toB4andB5 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B2toB4andB5);
+      TRAJ_B4toB2 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B4toB2);
+
+    } catch (Exception e) {
+
+      DriverStation.reportError("Unable to open trajectory: ", e.getStackTrace());
+
+    }
+  }
+
+  public enum AutoPath {
+    T1toB1thenB2,
+    B2toB4andB5,
+    B4toB2
+  }
+
+  public Trajectory getTrajectory(AutoPath trajectory) {
+    switch (trajectory) {
+
+      case T1toB1thenB2:
+        return TRAJ_T1toB1thenB2;
+      case B2toB4andB5:
+        return TRAJ_B2toB4andB5;
+      case B4toB2:
+        return TRAJ_B4toB2;
+
+      default:
+        return null;
+    }
+  }
+
+  public RamseteCommand getRamseteCommand(Trajectory trajectory) {
+
+    return new RamseteCommand(
+        trajectory,
+        this::getPose,
+        new RamseteController(),
+        constDrivetrain.KINEMATICS,
+        this::driveSpeed,
+        this);
   }
 
   public void displayValuesOnDashboard() {

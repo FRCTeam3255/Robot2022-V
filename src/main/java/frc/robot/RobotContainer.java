@@ -7,10 +7,13 @@ package frc.robot;
 import com.frcteam3255.joystick.SN_F310Gamepad;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
+import frc.robot.commands.FourBallA;
 import frc.robot.subsystems.Drivetrain;
 
 public class RobotContainer {
@@ -25,6 +28,10 @@ public class RobotContainer {
   // Subsystems
   private final Drivetrain subDrivetrain = new Drivetrain();
 
+  // Autos
+  private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
+  SendableChooser<Command> autoChooser = new SendableChooser<>();
+
   public RobotContainer() {
     configureButtonBindings();
 
@@ -34,6 +41,9 @@ public class RobotContainer {
                 driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
             subDrivetrain));
 
+    autoChooser.setDefaultOption("null", null);
+    autoChooser.addOption("Four Ball A", autoFourBallA);
+    SmartDashboard.putData(autoChooser);
   }
 
   private void configureButtonBindings() {
@@ -51,6 +61,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return null;
+    return autoChooser.getSelected();
   }
 }
