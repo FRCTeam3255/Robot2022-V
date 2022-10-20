@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-/** Add your docs here. */
 public final class RobotMap {
 
   public static final class mapControllers {
@@ -21,6 +20,43 @@ public final class RobotMap {
     public static final int LEFT_FOLLOW_MOTOR_CAN = 21;
     public static final int RIGHT_LEAD_MOTOR_CAN = 22;
     public static final int RIGHT_FOLLOW_MOTOR_CAN = 23;
+
+  }
+
+  public static final class mapHood {
+
+    public static final int HOOD_MOTOR_CAN = 25;
+
+    public static final int HOOD_BOTTOM_SWITCH_DIO = 5;
+
+  }
+
+  public static final class mapIntake {
+
+    public static final int INTAKE_MOTOR_CAN = 30;
+
+    public static final int INTAKE_SOLENOID_PCM_FORWARD = 0;
+    public static final int INTAKE_SOLENOID_PCM_REVERSE = 1;
+
+  }
+
+  public static final class mapShooter {
+
+    public static final int LEAD_MOTOR_CAN = 40;
+    public static final int FOLLOW_MOTOR_CAN = 41;
+
+  }
+
+  public static final class mapTransfer {
+
+    public static final int ENTRANCE_MOTOR_CAN = 50;
+    public static final int BOTTOM_MOTOR_CAN = 51;
+    public static final int TOP_MOTOR_CAN = 52;
+
+    public static final int TOP_LEFT_SWITCH_DIO = 1;
+    public static final int TOP_RIGHT_SWITCH_DIO = 2;
+    public static final int BOTTOM_LEFT_SWITCH_DIO = 3;
+    public static final int BOTTOM_RIGHT_SWITCH_DIO = 4;
 
   }
 
