@@ -5,8 +5,13 @@
 package frc.robot;
 
 import com.frcteam3255.preferences.SN_DoublePreference;
+import com.frcteam3255.preferences.SN_ZeroDoublePreference;
+import com.frcteam3255.preferences.SN_ZeroIntPreference;
 
 public final class RobotPreferences {
+
+  public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
+  public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
 
   public static final class prefDrivetrain {
 
@@ -21,6 +26,71 @@ public final class RobotPreferences {
     public static final SN_DoublePreference driveArcadeTurnMid = new SN_DoublePreference("driveArcadeTurn", 0.7);
 
     public static final SN_DoublePreference driveSlewRateLimit = new SN_DoublePreference("driveSlewRateLimit", 2);
+  }
+
+  public static final class prefHood {
+
+    public static final SN_DoublePreference hoodArbitraryFeedForward = new SN_DoublePreference(
+        "hoodArbitraryFeedForward", 0.040078);
+
+    public static final SN_DoublePreference hoodP = new SN_DoublePreference("hoodP", 0.09);
+    public static final SN_DoublePreference hoodI = new SN_DoublePreference("hoodI", 0);
+    public static final SN_DoublePreference hoodD = new SN_DoublePreference("hoodD", 0);
+
+    public static final SN_DoublePreference hoodAllowableClosedLoopErrorDegrees = new SN_DoublePreference(
+        "hoodAllowableClosedLoopErrorDegrees", 0.0001);
+    public static final SN_DoublePreference hoodClosedLoopPeakOutput = new SN_DoublePreference(
+        "hoodClosedLoopPeakOutput", .25);
+
+    public static final SN_DoublePreference hoodMinDegrees = new SN_DoublePreference("hoodMinDegrees", 4.89);
+    public static final SN_DoublePreference hoodMaxDegrees = new SN_DoublePreference("hoodMaxDegrees", 38);
+
+    public static final SN_DoublePreference hoodNudgeDegrees = new SN_DoublePreference("hoodNudgeDegrees", 1);
+  }
+
+  public static final class prefIntake {
+
+    public static final SN_DoublePreference intakeRollerSpeed = new SN_DoublePreference("intakeRollerSpeed", 0.8);
+
+  }
+
+  public static final class prefPreset {
+
+    public static final SN_DoublePreference presetFenderShooterRPM = new SN_DoublePreference(
+        "presetFenderShooterRPM", 2700);
+    public static final SN_DoublePreference presetFenderHoodDegrees = new SN_DoublePreference(
+        "presetFenderHoodDegrees", 7);
+
+    public static final SN_DoublePreference presetTarmacShooterRPM = new SN_DoublePreference(
+        "presetTarmacShooterRPM", 3255);
+    public static final SN_DoublePreference presetTarmacHoodDegrees = new SN_DoublePreference(
+        "presetTarmacHoodDegrees", 15);
+
+    public static final SN_DoublePreference presetLaunchpadShooterRPM = new SN_DoublePreference(
+        "presetLaunchpadShooterRPM", 4200);
+    public static final SN_DoublePreference presetLaunchpadHoodDegrees = new SN_DoublePreference(
+        "presetLaunchpadHoodDegrees", 38);
+
+  }
+
+  public static final class prefShooter {
+
+    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0);
+    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.02);
+    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.0002);
+    public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0.0088);
+
+    public static final SN_DoublePreference shooterAllowableClosedloopErrorRPM = new SN_DoublePreference(
+        "shooterAllowableClosedloopErrorRPM", 15);
+
+  }
+
+  public static final class prefTransfer {
+
+    public static final SN_DoublePreference transferEntranceSpeed = new SN_DoublePreference(
+        "transferEntranceSpeed", 0.8);
+    public static final SN_DoublePreference transferBeltSpeed = new SN_DoublePreference(
+        "transferBeltSpeed", 0.5);
   }
 
 }

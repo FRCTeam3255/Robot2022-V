@@ -16,7 +16,9 @@ public final class Constants {
 
   public static final class constDrivetrain {
 
-    public static final double GEAR_RATIO = 1 / 6;
+    public static final boolean LEFT_INVERTED = false;
+
+    public static final double GEAR_RATIO = 1 / 6; // 1/6 wheel rotation is 1 motor rotation
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
@@ -30,6 +32,31 @@ public final class Constants {
         .resolve("pathplanner/generatedJSON/B2toB4andB5.wpilib.json");
     public static final Path PATH_B4toB2 = Filesystem.getDeployDirectory().toPath()
         .resolve("pathplanner/generatedJSON/B4toB2.wpilib.json");
+  }
+
+  public static final class constHood {
+
+    public static final double GEAR_RATIO = 69.33333;
+    public static final boolean INVERTED = true;
+  }
+
+  public static final class constIntake {
+
+    public static final boolean ROLLER_INVERTED = true;
+    public static final boolean DEPLOY_INVERTED = true;
+
+  }
+
+  public static final class constShooter {
+
+    public static final boolean INVERTED = false;
+
+  }
+
+  public static final class constTransfer {
+
+    public static final boolean ENTRANCE_WHEEL_INVERTED = true;
+
   }
 
 }
