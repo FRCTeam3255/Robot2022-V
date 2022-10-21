@@ -20,12 +20,16 @@ public final class RobotPreferences {
     public static final SN_DoublePreference driveI = new SN_DoublePreference("driveI", 0);
     public static final SN_DoublePreference driveD = new SN_DoublePreference("driveD", 0);
 
-    public static final SN_DoublePreference driveArcadeSpeedHigh = new SN_DoublePreference("driveArcadeSpeedHigh", 1);
-    public static final SN_DoublePreference driveArcadeSpeedMid = new SN_DoublePreference("driveArcadeSpeedMid", 0.65);
-    public static final SN_DoublePreference driveArcadeSpeedLow = new SN_DoublePreference("driveArcadeSpeedLow", 0.25);
+    public static final SN_DoublePreference driveArcadeSpeedHigh = new SN_DoublePreference("driveArcadeSpeedHigh",
+        1);
+    public static final SN_DoublePreference driveArcadeSpeedMid = new SN_DoublePreference("driveArcadeSpeedMid",
+        0.65);
+    public static final SN_DoublePreference driveArcadeSpeedLow = new SN_DoublePreference("driveArcadeSpeedLow",
+        0.25);
     public static final SN_DoublePreference driveArcadeTurnMid = new SN_DoublePreference("driveArcadeTurn", 0.7);
 
     public static final SN_DoublePreference driveSlewRateLimit = new SN_DoublePreference("driveSlewRateLimit", 2);
+
   }
 
   public static final class prefHood {
@@ -46,6 +50,7 @@ public final class RobotPreferences {
     public static final SN_DoublePreference hoodMaxDegrees = new SN_DoublePreference("hoodMaxDegrees", 38);
 
     public static final SN_DoublePreference hoodNudgeDegrees = new SN_DoublePreference("hoodNudgeDegrees", 1);
+
   }
 
   public static final class prefIntake {
@@ -89,8 +94,37 @@ public final class RobotPreferences {
 
     public static final SN_DoublePreference transferEntranceSpeed = new SN_DoublePreference(
         "transferEntranceSpeed", 0.8);
+    public static final SN_DoublePreference transferEntranceReverseSpeed = new SN_DoublePreference(
+        "transferEntranceReverseSpeed", -0.8);
     public static final SN_DoublePreference transferBeltSpeed = new SN_DoublePreference(
         "transferBeltSpeed", 0.5);
+    public static final SN_DoublePreference transferBeltReverseSpeed = new SN_DoublePreference(
+        "transferBeltReverseSpeed", -0.5);
+
+  }
+
+  public static final class prefTurret {
+
+    public static final SN_DoublePreference turretArbitraryFeedForward = new SN_DoublePreference(
+        "turretArbitraryFeedForward", 0);
+
+    public static final SN_DoublePreference turretP = new SN_DoublePreference("turretP", 0.15);
+    public static final SN_DoublePreference turretI = new SN_DoublePreference("turretI", 0.00001);
+    public static final SN_DoublePreference turretD = new SN_DoublePreference("turretD", 8);
+
+    public static final SN_DoublePreference turretAllowableClosedloopErrorDegrees = new SN_DoublePreference(
+        "turretAllowableClosedloopErrorDegrees", 3);
+    public static final SN_DoublePreference turretClosedLoopPeakOutput = new SN_DoublePreference(
+        "turretClosedLoopPeakOutput", 1);
+
+    public static final SN_DoublePreference turretOpenLoopSpeed = new SN_DoublePreference("turretOpenLoopSpeed",
+        0.3);
+
+    public static final SN_DoublePreference turretMinDegrees = new SN_DoublePreference("turretMinDegrees", -270);
+    public static final SN_DoublePreference turretMaxDegrees = new SN_DoublePreference("turretMaxDegrees", 110);
+    public static final SN_DoublePreference turretFrontDegrees = new SN_DoublePreference("turretFrontDegrees", -90);
+    public static final SN_DoublePreference turretBackDegrees = new SN_DoublePreference("turretBackDegrees", 90);
+
   }
 
 }

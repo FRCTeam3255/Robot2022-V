@@ -105,7 +105,7 @@ public class Drivetrain extends SubsystemBase {
   public double getLeftMeters() {
     double falconCounts = leftLead.getSelectedSensorPosition();
     double falconRotations = falconCounts / SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT;
-    double wheelRotations = falconRotations * constDrivetrain.GEAR_RATIO;
+    double wheelRotations = falconRotations / constDrivetrain.GEAR_RATIO;
     double meters = wheelRotations * constDrivetrain.WHEEL_CIRCUMFERENCE;
 
     return meters;
@@ -114,7 +114,7 @@ public class Drivetrain extends SubsystemBase {
   public double getRightMeters() {
     double falconCounts = rightLead.getSelectedSensorPosition();
     double falconRotations = falconCounts / SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT;
-    double wheelRotations = falconRotations * constDrivetrain.GEAR_RATIO;
+    double wheelRotations = falconRotations / constDrivetrain.GEAR_RATIO;
     double meters = wheelRotations * constDrivetrain.WHEEL_CIRCUMFERENCE;
 
     return meters;

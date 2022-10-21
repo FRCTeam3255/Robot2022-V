@@ -61,6 +61,8 @@ public class Hood extends SubsystemBase {
     hoodMotor.configReverseSoftLimitEnable(true);
     hoodMotor.configReverseSoftLimitThreshold(
         SN_Math.degreesToFalcon(prefHood.hoodMinDegrees.getValue(), constHood.GEAR_RATIO));
+
+    resetAngleToBottom();
   }
 
   public double getAngleDegrees() {
