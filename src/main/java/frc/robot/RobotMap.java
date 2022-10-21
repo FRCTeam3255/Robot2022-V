@@ -60,4 +60,10 @@ public final class RobotMap {
 
   }
 
+  public static final class mapTurret {
+
+    public static final int TURRET_MOTOR_CAN = 60;
+
+  }
+
 }

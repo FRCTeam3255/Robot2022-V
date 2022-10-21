@@ -8,6 +8,7 @@ import com.frcteam3255.joystick.SN_DualActionStick;
 import com.frcteam3255.joystick.SN_F310Gamepad;
 import com.frcteam3255.joystick.SN_SwitchboardStick;
 import com.frcteam3255.preferences.SN_Preferences;
+import com.frcteam3255.utils.SN_InstantCommand;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -17,7 +18,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
+import frc.robot.RobotPreferences.prefTurret;
 import frc.robot.commands.CollectCargo;
+import frc.robot.commands.DisgardCargo;
 import frc.robot.commands.ShootCargo;
 import frc.robot.commands.Auto.FourBallA;
 import frc.robot.subsystems.Drivetrain;
@@ -25,6 +28,7 @@ import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
+import frc.robot.subsystems.Turret;
 
 public class RobotContainer {
 
@@ -41,10 +45,12 @@ public class RobotContainer {
   private final Intake subIntake = new Intake();
   private final Shooter subShooter = new Shooter();
   private final Transfer subTransfer = new Transfer();
+  private final Turret subTurret = new Turret();
 
   // Commands
   private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
   private final CollectCargo comCollectCargo = new CollectCargo(subIntake, subTransfer);
+  private final DisgardCargo comDisgardCargo = new DisgardCargo(subIntake, subTransfer);
 
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
@@ -53,7 +59,6 @@ public class RobotContainer {
   public static CargoState cargoState;
 
   public RobotContainer() {
-    configureButtonBindings();
 
     subDrivetrain.setDefaultCommand(
         new RunCommand(
@@ -61,11 +66,11 @@ public class RobotContainer {
                 driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
             subDrivetrain));
 
-    autoChooser.setDefaultOption("null", null);
-    autoChooser.addOption("Four Ball A", autoFourBallA);
-    SmartDashboard.putData(autoChooser);
-
     cargoState = CargoState.NONE;
+
+    configureButtonBindings();
+    configureDashboardButtons();
+    configureAutoSelector();
   }
 
   private void configureButtonBindings() {
@@ -90,8 +95,15 @@ public class RobotContainer {
 
     conOperator.btn_RBump.whenPressed(() -> subShooter.setMotorRPMToGoalRPM());
 
+    // Turret
+    conOperator.btn_LBump
+        .whileHeld(() -> subTurret.setSpeed(conOperator.getRightStickX() * prefTurret.turretOpenLoopSpeed.getValue()));
+    conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFrontDegrees));
+    conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretBackDegrees));
+
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
+    conOperator.btn_B.whileHeld(comDisgardCargo);
     conOperator.btn_Back.whenPressed(() -> subIntake.setRetracted());
 
     // Presets
@@ -112,16 +124,40 @@ public class RobotContainer {
     conSwitchboard.btn_1.whenPressed(() -> subIntake.displayValuesOnDashboard());
     conSwitchboard.btn_1.whenPressed(() -> subShooter.displayValuesOnDashboard());
     conSwitchboard.btn_1.whenPressed(() -> subTransfer.displayValuesOnDashboard());
+    conSwitchboard.btn_1.whenPressed(() -> subTurret.displayValuesOnDashboard());
     conSwitchboard.btn_1.whenReleased(() -> subDrivetrain.hideValuesOnDashboard());
     conSwitchboard.btn_1.whenReleased(() -> subHood.hideValuesOnDashboard());
     conSwitchboard.btn_1.whenReleased(() -> subIntake.hideValuesOnDashboard());
     conSwitchboard.btn_1.whenReleased(() -> subShooter.hideValuesOnDashboard());
     conSwitchboard.btn_1.whenReleased(() -> subTransfer.hideValuesOnDashboard());
+    conSwitchboard.btn_1.whenReleased(() -> subTurret.hideValuesOnDashboard());
 
     // btn_2 -> Use Hardcoded or Default Preference Values
     conSwitchboard.btn_2.whenPressed(() -> SN_Preferences.usePreferences());
     conSwitchboard.btn_2.whenReleased(() -> SN_Preferences.useDefaults());
 
+  }
+
+  private void configureDashboardButtons() {
+
+    SmartDashboard.putData(
+        "Configure Drivetrain", new SN_InstantCommand(subDrivetrain::configure, true, subDrivetrain));
+    SmartDashboard.putData(
+        "Configure Hood", new SN_InstantCommand(subHood::configure, true, subHood));
+    SmartDashboard.putData(
+        "Configure Intake", new SN_InstantCommand(subIntake::configure, true, subIntake));
+    SmartDashboard.putData(
+        "Configure Shooter", new SN_InstantCommand(subShooter::configure, true, subShooter));
+    SmartDashboard.putData(
+        "Configure Transfer", new SN_InstantCommand(subTransfer::configure, true, subTransfer));
+    SmartDashboard.putData(
+        "Configure Turret", new SN_InstantCommand(subTurret::configure, true, subTurret));
+  }
+
+  private void configureAutoSelector() {
+    autoChooser.setDefaultOption("null", null);
+    autoChooser.addOption("Four Ball A", autoFourBallA);
+    SmartDashboard.putData(autoChooser);
   }
 
   public enum CargoState {
