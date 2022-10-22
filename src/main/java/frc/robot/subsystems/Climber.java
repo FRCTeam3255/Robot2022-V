@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.frcteam3255.components.SN_DoubleSolenoid;
+import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.utils.SN_Math;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -62,6 +65,34 @@ public class Climber extends SubsystemBase {
     
     climberMotor.setNeutralMode(NeutralMode.Brake);
     climberMotor.setInverted(constClimber.INVERTED);
+  }
+  
+  public void setClimberSpeed(SN_DoublePreference speed){
+    climberMotor.set(ControlMode.PercentOutput, speed.getValue(), DemandType.ArbitraryFeedForward, prefClimber.climberArbitraryFeedForward.getValue());
+  }
+
+  public void setClimberPosition(SN_DoublePreference position){
+    climberMotor.set(ControlMode.Position, position.getValue(), DemandType.ArbitraryFeedForward, prefClimber.climberArbitraryFeedForward.getValue());
+  }
+
+  public void setPerpendicular(){
+    pivotPiston.setRetracted();
+  };
+
+  public void setPivoted(){
+    pivotPiston.setDeployed();
+  };
+
+  public boolean isPivoted() {
+    return pivotPiston.isDeployed();
+  }
+
+  public boolean getMaxSwitch() {
+    return !maxSwitch.get();
+  }
+  
+  public boolean getMinSwitch() {
+    return !minSwitch.get();
   }
 
   @Override
