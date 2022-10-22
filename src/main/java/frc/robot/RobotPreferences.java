@@ -29,8 +29,8 @@ public final class RobotPreferences {
         public static final SN_DoublePreference climberAngledMinPos = new SN_DoublePreference("climberAngledMinPos",
                 200000);
         public static final SN_DoublePreference climberPerpendicularMaxPos = new SN_DoublePreference(
-                "climberMaxPosition", 277300);
-        public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference("climberMaxPosition",
+                "climberPerpendicularMaxPos", 277300);
+        public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference("climberAngledMaxPos",
                 277300);
     }
 
