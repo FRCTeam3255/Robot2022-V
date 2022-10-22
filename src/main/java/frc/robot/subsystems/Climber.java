@@ -66,9 +66,9 @@ public class Climber extends SubsystemBase {
     climberMotor.setNeutralMode(NeutralMode.Brake);
     climberMotor.setInverted(constClimber.INVERTED);
   }
-  
-  public void setClimberSpeed(SN_DoublePreference speed){
-    climberMotor.set(ControlMode.PercentOutput, speed.getValue(), DemandType.ArbitraryFeedForward, prefClimber.climberArbitraryFeedForward.getValue());
+
+  public void setClimberSpeed(double speed){
+    climberMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, prefClimber.climberArbitraryFeedForward.getValue());
   }
 
   public void setClimberPosition(SN_DoublePreference position){
