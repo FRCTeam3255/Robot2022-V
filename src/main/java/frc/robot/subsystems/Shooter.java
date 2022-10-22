@@ -78,12 +78,12 @@ public class Shooter extends SubsystemBase {
         SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT) < prefShooter.shooterAllowableClosedloopErrorRPM.getValue();
   }
 
-  public void setGoalRPM(SN_DoublePreference goalRPM) {
-    this.goalRPM = goalRPM.getValue();
-  }
-
   public void setGoalRPM(double goalRPM) {
     this.goalRPM = goalRPM;
+  }
+
+  public void setGoalRPM(SN_DoublePreference goalRPM) {
+    setGoalRPM(goalRPM.getValue());
   }
 
   public double getGoalRPM() {
