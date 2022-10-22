@@ -75,8 +75,7 @@ public class Hood extends SubsystemBase {
   }
 
   public void setAngleDegrees(SN_DoublePreference degrees) {
-    hoodMotor.set(ControlMode.Position, degrees.getValue(),
-        DemandType.ArbitraryFeedForward, prefHood.hoodArbitraryFeedForward.getValue());
+    setAngleDegrees(degrees.getValue());
   }
 
   public boolean getBottomSwitch() {
