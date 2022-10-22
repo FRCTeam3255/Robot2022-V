@@ -73,7 +73,10 @@ public class RobotContainer {
             subDrivetrain));
 
     subClimber.setDefaultCommand(
-        new RunCommand(() -> subClimber.setClimberSpeed((conDriver.getAxisRT()) - conDriver.getAxisLT()), subClimber));
+        new RunCommand(
+            () -> subClimber.setClimberSpeed(
+                (conDriver.getAxisRT()) - conDriver.getAxisLT()),
+            subClimber));
 
     cargoState = CargoState.NONE;
 
