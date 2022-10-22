@@ -38,7 +38,7 @@ public class Climber extends SubsystemBase {
     minSwitch = new DigitalInput(mapClimber.CLIMBER_MINIMUM_SWITCH_DIO);
     maxSwitch = new DigitalInput(mapClimber.CLIMBER_MAXIMUM_SWITCH_DIO);
 
-    pivotPiston = new SN_DoubleSolenoid(mapClimber.CLIMBER_PCM, PneumaticsModuleType.CTREPCM,
+    pivotPiston = new SN_DoubleSolenoid(PneumaticsModuleType.CTREPCM,
         mapClimber.PIVOT_PISTON_SOLENOID_PCM_A, mapClimber.PIVOT_PISTON_SOLENOID_PCM_B);
 
     config = new TalonFXConfiguration();
@@ -70,7 +70,7 @@ public class Climber extends SubsystemBase {
   }
 
   public void setClimberSpeed(double speed) {
-    if ((minSwitch.get() && speed < 0) || (maxSwitch.get() && speed > 0)) {
+    if ((getMinSwitch() && speed < 0) || (getMaxSwitch() && speed > 0)) {
       speed = 0;
     }
     climberMotor.set(ControlMode.PercentOutput, speed);
@@ -121,9 +121,9 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     if (displayOnDashboard) {
       SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
-      SmartDashboard.putBoolean("Is Climber at Minimum Switch", getMinSwitch());
-      SmartDashboard.putBoolean("Is Climber at Maximum Switch", getMaxSwitch());
-      SmartDashboard.putBoolean("Is Climber Pivoted", isPivoted());
+      SmartDashboard.putBoolean("Climber Is At Minimum Switch", getMinSwitch());
+      SmartDashboard.putBoolean("Climber Is At Maximum Switch", getMaxSwitch());
+      SmartDashboard.putBoolean("Climber Is Pivoted", isPivoted());
     }
 
   }

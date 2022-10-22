@@ -20,7 +20,8 @@ public final class Constants {
 
   public static final class constDrivetrain {
 
-    public static final boolean LEFT_INVERTED = false;
+    public static final boolean LEFT_INVERTED = true;
+    public static final boolean RIGHT_INVERTED = false;
 
     public static final double GEAR_RATIO = 6; // 6 motor rotations per 1 wheel rotation
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
