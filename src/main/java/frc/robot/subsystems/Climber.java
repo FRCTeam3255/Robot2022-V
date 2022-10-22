@@ -73,6 +73,9 @@ public class Climber extends SubsystemBase {
     if ((minSwitch.get() && speed < 0) || (maxSwitch.get() && speed > 0)) {
       speed = 0;
     }
+    if ((isPivoted() == false)) {
+      speed = 0;
+    }
     climberMotor.set(ControlMode.PercentOutput, speed);
   }
 
