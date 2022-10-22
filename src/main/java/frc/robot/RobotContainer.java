@@ -99,8 +99,8 @@ public class RobotContainer {
 
     // Turret
     conOperator.btn_LBump.whileHeld(comMoveTurret);
-    conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFrontDegrees));
-    conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretBackDegrees));
+    conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
+    conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
