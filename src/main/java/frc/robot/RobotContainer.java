@@ -24,6 +24,7 @@ import frc.robot.commands.Auto.FourBallA;
 import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
+import frc.robot.commands.Climber.MagicClimb;
 import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -35,150 +36,154 @@ import frc.robot.subsystems.Turret;
 
 public class RobotContainer {
 
-  // Controllers
-  private final SN_F310Gamepad conDriver = new SN_F310Gamepad(mapControllers.DRIVER_CONTROLLER);
-  private final SlewRateLimiter driveSlewRateLimiter = new SlewRateLimiter(
-      prefDrivetrain.driveSlewRateLimit.getValue());
-  private final SN_DualActionStick conOperator = new SN_DualActionStick(mapControllers.OPERATOR_CONTROLLER);
-  private final SN_SwitchboardStick conSwitchboard = new SN_SwitchboardStick(mapControllers.SWITCHBOARD);
+    // Controllers
+    private final SN_F310Gamepad conDriver = new SN_F310Gamepad(mapControllers.DRIVER_CONTROLLER);
+    private final SlewRateLimiter driveSlewRateLimiter = new SlewRateLimiter(
+            prefDrivetrain.driveSlewRateLimit.getValue());
+    private final SN_DualActionStick conOperator = new SN_DualActionStick(mapControllers.OPERATOR_CONTROLLER);
+    private final SN_SwitchboardStick conSwitchboard = new SN_SwitchboardStick(mapControllers.SWITCHBOARD);
 
-  // Subsystems
-  private final Drivetrain subDrivetrain = new Drivetrain();
-  private final Hood subHood = new Hood();
-  private final Intake subIntake = new Intake();
-  private final Shooter subShooter = new Shooter();
-  private final Transfer subTransfer = new Transfer();
-  private final Turret subTurret = new Turret();
-  private final Climber subClimber = new Climber();
+    // Subsystems
+    private final Drivetrain subDrivetrain = new Drivetrain();
+    private final Hood subHood = new Hood();
+    private final Intake subIntake = new Intake();
+    private final Shooter subShooter = new Shooter();
+    private final Transfer subTransfer = new Transfer();
+    private final Turret subTurret = new Turret();
+    private final Climber subClimber = new Climber();
 
-  // Commands
-  private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
-  private final CollectCargo comCollectCargo = new CollectCargo(subIntake, subTransfer);
-  private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
+    // Commands
+    private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
+    private final CollectCargo comCollectCargo = new CollectCargo(subIntake, subTransfer);
+    private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
 
-  private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
+    private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
 
-  // Autos
-  private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
-  SendableChooser<Command> autoChooser = new SendableChooser<>();
+    private final MagicClimb comMagicClimb = new MagicClimb(subClimber);
+    // Autos
+    private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
+    SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-  public static CargoState cargoState;
+    public static CargoState cargoState;
 
-  public RobotContainer() {
+    public RobotContainer() {
 
-    subDrivetrain.setDefaultCommand(
-        new RunCommand(
-            () -> subDrivetrain.arcadeDrive(
-                driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
-            subDrivetrain));
-    
-    subClimber.setDefaultCommand(new RunCommand(() -> subClimber.setClimberSpeed((conDriver.getAxisRT()) - conDriver.getAxisLT()), subClimber));
-    
+        subDrivetrain.setDefaultCommand(
+                new RunCommand(
+                        () -> subDrivetrain.arcadeDrive(
+                                driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
+                        subDrivetrain));
 
-    cargoState = CargoState.NONE;
+        subClimber.setDefaultCommand(new RunCommand(
+                () -> subClimber.setClimberSpeed((conDriver.getAxisRT()) - conDriver.getAxisLT()), subClimber));
 
-    configureButtonBindings();
-    configureDashboardButtons();
-    configureAutoSelector();
-  }
+        cargoState = CargoState.NONE;
 
-  private void configureButtonBindings() {
+        configureButtonBindings();
+        configureDashboardButtons();
+        configureAutoSelector();
+    }
 
-    // Driver Commands
-    conDriver.btn_LBump
-        .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedLow))
-        .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
-    conDriver.btn_RBump
-        .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedHigh))
-        .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
+    private void configureButtonBindings() {
 
-    conDriver.btn_A
-        .whenPressed(() -> subClimber.setPivoted());
+        // Driver Commands
+        conDriver.btn_LBump
+                .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedLow))
+                .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
+        conDriver.btn_RBump
+                .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedHigh))
+                .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
 
-    conDriver.btn_B
-        .whenPressed(() -> subClimber.setPerpendicular());
-        
-    // Operator Commands
+        // Climbing
+        conDriver.btn_A
+                .whenPressed(() -> subClimber.setPivoted());
 
-    // Shooting
-    conOperator.btn_RTrig
-        .whileHeld(comShootCargo)
-        .whileHeld(() -> subShooter.setMotorRPMToGoalRPM())
-        .whenReleased(() -> subShooter.neutralOutput());
+        conDriver.btn_B
+                .whenPressed(() -> subClimber.setPerpendicular());
 
-    conOperator.btn_RBump.whenPressed(() -> subShooter.setMotorRPMToGoalRPM());
+        conDriver.btn_Start.whenPressed(comMagicClimb);
 
-    // Turret
-    conOperator.btn_LBump.whileHeld(comMoveTurret);
-    conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
-    conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
+        // Operator Commands
 
-    // Intake
-    conOperator.btn_LTrig.whileHeld(comCollectCargo);
-    conOperator.btn_B.whileHeld(comDiscardCargo);
-    conOperator.btn_Back.whenPressed(() -> subIntake.setRetracted());
+        // Shooting
+        conOperator.btn_RTrig
+                .whileHeld(comShootCargo)
+                .whileHeld(() -> subShooter.setMotorRPMToGoalRPM())
+                .whenReleased(() -> subShooter.neutralOutput());
 
-    // Presets
-    conOperator.POV_North
-        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
+        conOperator.btn_RBump.whenPressed(() -> subShooter.setMotorRPMToGoalRPM());
 
-    conOperator.POV_South
-        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
+        // Turret
+        conOperator.btn_LBump.whileHeld(comMoveTurret);
+        conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
+        conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
 
-    conOperator.POV_West
-        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
+        // Intake
+        conOperator.btn_LTrig.whileHeld(comCollectCargo);
+        conOperator.btn_B.whileHeld(comDiscardCargo);
+        conOperator.btn_Back.whenPressed(() -> subIntake.setRetracted());
 
-    // Switchboard Commands
+        // Presets
+        conOperator.POV_North
+                .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM))
+                .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
 
-    // btn_1 -> Send Values to SmartDashboard
-    conSwitchboard.btn_1
-        .whenPressed(() -> subDrivetrain.displayValuesOnDashboard())
-        .whenPressed(() -> subHood.displayValuesOnDashboard())
-        .whenPressed(() -> subIntake.displayValuesOnDashboard())
-        .whenPressed(() -> subShooter.displayValuesOnDashboard())
-        .whenPressed(() -> subTransfer.displayValuesOnDashboard())
-        .whenPressed(() -> subTurret.displayValuesOnDashboard());
-    conSwitchboard.btn_1
-        .whenReleased(() -> subDrivetrain.hideValuesOnDashboard())
-        .whenReleased(() -> subHood.hideValuesOnDashboard())
-        .whenReleased(() -> subIntake.hideValuesOnDashboard())
-        .whenReleased(() -> subShooter.hideValuesOnDashboard())
-        .whenReleased(() -> subTransfer.hideValuesOnDashboard())
-        .whenReleased(() -> subTurret.hideValuesOnDashboard());
+        conOperator.POV_South
+                .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM))
+                .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
 
-    // btn_2 -> Use Hardcoded or Default Preference Values
-    conSwitchboard.btn_2
-        .whenPressed(() -> SN_Preferences.usePreferences())
-        .whenReleased(() -> SN_Preferences.useDefaults());
+        conOperator.POV_West
+                .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
+                .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
 
-  }
+        // Switchboard Commands
 
-  private void configureDashboardButtons() {
+        // btn_1 -> Send Values to SmartDashboard
+        conSwitchboard.btn_1
+                .whenPressed(() -> subDrivetrain.displayValuesOnDashboard())
+                .whenPressed(() -> subHood.displayValuesOnDashboard())
+                .whenPressed(() -> subIntake.displayValuesOnDashboard())
+                .whenPressed(() -> subShooter.displayValuesOnDashboard())
+                .whenPressed(() -> subTransfer.displayValuesOnDashboard())
+                .whenPressed(() -> subTurret.displayValuesOnDashboard());
+        conSwitchboard.btn_1
+                .whenReleased(() -> subDrivetrain.hideValuesOnDashboard())
+                .whenReleased(() -> subHood.hideValuesOnDashboard())
+                .whenReleased(() -> subIntake.hideValuesOnDashboard())
+                .whenReleased(() -> subShooter.hideValuesOnDashboard())
+                .whenReleased(() -> subTransfer.hideValuesOnDashboard())
+                .whenReleased(() -> subTurret.hideValuesOnDashboard());
 
-    SmartDashboard.putData(
-        "Configure Drivetrain", new SN_InstantCommand(subDrivetrain::configure, true, subDrivetrain));
-    SmartDashboard.putData(
-        "Configure Hood", new SN_InstantCommand(subHood::configure, true, subHood));
-    SmartDashboard.putData(
-        "Configure Intake", new SN_InstantCommand(subIntake::configure, true, subIntake));
-    SmartDashboard.putData(
-        "Configure Shooter", new SN_InstantCommand(subShooter::configure, true, subShooter));
-    SmartDashboard.putData(
-        "Configure Transfer", new SN_InstantCommand(subTransfer::configure, true, subTransfer));
-    SmartDashboard.putData(
-        "Configure Turret", new SN_InstantCommand(subTurret::configure, true, subTurret));
-  }
+        // btn_2 -> Use Hardcoded or Default Preference Values
+        conSwitchboard.btn_2
+                .whenPressed(() -> SN_Preferences.usePreferences())
+                .whenReleased(() -> SN_Preferences.useDefaults());
 
-  private void configureAutoSelector() {
-    autoChooser.setDefaultOption("null", null);
-    autoChooser.addOption("Four Ball A", autoFourBallA);
-    SmartDashboard.putData(autoChooser);
-  }
+    }
 
-  public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
-  }
+    private void configureDashboardButtons() {
+
+        SmartDashboard.putData(
+                "Configure Drivetrain", new SN_InstantCommand(subDrivetrain::configure, true, subDrivetrain));
+        SmartDashboard.putData(
+                "Configure Hood", new SN_InstantCommand(subHood::configure, true, subHood));
+        SmartDashboard.putData(
+                "Configure Intake", new SN_InstantCommand(subIntake::configure, true, subIntake));
+        SmartDashboard.putData(
+                "Configure Shooter", new SN_InstantCommand(subShooter::configure, true, subShooter));
+        SmartDashboard.putData(
+                "Configure Transfer", new SN_InstantCommand(subTransfer::configure, true, subTransfer));
+        SmartDashboard.putData(
+                "Configure Turret", new SN_InstantCommand(subTurret::configure, true, subTurret));
+    }
+
+    private void configureAutoSelector() {
+        autoChooser.setDefaultOption("null", null);
+        autoChooser.addOption("Four Ball A", autoFourBallA);
+        SmartDashboard.putData(autoChooser);
+    }
+
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 }
