@@ -25,6 +25,7 @@ import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.commands.Turret.MoveTurret;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -48,6 +49,7 @@ public class RobotContainer {
   private final Shooter subShooter = new Shooter();
   private final Transfer subTransfer = new Transfer();
   private final Turret subTurret = new Turret();
+  private final Climber subClimber = new Climber();
 
   // Commands
   private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
@@ -69,6 +71,9 @@ public class RobotContainer {
             () -> subDrivetrain.arcadeDrive(
                 driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
             subDrivetrain));
+    
+    subClimber.setDefaultCommand(new RunCommand(() -> subClimber.setClimberSpeed((conDriver.getAxisRT()) - conDriver.getAxisLT()), subClimber));
+    
 
     cargoState = CargoState.NONE;
 
@@ -87,6 +92,12 @@ public class RobotContainer {
         .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedHigh))
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
 
+    conDriver.btn_A
+        .whenPressed(() -> subClimber.setPivoted());
+
+    conDriver.btn_B
+        .whenPressed(() -> subClimber.setPerpendicular());
+        
     // Operator Commands
 
     // Shooting

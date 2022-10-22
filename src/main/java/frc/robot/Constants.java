@@ -14,6 +14,10 @@ public final class Constants {
 
   // ALL LENGTH MEASUREMENTS MUST BE IN METERS
 
+  public static final class constClimber {
+    public static final boolean INVERTED = false;
+  }
+
   public static final class constDrivetrain {
 
     public static final boolean LEFT_INVERTED = false;
