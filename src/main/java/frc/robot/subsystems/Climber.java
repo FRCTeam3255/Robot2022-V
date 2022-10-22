@@ -118,9 +118,9 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     if (displayOnDashboard) {
       SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
-      SmartDashboard.putBoolean("Is Climber at Minimum Switch", getMinSwitch());
-      SmartDashboard.putBoolean("Is Climber at Maximum Switch", getMaxSwitch());
-      SmartDashboard.putBoolean("Is Climber Pivoted", isPivoted());
+      SmartDashboard.putBoolean("Climber Is At Minimum Switch", getMinSwitch());
+      SmartDashboard.putBoolean("Climber Is At Maximum Switch", getMaxSwitch());
+      SmartDashboard.putBoolean("Climber Is Pivoted", isPivoted());
     }
 
   }
