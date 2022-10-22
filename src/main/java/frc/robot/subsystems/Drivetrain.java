@@ -46,9 +46,9 @@ public class Drivetrain extends SubsystemBase {
   double arcadeDriveTurnMultiplier;
   boolean displayOnDashboard;
 
-  Trajectory TRAJ_T1toB1thenB2;
-  Trajectory TRAJ_B2toB4andB5;
-  Trajectory TRAJ_B4toB2;
+  public Trajectory TRAJ_T1toB1thenB2 = new Trajectory();
+  public Trajectory TRAJ_B2toB4andB5 = new Trajectory();
+  public Trajectory TRAJ_B4toB2 = new Trajectory();
 
   public Drivetrain() {
 

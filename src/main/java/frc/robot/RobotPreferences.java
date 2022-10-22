@@ -13,6 +13,12 @@ public final class RobotPreferences {
   public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
   public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
 
+
+  public static final class prefAuto{
+    public static final SN_DoublePreference shooterRPM = new SN_DoublePreference("shooterRPM", 1); // Sets RPM for shooter
+    public static final SN_DoublePreference turretAngle = new SN_DoublePreference("turretAngle", 0); // Sets turret angle for auto
+    public static final SN_DoublePreference hoodAngle = new SN_DoublePreference("hoodAngle", 0); // Sets hood angle for auto
+  }
   public static final class prefDrivetrain {
 
     public static final SN_DoublePreference driveF = new SN_DoublePreference("driveF", 0.045);
