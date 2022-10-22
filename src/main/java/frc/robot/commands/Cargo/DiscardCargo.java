@@ -62,6 +62,7 @@ public class DiscardCargo extends CommandBase {
       }
 
       subTransfer.setTopBeltSpeed(prefTransfer.transferBeltReverseSpeed);
+      subTransfer.setBottomBeltSpeed(prefTransfer.transferBeltSpeed);
       subTransfer.setEntranceWheelSpeed(prefTransfer.transferEntranceReverseSpeed);
 
     }
@@ -75,6 +76,7 @@ public class DiscardCargo extends CommandBase {
       RobotContainer.cargoState = CargoState.NONE;
 
       subTransfer.setTopBeltSpeed(RobotPreferences.zeroDoublePref);
+      subTransfer.setBottomBeltSpeed(RobotPreferences.zeroDoublePref);
       subTransfer.setEntranceWheelSpeed(RobotPreferences.zeroDoublePref);
     }
   }
