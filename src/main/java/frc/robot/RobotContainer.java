@@ -19,10 +19,11 @@ import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
 import frc.robot.RobotPreferences.prefTurret;
-import frc.robot.commands.CollectCargo;
-import frc.robot.commands.DisgardCargo;
-import frc.robot.commands.ShootCargo;
 import frc.robot.commands.Auto.FourBallA;
+import frc.robot.commands.Cargo.CollectCargo;
+import frc.robot.commands.Cargo.DiscardCargo;
+import frc.robot.commands.Cargo.ShootCargo;
+import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -50,7 +51,9 @@ public class RobotContainer {
   // Commands
   private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
   private final CollectCargo comCollectCargo = new CollectCargo(subIntake, subTransfer);
-  private final DisgardCargo comDisgardCargo = new DisgardCargo(subIntake, subTransfer);
+  private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
+
+  private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
 
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
@@ -96,14 +99,13 @@ public class RobotContainer {
     conOperator.btn_RBump.whenPressed(() -> subShooter.setMotorRPMToGoalRPM());
 
     // Turret
-    conOperator.btn_LBump
-        .whileHeld(() -> subTurret.setSpeed(conOperator.getRightStickX() * prefTurret.turretOpenLoopSpeed.getValue()));
+    conOperator.btn_LBump.whileHeld(comMoveTurret);
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFrontDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretBackDegrees));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
-    conOperator.btn_B.whileHeld(comDisgardCargo);
+    conOperator.btn_B.whileHeld(comDiscardCargo);
     conOperator.btn_Back.whenPressed(() -> subIntake.setRetracted());
 
     // Presets
@@ -161,7 +163,7 @@ public class RobotContainer {
   }
 
   public enum CargoState {
-    SHOOTING, COLLECTING, DISGARDING, PROCESSING, NONE
+    SHOOTING, COLLECTING, DISCARDING, PROCESSING, NONE
   }
 
   public Command getAutonomousCommand() {
