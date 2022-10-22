@@ -19,10 +19,11 @@ import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
 import frc.robot.RobotPreferences.prefTurret;
-import frc.robot.commands.CollectCargo;
-import frc.robot.commands.DisgardCargo;
-import frc.robot.commands.ShootCargo;
 import frc.robot.commands.Auto.FourBallA;
+import frc.robot.commands.Cargo.CollectCargo;
+import frc.robot.commands.Cargo.DiscardCargo;
+import frc.robot.commands.Cargo.ShootCargo;
+import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -50,7 +51,9 @@ public class RobotContainer {
   // Commands
   private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
   private final CollectCargo comCollectCargo = new CollectCargo(subIntake, subTransfer);
-  private final DisgardCargo comDisgardCargo = new DisgardCargo(subIntake, subTransfer);
+  private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
+
+  private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
 
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
@@ -77,12 +80,10 @@ public class RobotContainer {
 
     // Driver Commands
     conDriver.btn_LBump
-        .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedLow));
-    conDriver.btn_LBump
+        .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedLow))
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
     conDriver.btn_RBump
-        .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedHigh));
-    conDriver.btn_RBump
+        .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedHigh))
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
 
     // Operator Commands
@@ -96,14 +97,13 @@ public class RobotContainer {
     conOperator.btn_RBump.whenPressed(() -> subShooter.setMotorRPMToGoalRPM());
 
     // Turret
-    conOperator.btn_LBump
-        .whileHeld(() -> subTurret.setSpeed(conOperator.getRightStickX() * prefTurret.turretOpenLoopSpeed.getValue()));
+    conOperator.btn_LBump.whileHeld(comMoveTurret);
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFrontDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretBackDegrees));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
-    conOperator.btn_B.whileHeld(comDisgardCargo);
+    conOperator.btn_B.whileHeld(comDiscardCargo);
     conOperator.btn_Back.whenPressed(() -> subIntake.setRetracted());
 
     // Presets
@@ -119,18 +119,20 @@ public class RobotContainer {
     // Switchboard Commands
 
     // btn_1 -> Send Values to SmartDashboard
-    conSwitchboard.btn_1.whenPressed(() -> subDrivetrain.displayValuesOnDashboard());
-    conSwitchboard.btn_1.whenPressed(() -> subHood.displayValuesOnDashboard());
-    conSwitchboard.btn_1.whenPressed(() -> subIntake.displayValuesOnDashboard());
-    conSwitchboard.btn_1.whenPressed(() -> subShooter.displayValuesOnDashboard());
-    conSwitchboard.btn_1.whenPressed(() -> subTransfer.displayValuesOnDashboard());
-    conSwitchboard.btn_1.whenPressed(() -> subTurret.displayValuesOnDashboard());
-    conSwitchboard.btn_1.whenReleased(() -> subDrivetrain.hideValuesOnDashboard());
-    conSwitchboard.btn_1.whenReleased(() -> subHood.hideValuesOnDashboard());
-    conSwitchboard.btn_1.whenReleased(() -> subIntake.hideValuesOnDashboard());
-    conSwitchboard.btn_1.whenReleased(() -> subShooter.hideValuesOnDashboard());
-    conSwitchboard.btn_1.whenReleased(() -> subTransfer.hideValuesOnDashboard());
-    conSwitchboard.btn_1.whenReleased(() -> subTurret.hideValuesOnDashboard());
+    conSwitchboard.btn_1
+        .whenPressed(() -> subDrivetrain.displayValuesOnDashboard())
+        .whenPressed(() -> subHood.displayValuesOnDashboard())
+        .whenPressed(() -> subIntake.displayValuesOnDashboard())
+        .whenPressed(() -> subShooter.displayValuesOnDashboard())
+        .whenPressed(() -> subTransfer.displayValuesOnDashboard())
+        .whenPressed(() -> subTurret.displayValuesOnDashboard());
+    conSwitchboard.btn_1
+        .whenReleased(() -> subDrivetrain.hideValuesOnDashboard())
+        .whenReleased(() -> subHood.hideValuesOnDashboard())
+        .whenReleased(() -> subIntake.hideValuesOnDashboard())
+        .whenReleased(() -> subShooter.hideValuesOnDashboard())
+        .whenReleased(() -> subTransfer.hideValuesOnDashboard())
+        .whenReleased(() -> subTurret.hideValuesOnDashboard());
 
     // btn_2 -> Use Hardcoded or Default Preference Values
     conSwitchboard.btn_2.whenPressed(() -> SN_Preferences.usePreferences());
@@ -161,7 +163,7 @@ public class RobotContainer {
   }
 
   public enum CargoState {
-    SHOOTING, COLLECTING, DISGARDING, PROCESSING, NONE
+    SHOOTING, COLLECTING, DISCARDING, PROCESSING, NONE
   }
 
   public Command getAutonomousCommand() {

@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Cargo;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
@@ -12,14 +12,14 @@ import frc.robot.RobotPreferences.prefTransfer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Transfer;
 
-public class DisgardCargo extends CommandBase {
+public class DiscardCargo extends CommandBase {
 
   Intake subIntake;
   Transfer subTransfer;
 
   boolean precedence;
 
-  public DisgardCargo(Intake subIntake, Transfer subTransfer) {
+  public DiscardCargo(Intake subIntake, Transfer subTransfer) {
 
     this.subIntake = subIntake;
     this.subTransfer = subTransfer;
@@ -34,7 +34,7 @@ public class DisgardCargo extends CommandBase {
 
   @Override
   public void execute() {
-    // if the robot is disgarding, it only takes precedence over processing
+    // if the robot is discarding, it only takes precedence over processing
     switch (RobotContainer.cargoState) {
       case SHOOTING:
         precedence = false;
@@ -42,7 +42,7 @@ public class DisgardCargo extends CommandBase {
       case COLLECTING:
         precedence = false;
         break;
-      case DISGARDING:
+      case DISCARDING:
         precedence = true;
         break;
       case PROCESSING:
@@ -55,7 +55,7 @@ public class DisgardCargo extends CommandBase {
 
     if (precedence) {
 
-      RobotContainer.cargoState = CargoState.DISGARDING;
+      RobotContainer.cargoState = CargoState.DISCARDING;
 
       if (subIntake.isDeployed()) {
         subIntake.setRetracted();
