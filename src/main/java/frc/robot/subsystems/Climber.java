@@ -15,13 +15,14 @@ import com.frcteam3255.utils.SN_Math;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.constClimber;
 import frc.robot.RobotMap.mapClimber;
 import frc.robot.RobotPreferences.prefClimber;
 
 public class Climber extends SubsystemBase {
-  
+
   TalonFX climberMotor;
   SN_DoubleSolenoid pivotPiston;
   TalonFXConfiguration config;
@@ -38,11 +39,11 @@ public class Climber extends SubsystemBase {
     maxSwitch = new DigitalInput(mapClimber.CLIMBER_MAXIMUM_SWITCH_DIO);
 
     pivotPiston = new SN_DoubleSolenoid(mapClimber.CLIMBER_PCM, PneumaticsModuleType.CTREPCM,
-    mapClimber.PIVOT_PISTON_SOLENOID_PCM_A, mapClimber.PIVOT_PISTON_SOLENOID_PCM_B);
+        mapClimber.PIVOT_PISTON_SOLENOID_PCM_A, mapClimber.PIVOT_PISTON_SOLENOID_PCM_B);
 
     config = new TalonFXConfiguration();
     configure();
-    
+
     displayOnDashboard = true;
 
   }
@@ -52,9 +53,10 @@ public class Climber extends SubsystemBase {
     config.slot0.kI = prefClimber.climberI.getValue();
     config.slot0.kD = prefClimber.climberD.getValue();
 
-    config.slot0.closedLoopPeakOutput = prefClimber.climberClosedLoopSpeed.getValue();    
-    config.slot0.allowableClosedloopError = SN_Math.RPMToVelocity(prefClimber.climberAllowableClosedLoopError.getValue(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
-      
+    config.slot0.closedLoopPeakOutput = prefClimber.climberClosedLoopSpeed.getValue();
+    config.slot0.allowableClosedloopError = SN_Math.RPMToVelocity(
+        prefClimber.climberAllowableClosedLoopError.getValue(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
+
     climberMotor.configFactoryDefault();
     climberMotor.configAllSettings(config);
 
@@ -62,24 +64,32 @@ public class Climber extends SubsystemBase {
     climberMotor.configReverseSoftLimitThreshold(prefClimber.climberPerpendicularMinPos.getValue());
     climberMotor.configForwardSoftLimitEnable(true);
     climberMotor.configForwardSoftLimitThreshold(prefClimber.climberPerpendicularMaxPos.getValue());
-    
+
     climberMotor.setNeutralMode(NeutralMode.Brake);
     climberMotor.setInverted(constClimber.INVERTED);
   }
 
-  public void setClimberSpeed(double speed){
-    climberMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, prefClimber.climberArbitraryFeedForward.getValue());
+  public void setClimberSpeed(double speed) {
+    if (minSwitch.get() && speed > 0 || maxSwitch.get() && speed < 0) {
+      speed = 0;
+    }
+    climberMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setClimberPosition(SN_DoublePreference position){
-    climberMotor.set(ControlMode.Position, position.getValue(), DemandType.ArbitraryFeedForward, prefClimber.climberArbitraryFeedForward.getValue());
+  public void setClimberPosition(SN_DoublePreference position) {
+    climberMotor.set(ControlMode.Position, position.getValue(), DemandType.ArbitraryFeedForward,
+        prefClimber.climberArbitraryFeedForward.getValue());
   }
 
-  public void setPerpendicular(){
+  public double getClimberEncoderCounts() {
+    return climberMotor.getSelectedSensorPosition();
+  }
+
+  public void setPerpendicular() {
     pivotPiston.setRetracted();
   };
 
-  public void setPivoted(){
+  public void setPivoted() {
     pivotPiston.setDeployed();
   };
 
@@ -90,13 +100,28 @@ public class Climber extends SubsystemBase {
   public boolean getMaxSwitch() {
     return !maxSwitch.get();
   }
-  
+
   public boolean getMinSwitch() {
     return !minSwitch.get();
+  }
+
+  public void displayValuesOnDashboard() {
+    displayOnDashboard = true;
+  }
+
+  public void hideValuesOnDashboard() {
+    displayOnDashboard = false;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (displayOnDashboard) {
+      SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
+      SmartDashboard.putBoolean("Is Climber at Minimum Switch", getMinSwitch());
+      SmartDashboard.putBoolean("Is Climber at Maximum Switch", getMaxSwitch());
+      SmartDashboard.putBoolean("Is Climber Pivoted", isPivoted());
+    }
+
   }
 }
