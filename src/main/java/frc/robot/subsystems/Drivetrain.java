@@ -88,11 +88,11 @@ public class Drivetrain extends SubsystemBase {
 
     leftLead.setInverted(constDrivetrain.LEFT_INVERTED);
     leftFollow.setInverted(InvertType.FollowMaster);
-    rightLead.setInverted(!constDrivetrain.LEFT_INVERTED);
+    rightLead.setInverted(constDrivetrain.RIGHT_INVERTED);
     rightFollow.setInverted(InvertType.FollowMaster);
 
     leftLead.setSensorPhase(constDrivetrain.LEFT_INVERTED);
-    rightLead.setSensorPhase(!constDrivetrain.LEFT_INVERTED);
+    rightLead.setSensorPhase(constDrivetrain.RIGHT_INVERTED);
 
     leftLead.setNeutralMode(NeutralMode.Brake);
     rightLead.setNeutralMode(NeutralMode.Brake);

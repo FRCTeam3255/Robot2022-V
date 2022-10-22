@@ -70,7 +70,7 @@ public class Climber extends SubsystemBase {
   }
 
   public void setClimberSpeed(double speed) {
-    if ((minSwitch.get() && speed < 0) || (maxSwitch.get() && speed > 0)) {
+    if ((getMinSwitch() && speed < 0) || (getMaxSwitch() && speed > 0)) {
       speed = 0;
     }
     climberMotor.set(ControlMode.PercentOutput, speed);
@@ -90,7 +90,10 @@ public class Climber extends SubsystemBase {
   };
 
   public void setPivoted() {
-    pivotPiston.setDeployed();
+    if (getClimberEncoderCounts() > prefClimber.climberAngledMinPos.getValue()) {
+      pivotPiston.setDeployed();
+    }
+
   };
 
   public boolean isPivoted() {
@@ -118,9 +121,9 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     if (displayOnDashboard) {
       SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
-      SmartDashboard.putBoolean("Is Climber at Minimum Switch", getMinSwitch());
-      SmartDashboard.putBoolean("Is Climber at Maximum Switch", getMaxSwitch());
-      SmartDashboard.putBoolean("Is Climber Pivoted", isPivoted());
+      SmartDashboard.putBoolean("Climber Is At Minimum Switch", getMinSwitch());
+      SmartDashboard.putBoolean("Climber Is At Maximum Switch", getMaxSwitch());
+      SmartDashboard.putBoolean("Climber Is Pivoted", isPivoted());
     }
 
   }
