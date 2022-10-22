@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants.CargoState;
 import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
@@ -24,6 +25,7 @@ import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.commands.Turret.MoveTurret;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -47,6 +49,7 @@ public class RobotContainer {
   private final Shooter subShooter = new Shooter();
   private final Transfer subTransfer = new Transfer();
   private final Turret subTurret = new Turret();
+  private final Climber subClimber = new Climber();
 
   // Commands
   private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
@@ -68,6 +71,9 @@ public class RobotContainer {
             () -> subDrivetrain.arcadeDrive(
                 driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
             subDrivetrain));
+    
+    subClimber.setDefaultCommand(new RunCommand(() -> subClimber.setClimberSpeed((conDriver.getAxisRT()) - conDriver.getAxisLT()), subClimber));
+    
 
     cargoState = CargoState.NONE;
 
@@ -86,20 +92,26 @@ public class RobotContainer {
         .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedHigh))
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
 
+    conDriver.btn_A
+        .whenPressed(() -> subClimber.setPivoted());
+
+    conDriver.btn_B
+        .whenPressed(() -> subClimber.setPerpendicular());
+        
     // Operator Commands
 
     // Shooting
-    conOperator.btn_RTrig.whileHeld(comShootCargo);
-    conOperator.btn_RTrig.whileHeld(
-        () -> subShooter.setMotorRPMToGoalRPM())
+    conOperator.btn_RTrig
+        .whileHeld(comShootCargo)
+        .whileHeld(() -> subShooter.setMotorRPMToGoalRPM())
         .whenReleased(() -> subShooter.neutralOutput());
 
     conOperator.btn_RBump.whenPressed(() -> subShooter.setMotorRPMToGoalRPM());
 
     // Turret
     conOperator.btn_LBump.whileHeld(comMoveTurret);
-    conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFrontDegrees));
-    conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretBackDegrees));
+    conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
+    conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
@@ -107,14 +119,17 @@ public class RobotContainer {
     conOperator.btn_Back.whenPressed(() -> subIntake.setRetracted());
 
     // Presets
-    conOperator.POV_North.whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM));
-    conOperator.POV_North.whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
+    conOperator.POV_North
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM))
+        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
 
-    conOperator.POV_South.whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM));
-    conOperator.POV_South.whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
+    conOperator.POV_South
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM))
+        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
 
-    conOperator.POV_West.whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM));
-    conOperator.POV_West.whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
+    conOperator.POV_West
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
+        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
 
     // Switchboard Commands
 
@@ -135,8 +150,9 @@ public class RobotContainer {
         .whenReleased(() -> subTurret.hideValuesOnDashboard());
 
     // btn_2 -> Use Hardcoded or Default Preference Values
-    conSwitchboard.btn_2.whenPressed(() -> SN_Preferences.usePreferences());
-    conSwitchboard.btn_2.whenReleased(() -> SN_Preferences.useDefaults());
+    conSwitchboard.btn_2
+        .whenPressed(() -> SN_Preferences.usePreferences())
+        .whenReleased(() -> SN_Preferences.useDefaults());
 
   }
 
@@ -160,10 +176,6 @@ public class RobotContainer {
     autoChooser.setDefaultOption("null", null);
     autoChooser.addOption("Four Ball A", autoFourBallA);
     SmartDashboard.putData(autoChooser);
-  }
-
-  public enum CargoState {
-    SHOOTING, COLLECTING, DISCARDING, PROCESSING, NONE
   }
 
   public Command getAutonomousCommand() {

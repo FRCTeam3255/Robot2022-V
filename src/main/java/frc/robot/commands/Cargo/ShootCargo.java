@@ -9,7 +9,7 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
-import frc.robot.RobotContainer.CargoState;
+import frc.robot.Constants.CargoState;
 import frc.robot.RobotPreferences.prefTransfer;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;

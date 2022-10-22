@@ -14,7 +14,7 @@ public class Vision extends SubsystemBase {
 
   public SN_Limelight limelight;
 
-  double t;
+  int buttonTimerLoops;
 
   public Vision() {
     limelight = new SN_Limelight();
@@ -31,10 +31,10 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
 
-    t++;
-    if (RobotController.getUserButton() && t > 25) {
+    buttonTimerLoops++;
+    if (RobotController.getUserButton() && buttonTimerLoops > 25) {
       limelight.toggleLEDs();
-      t = 0;
+      buttonTimerLoops = 0;
     }
   }
 }
