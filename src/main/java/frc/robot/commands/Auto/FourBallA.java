@@ -4,7 +4,6 @@
 
 package frc.robot.commands.Auto;
 
-
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotPreferences.prefAuto;
@@ -26,22 +25,27 @@ public class FourBallA extends SequentialCommandGroup {
   Transfer subTransfer;
   Intake subIntake;
 
-  public FourBallA(Drivetrain subDrivetrain) {
+  public FourBallA(Drivetrain subDrivetrain, Shooter subShooter, Turret subTurret, Hood subHood, Transfer subTransfer,
+      Intake subIntake) {
     this.subDrivetrain = subDrivetrain;
+    this.subShooter = subShooter;
+    this.subTurret = subTurret;
+    this.subHood = subHood;
+    this.subTransfer = subTransfer;
+    this.subIntake = subIntake;
 
     addCommands(
 
-      parallel(
-          new CollectCargo(subIntake, subTransfer)
-                    .until(() -> subTransfer.isTopBallCollected() && subTransfer.isBottomBallCollected()),
-                new InstantCommand(() -> subShooter.setMotorRPM(prefAuto.shooterRPM.getValue())), // set shooter
-                new InstantCommand(() -> subTurret.setAngle(prefAuto.turretAngle.getValue())), // set turret
-                new InstantCommand(() -> subHood.setAngleDegrees(prefAuto.hoodAngle))), // set hood
+        parallel(
+            new CollectCargo(subIntake, subTransfer)
+                .until(() -> subTransfer.isTopBallCollected() && subTransfer.isBottomBallCollected()),
+            new InstantCommand(() -> subShooter.setMotorRPM(prefAuto.shooterRPM.getValue())), // set shooter
+            new InstantCommand(() -> subTurret.setAngle(prefAuto.turretAngle.getValue())), // set turret
+            new InstantCommand(() -> subHood.setAngleDegrees(prefAuto.hoodAngle))), // set hood
 
-                new ShootCargo(subShooter, subTransfer).withTimeout(3),
+        new ShootCargo(subShooter, subTransfer).withTimeout(3),
 
-
-      parallel(
+        parallel(
             new CollectCargo(subIntake, subTransfer)
                 .until(() -> subTransfer.isTopBallCollected() && subTransfer.isBottomBallCollected()),
             new InstantCommand(() -> subShooter.setMotorRPM(prefAuto.shooterRPM.getValue())), // set shooter
@@ -49,9 +53,9 @@ public class FourBallA extends SequentialCommandGroup {
             new InstantCommand(() -> subHood.setAngleDegrees(prefAuto.hoodAngle)), // set hood
             new InstantCommand(() -> subDrivetrain.resetPose(subDrivetrain.TRAJ_T1toB1thenB2.getInitialPose()))
                 .andThen(new InstantCommand(() -> subDrivetrain.driveSpeed(0, 0)))),
-      
-            new ShootCargo(subShooter, subTransfer).withTimeout(3)
-    
+
+        new ShootCargo(subShooter, subTransfer).withTimeout(3)
+
     );
   }
 
