@@ -12,6 +12,19 @@ public final class RobotPreferences {
 
   public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
   public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
+  public static final class prefClimber {
+    public static final SN_DoublePreference climberP = new SN_DoublePreference("climberP", 0);
+    public static final SN_DoublePreference climberI = new SN_DoublePreference("climberI", 0);
+    public static final SN_DoublePreference climberD = new SN_DoublePreference("climberD", 0);
+
+    public static final SN_DoublePreference climberClosedLoopSpeed = new SN_DoublePreference("climberClosedLoopSpeed", 0);
+    public static final SN_DoublePreference climberAllowableClosedLoopError = new SN_DoublePreference(
+        "climberAllowableClosedLoopError", 0);
+
+    public static final SN_DoublePreference climberPerpendicularMinPos = new SN_DoublePreference("climberPerpendicularMinPos", 0);
+    public static final SN_DoublePreference climberAngledMinPos = new SN_DoublePreference("climberAngledMinPos", 200000);
+    public static final SN_DoublePreference climberMaxPosition = new SN_DoublePreference("climberMaxPosition", 277300);
+}
 
   public static final class prefDrivetrain {
 
