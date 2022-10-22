@@ -70,7 +70,7 @@ public class Climber extends SubsystemBase {
   }
 
   public void setClimberSpeed(double speed) {
-    if (minSwitch.get() && speed > 0 || maxSwitch.get() && speed < 0) {
+    if (minSwitch.get() && speed < 0 || maxSwitch.get() && speed > 0) {
       speed = 0;
     }
     climberMotor.set(ControlMode.PercentOutput, speed);
