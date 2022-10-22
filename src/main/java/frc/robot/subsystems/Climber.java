@@ -90,7 +90,10 @@ public class Climber extends SubsystemBase {
   };
 
   public void setPivoted() {
-    pivotPiston.setDeployed();
+    if (getClimberEncoderCounts() > prefClimber.climberAngledMinPos.getValue()) {
+      pivotPiston.setDeployed();
+    }
+
   };
 
   public boolean isPivoted() {
