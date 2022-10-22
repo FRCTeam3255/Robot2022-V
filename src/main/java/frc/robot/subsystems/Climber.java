@@ -38,7 +38,7 @@ public class Climber extends SubsystemBase {
     minSwitch = new DigitalInput(mapClimber.CLIMBER_MINIMUM_SWITCH_DIO);
     maxSwitch = new DigitalInput(mapClimber.CLIMBER_MAXIMUM_SWITCH_DIO);
 
-    pivotPiston = new SN_DoubleSolenoid(mapClimber.CLIMBER_PCM, PneumaticsModuleType.CTREPCM,
+    pivotPiston = new SN_DoubleSolenoid(PneumaticsModuleType.CTREPCM,
         mapClimber.PIVOT_PISTON_SOLENOID_PCM_A, mapClimber.PIVOT_PISTON_SOLENOID_PCM_B);
 
     config = new TalonFXConfiguration();
