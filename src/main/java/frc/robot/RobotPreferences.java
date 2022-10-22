@@ -13,6 +13,8 @@ public final class RobotPreferences {
   public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
   public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
   public static final class prefClimber {
+    //TODO: GET FPID VALUES
+    public static final SN_DoublePreference climberArbitraryFeedForward = new SN_DoublePreference("climberArbitraryFeedForward",  0);
     public static final SN_DoublePreference climberP = new SN_DoublePreference("climberP", 0);
     public static final SN_DoublePreference climberI = new SN_DoublePreference("climberI", 0);
     public static final SN_DoublePreference climberD = new SN_DoublePreference("climberD", 0);
@@ -21,9 +23,12 @@ public final class RobotPreferences {
     public static final SN_DoublePreference climberAllowableClosedLoopError = new SN_DoublePreference(
         "climberAllowableClosedLoopError", 0);
 
+
     public static final SN_DoublePreference climberPerpendicularMinPos = new SN_DoublePreference("climberPerpendicularMinPos", 0);
     public static final SN_DoublePreference climberAngledMinPos = new SN_DoublePreference("climberAngledMinPos", 200000);
-    public static final SN_DoublePreference climberMaxPosition = new SN_DoublePreference("climberMaxPosition", 277300);
+    public static final SN_DoublePreference climberPerpendicularMaxPos = new SN_DoublePreference("climberMaxPosition", 277300);
+    //TODO: GET THIS VALUE
+    public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference("climberMaxPosition", 277300);
 }
 
   public static final class prefDrivetrain {

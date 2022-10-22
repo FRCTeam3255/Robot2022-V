@@ -19,7 +19,6 @@ import frc.robot.RobotPreferences.prefClimber;
 
 public class Climber extends SubsystemBase {
   
-  //TODO: check if these are good names
   TalonFX climberMotor;
   SN_DoubleSolenoid pivotPiston;
   TalonFXConfiguration config;
@@ -51,9 +50,7 @@ public class Climber extends SubsystemBase {
     config.slot0.kD = prefClimber.climberD.getValue();
 
     config.slot0.closedLoopPeakOutput = prefClimber.climberClosedLoopSpeed.getValue();    
-    config.slot0.allowableClosedloopError = SN_Math.RPMToVelocity(
-      
-    prefClimber.climberAllowableClosedLoopError.getValue(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
+    config.slot0.allowableClosedloopError = SN_Math.RPMToVelocity(prefClimber.climberAllowableClosedLoopError.getValue(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
       
     climberMotor.configFactoryDefault();
     climberMotor.configAllSettings(config);
@@ -61,10 +58,10 @@ public class Climber extends SubsystemBase {
     climberMotor.configReverseSoftLimitEnable(true);
     climberMotor.configReverseSoftLimitThreshold(prefClimber.climberPerpendicularMinPos.getValue());
     climberMotor.configForwardSoftLimitEnable(true);
-    climberMotor.configForwardSoftLimitThreshold(prefClimber.climberMaxPosition.getValue());
+    climberMotor.configForwardSoftLimitThreshold(prefClimber.climberPerpendicularMaxPos.getValue());
     
-    climberMotor.setInverted(constClimber.INVERTED);
     climberMotor.setNeutralMode(NeutralMode.Brake);
+    climberMotor.setInverted(constClimber.INVERTED);
   }
 
   @Override
