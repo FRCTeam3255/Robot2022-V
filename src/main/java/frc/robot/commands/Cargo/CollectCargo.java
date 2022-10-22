@@ -46,7 +46,7 @@ public class CollectCargo extends CommandBase {
   @Override
   public void initialize() {
     // don't deploy intake if there are two cargo in the robot
-    if (!subTransfer.isTopBallCollected() || !subTransfer.isBottomBallCollected()) {
+    if (!(subTransfer.isTopBallCollected() && subTransfer.isBottomBallCollected())) {
       subIntake.setDeployed();
     }
   }
