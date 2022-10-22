@@ -90,9 +90,9 @@ public class RobotContainer {
     // Operator Commands
 
     // Shooting
-    conOperator.btn_RTrig.whileHeld(comShootCargo);
-    conOperator.btn_RTrig.whileHeld(
-        () -> subShooter.setMotorRPMToGoalRPM())
+    conOperator.btn_RTrig
+        .whileHeld(comShootCargo)
+        .whileHeld(() -> subShooter.setMotorRPMToGoalRPM())
         .whenReleased(() -> subShooter.neutralOutput());
 
     conOperator.btn_RBump.whenPressed(() -> subShooter.setMotorRPMToGoalRPM());
@@ -108,14 +108,17 @@ public class RobotContainer {
     conOperator.btn_Back.whenPressed(() -> subIntake.setRetracted());
 
     // Presets
-    conOperator.POV_North.whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM));
-    conOperator.POV_North.whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
+    conOperator.POV_North
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM))
+        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
 
-    conOperator.POV_South.whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM));
-    conOperator.POV_South.whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
+    conOperator.POV_South
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM))
+        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
 
-    conOperator.POV_West.whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM));
-    conOperator.POV_West.whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
+    conOperator.POV_West
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
+        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
 
     // Switchboard Commands
 
@@ -136,8 +139,9 @@ public class RobotContainer {
         .whenReleased(() -> subTurret.hideValuesOnDashboard());
 
     // btn_2 -> Use Hardcoded or Default Preference Values
-    conSwitchboard.btn_2.whenPressed(() -> SN_Preferences.usePreferences());
-    conSwitchboard.btn_2.whenReleased(() -> SN_Preferences.useDefaults());
+    conSwitchboard.btn_2
+        .whenPressed(() -> SN_Preferences.usePreferences())
+        .whenReleased(() -> SN_Preferences.useDefaults());
 
   }
 
