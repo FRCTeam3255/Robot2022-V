@@ -68,4 +68,8 @@ public final class Constants {
 
   }
 
+  public enum CargoState {
+    SHOOTING, COLLECTING, DISCARDING, PROCESSING, NONE
+  }
+
 }
