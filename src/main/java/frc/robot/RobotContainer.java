@@ -56,7 +56,7 @@ public class RobotContainer {
   private final CollectCargo comCollectCargo = new CollectCargo(subIntake, subTransfer);
   private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
 
-  private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
+  private final MoveTurret comMoveTurret = new MoveTurret(subTurret, subClimber, conOperator);
 
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
