@@ -26,17 +26,12 @@ public final class RobotPreferences {
 
     public static final SN_DoublePreference climberPerpendicularMinPos = new SN_DoublePreference(
         "climberPerpendicularMinPos", 0);
-    public static final SN_DoublePreference climberAngledMinPos = new SN_DoublePreference(
-        "climberAngledMinPos",
+    public static final SN_DoublePreference climberAngledMinPos = new SN_DoublePreference("climberAngledMinPos",
         200000);
     public static final SN_DoublePreference climberPerpendicularMaxPos = new SN_DoublePreference(
         "climberPerpendicularMaxPos", 277300);
-    public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference(
-        "climberAngledMaxPos",
+    public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference("climberAngledMaxPos",
         277300);
-    // TODO: Actually get an optimal place to angle from, this is an estimate
-    public static final SN_DoublePreference climberOptimalAnglingPosition = new SN_DoublePreference(
-        "climberOptimalAnglingPosition", 219325);
   }
 
   public static final class prefDrivetrain {
@@ -46,20 +41,15 @@ public final class RobotPreferences {
     public static final SN_DoublePreference driveI = new SN_DoublePreference("driveI", 0);
     public static final SN_DoublePreference driveD = new SN_DoublePreference("driveD", 0);
 
-    public static final SN_DoublePreference driveArcadeSpeedHigh = new SN_DoublePreference(
-        "driveArcadeSpeedHigh",
+    public static final SN_DoublePreference driveArcadeSpeedHigh = new SN_DoublePreference("driveArcadeSpeedHigh",
         1);
-    public static final SN_DoublePreference driveArcadeSpeedMid = new SN_DoublePreference(
-        "driveArcadeSpeedMid",
+    public static final SN_DoublePreference driveArcadeSpeedMid = new SN_DoublePreference("driveArcadeSpeedMid",
         0.65);
-    public static final SN_DoublePreference driveArcadeSpeedLow = new SN_DoublePreference(
-        "driveArcadeSpeedLow",
+    public static final SN_DoublePreference driveArcadeSpeedLow = new SN_DoublePreference("driveArcadeSpeedLow",
         0.25);
-    public static final SN_DoublePreference driveArcadeTurnMid = new SN_DoublePreference("driveArcadeTurn",
-        0.7);
+    public static final SN_DoublePreference driveArcadeTurnMid = new SN_DoublePreference("driveArcadeTurn", 0.7);
 
-    public static final SN_DoublePreference driveSlewRateLimit = new SN_DoublePreference(
-        "driveSlewRateLimit", 2);
+    public static final SN_DoublePreference driveSlewRateLimit = new SN_DoublePreference("driveSlewRateLimit", 2);
 
   }
 
@@ -77,19 +67,16 @@ public final class RobotPreferences {
     public static final SN_DoublePreference hoodClosedLoopPeakOutput = new SN_DoublePreference(
         "hoodClosedLoopPeakOutput", .25);
 
-    public static final SN_DoublePreference hoodMinDegrees = new SN_DoublePreference("hoodMinDegrees",
-        4.89);
+    public static final SN_DoublePreference hoodMinDegrees = new SN_DoublePreference("hoodMinDegrees", 4.89);
     public static final SN_DoublePreference hoodMaxDegrees = new SN_DoublePreference("hoodMaxDegrees", 38);
 
-    public static final SN_DoublePreference hoodNudgeDegrees = new SN_DoublePreference("hoodNudgeDegrees",
-        1);
+    public static final SN_DoublePreference hoodNudgeDegrees = new SN_DoublePreference("hoodNudgeDegrees", 1);
 
   }
 
   public static final class prefIntake {
 
-    public static final SN_DoublePreference intakeRollerSpeed = new SN_DoublePreference("intakeRollerSpeed",
-        0.8);
+    public static final SN_DoublePreference intakeRollerSpeed = new SN_DoublePreference("intakeRollerSpeed", 0.8);
 
   }
 
@@ -151,14 +138,11 @@ public final class RobotPreferences {
     public static final SN_DoublePreference turretClosedLoopPeakOutput = new SN_DoublePreference(
         "turretClosedLoopPeakOutput", 1);
 
-    public static final SN_DoublePreference turretOpenLoopSpeed = new SN_DoublePreference(
-        "turretOpenLoopSpeed",
+    public static final SN_DoublePreference turretOpenLoopSpeed = new SN_DoublePreference("turretOpenLoopSpeed",
         0.3);
 
-    public static final SN_DoublePreference turretMinDegrees = new SN_DoublePreference("turretMinDegrees",
-        -270);
-    public static final SN_DoublePreference turretMaxDegrees = new SN_DoublePreference("turretMaxDegrees",
-        110);
+    public static final SN_DoublePreference turretMinDegrees = new SN_DoublePreference("turretMinDegrees", -270);
+    public static final SN_DoublePreference turretMaxDegrees = new SN_DoublePreference("turretMaxDegrees", 110);
     public static final SN_DoublePreference turretFacingTowardsIntakeDegrees = new SN_DoublePreference(
         "turretFacingTowardsIntakeDegrees", -90);
     public static final SN_DoublePreference turretFacingAwayFromIntakeDegrees = new SN_DoublePreference(

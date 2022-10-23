@@ -47,9 +47,6 @@ public class Shooter extends SubsystemBase {
     config.slot0.kI = prefShooter.shooterI.getValue();
     config.slot0.kD = prefShooter.shooterD.getValue();
 
-    config.slot0.allowableClosedloopError = SN_Math.RPMToVelocity(
-        prefShooter.shooterAllowableClosedloopErrorRPM.getValue(), SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
-
     leadMotor.configFactoryDefault();
     followMotor.configFactoryDefault();
 
@@ -81,12 +78,12 @@ public class Shooter extends SubsystemBase {
         SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT) < prefShooter.shooterAllowableClosedloopErrorRPM.getValue();
   }
 
-  public void setGoalRPM(SN_DoublePreference goalRPM) {
-    this.goalRPM = goalRPM.getValue();
-  }
-
   public void setGoalRPM(double goalRPM) {
     this.goalRPM = goalRPM;
+  }
+
+  public void setGoalRPM(SN_DoublePreference goalRPM) {
+    setGoalRPM(goalRPM.getValue());
   }
 
   public double getGoalRPM() {
