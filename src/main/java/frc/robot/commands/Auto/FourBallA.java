@@ -25,7 +25,12 @@ public class FourBallA extends SequentialCommandGroup {
   Transfer subTransfer;
   Intake subIntake;
 
-  public FourBallA(Drivetrain subDrivetrain, Shooter subShooter, Turret subTurret, Hood subHood, Transfer subTransfer,
+  public FourBallA(
+      Drivetrain subDrivetrain,
+      Shooter subShooter,
+      Turret subTurret,
+      Hood subHood,
+      Transfer subTransfer,
       Intake subIntake) {
     this.subDrivetrain = subDrivetrain;
     this.subShooter = subShooter;

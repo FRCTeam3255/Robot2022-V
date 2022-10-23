@@ -59,7 +59,12 @@ public class RobotContainer {
   private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
 
   // Autos
-  private final FourBallA autoFourBallA = new FourBallA(subDrivetrain, subShooter, subTurret, subHood, subTransfer,
+  private final FourBallA autoFourBallA = new FourBallA(
+      subDrivetrain,
+      subShooter,
+      subTurret,
+      subHood,
+      subTransfer,
       subIntake);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
