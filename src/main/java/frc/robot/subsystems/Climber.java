@@ -13,6 +13,7 @@ import com.frcteam3255.components.SN_DoubleSolenoid;
 import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.utils.SN_Math;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -63,22 +64,61 @@ public class Climber extends SubsystemBase {
     climberMotor.configReverseSoftLimitEnable(true);
     climberMotor.configReverseSoftLimitThreshold(prefClimber.climberPerpendicularMinPos.getValue());
     climberMotor.configForwardSoftLimitEnable(true);
-    climberMotor.configForwardSoftLimitThreshold(prefClimber.climberPerpendicularMaxPos.getValue());
+    climberMotor.configForwardSoftLimitThreshold(prefClimber.climberAngledMaxPos.getValue());
 
     climberMotor.setNeutralMode(NeutralMode.Brake);
     climberMotor.setInverted(constClimber.INVERTED);
   }
 
-  public void setClimberSpeed(double speed) {
-    if ((getMinSwitch() && speed < 0) || (getMaxSwitch() && speed > 0)) {
+  public void setClimberSpeed(double a_speed) {
+
+    double speed = a_speed;
+
+    // cannot never go below min switch
+    if ((getMinSwitch() && speed < 0)) {
       speed = 0;
     }
+
+    // cannot never go above max switch
+    if ((getMaxSwitch() && speed > 0)) {
+      speed = 0;
+    }
+
+    // while angled, cannot go below minimum angled position
+    if (isPivoted() && getClimberEncoderCounts() <= prefClimber.climberAngledMinPos.getValue() && speed < 0) {
+      speed = 0;
+    }
+
+    // while perpendicular, cannot go above maximum perpendicular position
+    if (!isPivoted() && getClimberEncoderCounts() >= prefClimber.climberPerpendicularMaxPos.getValue() && speed > 0) {
+      speed = 0;
+    }
+
+    // maximum angled position is the physical maximum position, where the max
+    // switch and forward soft limit are
+
+    // minimum perpendicular position is the physical minimum position, where the
+    // min switch and reverse soft limit are
+
     climberMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setClimberPosition(SN_DoublePreference position) {
-    climberMotor.set(ControlMode.Position, position.getValue(), DemandType.ArbitraryFeedForward,
-        prefClimber.climberArbitraryFeedForward.getValue());
+  public void setClimberPosition(SN_DoublePreference a_position) {
+
+    double position = a_position.getValue();
+
+    if (isPivoted()) {
+      MathUtil.clamp(position, prefClimber.climberAngledMinPos.getValue(),
+          prefClimber.climberAngledMaxPos.getValue());
+    }
+
+    else {
+      MathUtil.clamp(position, prefClimber.climberPerpendicularMinPos.getValue(),
+          prefClimber.climberPerpendicularMaxPos.getValue());
+    }
+
+    climberMotor.set(ControlMode.Position, position,
+        DemandType.ArbitraryFeedForward, prefClimber.climberArbitraryFeedForward.getValue());
   }
 
   public double getClimberEncoderCounts() {
