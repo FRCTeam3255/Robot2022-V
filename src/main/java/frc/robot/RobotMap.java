@@ -6,14 +6,12 @@ package frc.robot;
 
 public final class RobotMap {
 
-  public static final class mapClimber{
-    
+  public static final class mapClimber {
+
     public static final int CLIMBER_MOTOR_CAN = 10;
     public static final int CLIMBER_MINIMUM_SWITCH_DIO = 6;
     public static final int CLIMBER_MAXIMUM_SWITCH_DIO = 0;
 
-    //Climber PCM
-    public static final int CLIMBER_PCM = 2;
     public static final int PIVOT_PISTON_SOLENOID_PCM_A = 2;
     public static final int PIVOT_PISTON_SOLENOID_PCM_B = 3;
   }
@@ -66,9 +64,9 @@ public final class RobotMap {
     public static final int TOP_MOTOR_CAN = 52;
 
     public static final int TOP_LEFT_SWITCH_DIO = 1;
-    public static final int TOP_RIGHT_SWITCH_DIO = 2;
+    public static final int TOP_RIGHT_SWITCH_DIO = 4;
+    public static final int BOTTOM_RIGHT_SWITCH_DIO = 2;
     public static final int BOTTOM_LEFT_SWITCH_DIO = 3;
-    public static final int BOTTOM_RIGHT_SWITCH_DIO = 4;
 
   }
 

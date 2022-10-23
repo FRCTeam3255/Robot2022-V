@@ -71,9 +71,12 @@ public class RobotContainer {
             () -> subDrivetrain.arcadeDrive(
                 driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
             subDrivetrain));
-    
-    subClimber.setDefaultCommand(new RunCommand(() -> subClimber.setClimberSpeed((conDriver.getAxisRT()) - conDriver.getAxisLT()), subClimber));
-    
+
+    subClimber.setDefaultCommand(
+        new RunCommand(
+            () -> subClimber.setClimberSpeed(
+                (conDriver.getAxisRT()) - conDriver.getAxisLT()),
+            subClimber));
 
     cargoState = CargoState.NONE;
 
@@ -97,7 +100,7 @@ public class RobotContainer {
 
     conDriver.btn_B
         .whenPressed(() -> subClimber.setPerpendicular());
-        
+
     // Operator Commands
 
     // Shooting

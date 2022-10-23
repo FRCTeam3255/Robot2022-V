@@ -28,7 +28,7 @@ public class MoveTurret extends CommandBase {
 
   @Override
   public void execute() {
-    speed = conOperator.getRightStickX();
+    speed = -conOperator.getRightStickX();
 
     subTurret.setSpeed(speed * prefTurret.turretOpenLoopSpeed.getValue());
   }
