@@ -96,7 +96,7 @@ public class RobotContainer {
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
 
     conDriver.btn_A
-        .whenPressed(() -> subClimber.setPivoted());
+        .whenPressed(() -> subClimber.setAngled());
 
     conDriver.btn_B
         .whenPressed(() -> subClimber.setPerpendicular());
