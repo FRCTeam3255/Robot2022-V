@@ -32,6 +32,10 @@ public final class RobotPreferences {
         "climberPerpendicularMaxPos", 277300);
     public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference("climberAngledMaxPos",
         277300);
+
+    // TODO: Actually get an optimal place to angle from, this is an estimate
+    public static final SN_DoublePreference climberOptimalAnglingPosition = new SN_DoublePreference(
+        "climberOptimalAnglingPosition", 219325);
   }
 
   public static final class prefDrivetrain {
