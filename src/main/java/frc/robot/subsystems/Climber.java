@@ -108,6 +108,16 @@ public class Climber extends SubsystemBase {
     return !minSwitch.get();
   }
 
+  // Can't think of a better name for this, pretty sure anglable is not a word and
+  // I don't want another disgard moment
+  public boolean canAngle() {
+    if (getClimberEncoderCounts() > prefClimber.climberOptimalAnglingPosition.getValue()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public void displayValuesOnDashboard() {
     displayOnDashboard = true;
   }

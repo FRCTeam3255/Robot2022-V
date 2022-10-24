@@ -104,7 +104,7 @@ public class RobotContainer {
     conDriver.btn_B
         .whenPressed(() -> subClimber.setPerpendicular());
 
-    conDriver.btn_Start.whenPressed(comMagicClimb);
+    conDriver.btn_Start.whileHeld(comMagicClimb);
 
     // Operator Commands
 

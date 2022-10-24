@@ -5,6 +5,7 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotPreferences.prefClimber;
 import frc.robot.subsystems.Climber;
@@ -15,14 +16,24 @@ import frc.robot.subsystems.Climber;
 public class MagicClimb extends SequentialCommandGroup {
   Climber subClimber;
 
-  /** Creates a new MagicClimb. */
   public MagicClimb(Climber subClimber) {
     this.subClimber = subClimber;
 
     addCommands(
-        new InstantCommand(() -> subClimber.setClimberPosition(prefClimber.climberPerpendicularMinPos)),
-        new InstantCommand(() -> subClimber.setClimberPosition(prefClimber.climberOptimalAnglingPosition)),
+        // Will remove these comments after the code looks good (i am going insane)
+
+        // Run the climber all the way to the bottom (grab the rung)
+        new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberPerpendicularMinPos))
+            .until(() -> subClimber.getMinSwitch()),
+        // Move up until we're at a position where we can angle (I'd prefer to not use a
+        // timer for this because having the
+        // encoder counts reset at the bottom and then using those seems better)
+        new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberOptimalAnglingPosition))
+            .until(() -> subClimber.canAngle()),
+        // Pivot. Keeping this instant because I don't see how it isn't instant
         new InstantCommand(() -> subClimber.setPivoted()),
-        new InstantCommand(() -> subClimber.setClimberPosition(prefClimber.climberAngledMaxPos)));
+        // Run the climber all the way up
+        new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberAngledMaxPos))
+            .until(() -> subClimber.getMaxSwitch()));
   }
 }
