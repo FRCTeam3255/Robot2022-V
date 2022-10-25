@@ -9,7 +9,7 @@ import com.frcteam3255.preferences.SN_DoublePreference;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotPreferences;
-import frc.robot.RobotContainer.CargoState;
+import frc.robot.Constants.CargoState;
 import frc.robot.RobotPreferences.prefIntake;
 import frc.robot.RobotPreferences.prefTransfer;
 import frc.robot.subsystems.Intake;
@@ -46,7 +46,7 @@ public class CollectCargo extends CommandBase {
   @Override
   public void initialize() {
     // don't deploy intake if there are two cargo in the robot
-    if (!subTransfer.isTopBallCollected() || !subTransfer.isBottomBallCollected()) {
+    if (!(subTransfer.isTopBallCollected() && subTransfer.isBottomBallCollected())) {
       subIntake.setDeployed();
     }
   }

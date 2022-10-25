@@ -15,9 +15,14 @@ public final class Constants {
 
   // ALL LENGTH MEASUREMENTS MUST BE IN METERS
 
+  public static final class constClimber {
+    public static final boolean INVERTED = false;
+  }
+
   public static final class constDrivetrain {
 
-    public static final boolean LEFT_INVERTED = false;
+    public static final boolean LEFT_INVERTED = true;
+    public static final boolean RIGHT_INVERTED = false;
 
     public static final double GEAR_RATIO = 6; // 6 motor rotations per 1 wheel rotation
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
@@ -74,6 +79,10 @@ public final class Constants {
     public static final boolean INVERTED = false;
     public static final double GEAR_RATIO = 65;
 
+  }
+
+  public enum CargoState {
+    SHOOTING, COLLECTING, DISCARDING, PROCESSING, NONE
   }
 
 }

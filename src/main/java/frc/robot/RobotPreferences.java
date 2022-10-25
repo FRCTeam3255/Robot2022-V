@@ -9,9 +9,30 @@ import com.frcteam3255.preferences.SN_ZeroDoublePreference;
 import com.frcteam3255.preferences.SN_ZeroIntPreference;
 
 public final class RobotPreferences {
-
   public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
   public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
+
+  public static final class prefClimber {
+    public static final SN_DoublePreference climberArbitraryFeedForward = new SN_DoublePreference(
+        "climberArbitraryFeedForward", 0);
+    public static final SN_DoublePreference climberP = new SN_DoublePreference("climberP", 1);
+    public static final SN_DoublePreference climberI = new SN_DoublePreference("climberI", 0);
+    public static final SN_DoublePreference climberD = new SN_DoublePreference("climberD", 0);
+
+    public static final SN_DoublePreference climberClosedLoopSpeed = new SN_DoublePreference(
+        "climberClosedLoopSpeed", 1);
+    public static final SN_DoublePreference climberAllowableClosedLoopError = new SN_DoublePreference(
+        "climberAllowableClosedLoopError", 0);
+
+    public static final SN_DoublePreference climberPerpendicularMinPos = new SN_DoublePreference(
+        "climberPerpendicularMinPos", 0);
+    public static final SN_DoublePreference climberAngledMinPos = new SN_DoublePreference("climberAngledMinPos",
+        200000);
+    public static final SN_DoublePreference climberPerpendicularMaxPos = new SN_DoublePreference(
+        "climberPerpendicularMaxPos", 277300);
+    public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference("climberAngledMaxPos",
+        277300);
+  }
 
   public static final class prefDrivetrain {
 
@@ -122,8 +143,10 @@ public final class RobotPreferences {
 
     public static final SN_DoublePreference turretMinDegrees = new SN_DoublePreference("turretMinDegrees", -270);
     public static final SN_DoublePreference turretMaxDegrees = new SN_DoublePreference("turretMaxDegrees", 110);
-    public static final SN_DoublePreference turretFrontDegrees = new SN_DoublePreference("turretFrontDegrees", -90);
-    public static final SN_DoublePreference turretBackDegrees = new SN_DoublePreference("turretBackDegrees", 90);
+    public static final SN_DoublePreference turretFacingTowardsIntakeDegrees = new SN_DoublePreference(
+        "turretFacingTowardsIntakeDegrees", -90);
+    public static final SN_DoublePreference turretFacingAwayFromIntakeDegrees = new SN_DoublePreference(
+        "turretFacingAwayFromIntakeDegrees", 90);
 
   }
 
