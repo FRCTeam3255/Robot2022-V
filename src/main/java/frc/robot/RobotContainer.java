@@ -90,6 +90,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Driver Commands
+
+    // Driving
     conDriver.btn_LBump
         .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedLow))
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
@@ -99,10 +101,13 @@ public class RobotContainer {
 
     // Climbing
     conDriver.btn_A
-        .whenPressed(() -> subClimber.setPivoted());
+        .whenPressed(() -> subClimber.setAngled());
 
     conDriver.btn_B
         .whenPressed(() -> subClimber.setPerpendicular());
+    conDriver.btn_Back
+        .whenPressed(() -> subTurret.setAngle(prefTurret.turretMinDegrees))
+        .whenPressed(() -> subHood.neutralOutput());
 
     conDriver.btn_Start.whileHeld(comMagicClimb);
 

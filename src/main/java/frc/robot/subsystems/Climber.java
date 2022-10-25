@@ -89,14 +89,14 @@ public class Climber extends SubsystemBase {
     pivotPiston.setRetracted();
   };
 
-  public void setPivoted() {
+  public void setAngled() {
     if (getClimberEncoderCounts() > prefClimber.climberAngledMinPos.getValue()) {
       pivotPiston.setDeployed();
     }
 
   };
 
-  public boolean isPivoted() {
+  public boolean isAngled() {
     return pivotPiston.isDeployed();
   }
 
@@ -127,8 +127,8 @@ public class Climber extends SubsystemBase {
       SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
       SmartDashboard.putBoolean("Climber Is At Minimum Switch", getMinSwitch());
       SmartDashboard.putBoolean("Climber Is At Maximum Switch", getMaxSwitch());
-      SmartDashboard.putBoolean("Climber Is Pivoted", isPivoted());
       SmartDashboard.putBoolean("Climber in Optimal Angling Range", isInOptimalAnglingRange());
+      SmartDashboard.putBoolean("Climber Is Angled", isAngled());
     }
 
   }
