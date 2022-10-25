@@ -108,14 +108,8 @@ public class Climber extends SubsystemBase {
     return !minSwitch.get();
   }
 
-  // Can't think of a better name for this, pretty sure anglable is not a word and
-  // I don't want another disgard moment
-  public boolean canAngle() {
-    if (getClimberEncoderCounts() > prefClimber.climberOptimalAnglingPosition.getValue()) {
-      return true;
-    } else {
-      return false;
-    }
+  public boolean isInOptimalAnglingRange() {
+    return (getClimberEncoderCounts() > prefClimber.climberOptimalAnglingPosition.getValue());
   }
 
   public void displayValuesOnDashboard() {
@@ -134,6 +128,7 @@ public class Climber extends SubsystemBase {
       SmartDashboard.putBoolean("Climber Is At Minimum Switch", getMinSwitch());
       SmartDashboard.putBoolean("Climber Is At Maximum Switch", getMaxSwitch());
       SmartDashboard.putBoolean("Climber Is Pivoted", isPivoted());
+      SmartDashboard.putBoolean("Climber in Optimal Angling Range", isInOptimalAnglingRange());
     }
 
   }
