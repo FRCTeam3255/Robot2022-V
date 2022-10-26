@@ -167,5 +167,8 @@ public final class RobotPreferences {
         "turretFacingTowardsIntakeDegrees", -90);
     public static final SN_DoublePreference turretFacingAwayFromIntakeDegrees = new SN_DoublePreference(
         "turretFacingAwayFromIntakeDegrees", 90);
+
+    public static final SN_DoublePreference turretClimberThreshold = new SN_DoublePreference(
+        "turretClimberThreshold", -269);
   }
 }
