@@ -33,8 +33,7 @@ public class OdometryAimTurret extends CommandBase {
   // angle robot needs to turn to face hub
   double robotRelativeAngleToHubRadians;
   // angle turret needs to turn to face hub
-  double turretRelativeAngleToHubRadians;
-  double turretRelativeAngleToHubDegrees;
+  double outputToTurretDegrees;
 
   public OdometryAimTurret(Turret subTurret, Drivetrain subDrivetrain, Vision subVision) {
     this.subTurret = subTurret;
@@ -45,7 +44,7 @@ public class OdometryAimTurret extends CommandBase {
     hubPosition = constField.HUB_POSITION;
     adjustedHubPosition = new Translation2d(0, 0);
 
-    addRequirements(subTurret);
+    addRequirements();
   }
 
   @Override
@@ -64,20 +63,20 @@ public class OdometryAimTurret extends CommandBase {
         hubPosition.getY() - robotPose.getY());
 
     fieldRelativeAngleToHubRadians = Math.atan2(adjustedHubPosition.getY(), adjustedHubPosition.getX());
-    robotRelativeAngleToHubRadians = fieldRelativeAngleToHubRadians + robotPose.getRotation().getRadians();
-    turretRelativeAngleToHubRadians = robotRelativeAngleToHubRadians + Units.degreesToRadians(subTurret.getAngle());
+    robotRelativeAngleToHubRadians = fieldRelativeAngleToHubRadians - (robotPose.getRotation().getRadians());
 
-    turretRelativeAngleToHubDegrees = Units.radiansToDegrees(turretRelativeAngleToHubRadians);
+    // turret zero is 90 degrees off from robot zero, hence the - 90
+    outputToTurretDegrees = Units.radiansToDegrees(robotRelativeAngleToHubRadians) - 90;
 
     // if the calculated angle goes out of the turret's range, correct for it
-    if (turretRelativeAngleToHubDegrees >= prefTurret.turretMaxDegrees.getValue()) {
-      turretRelativeAngleToHubDegrees -= 360;
-    } else if (turretRelativeAngleToHubDegrees <= prefTurret.turretMinDegrees.getValue()) {
-      turretRelativeAngleToHubDegrees += 360;
+    while (outputToTurretDegrees > prefTurret.turretMaxDegrees.getValue()) {
+      outputToTurretDegrees -= 360;
+    }
+    while (outputToTurretDegrees < prefTurret.turretMinDegrees.getValue()) {
+      outputToTurretDegrees += 360;
     }
 
-    subTurret.setAngle(turretRelativeAngleToHubDegrees);
-
+    subTurret.setAngle(outputToTurretDegrees);
   }
 
   @Override
