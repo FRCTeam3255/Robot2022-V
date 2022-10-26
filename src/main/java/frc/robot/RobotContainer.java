@@ -23,6 +23,7 @@ import frc.robot.commands.Auto.FourBallA;
 import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
+import frc.robot.commands.Climber.MoveClimber;
 import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -55,6 +56,7 @@ public class RobotContainer {
 
   private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
 
+  private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -69,11 +71,7 @@ public class RobotContainer {
                 conDriver.getArcadeMove(), conDriver.getArcadeRotate()),
             subDrivetrain));
 
-    subClimber.setDefaultCommand(
-        new RunCommand(
-            () -> subClimber.setClimberSpeed(
-                (conDriver.getAxisRT()) - conDriver.getAxisLT()),
-            subClimber));
+    subClimber.setDefaultCommand(comMoveClimber);
 
     cargoState = CargoState.NONE;
 
@@ -85,6 +83,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Driver Commands
+
+    // Driving
     conDriver.btn_LBump
         .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedLow))
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
@@ -92,11 +92,15 @@ public class RobotContainer {
         .whenPressed(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedHigh))
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
 
+    // Climbing
     conDriver.btn_A
-        .whenPressed(() -> subClimber.setPivoted());
+        .whenPressed(() -> subClimber.setAngled());
 
     conDriver.btn_B
         .whenPressed(() -> subClimber.setPerpendicular());
+    conDriver.btn_Back
+        .whenPressed(() -> subTurret.setAngle(prefTurret.turretMinDegrees))
+        .whenPressed(() -> subHood.neutralOutput());
 
     // Operator Commands
 
