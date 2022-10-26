@@ -97,7 +97,8 @@ public class RobotContainer {
 
     // Climbing
     conDriver.btn_A
-        .whenPressed(() -> subClimber.setPivoted());
+        .whenPressed(() -> subClimber.setAngled());
+
     conDriver.btn_B
         .whenPressed(() -> subClimber.setPerpendicular());
     conDriver.btn_Back
