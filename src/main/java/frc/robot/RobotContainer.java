@@ -25,6 +25,8 @@ import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.commands.Climber.MagicClimb;
+
+import frc.robot.commands.Climber.MoveClimber;
 import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
@@ -60,6 +62,8 @@ public class RobotContainer {
   private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
 
   private final MagicClimb comMagicClimb = new MagicClimb(subClimber);
+  private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
+
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -74,11 +78,7 @@ public class RobotContainer {
                 driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
             subDrivetrain));
 
-    subClimber.setDefaultCommand(
-        new RunCommand(
-            () -> subClimber.setClimberSpeed(
-                (conDriver.getAxisRT()) - conDriver.getAxisLT()),
-            subClimber));
+    subClimber.setDefaultCommand(comMoveClimber);
 
     cargoState = CargoState.NONE;
 
