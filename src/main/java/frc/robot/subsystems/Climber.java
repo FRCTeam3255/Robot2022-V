@@ -125,6 +125,10 @@ public class Climber extends SubsystemBase {
     return climberMotor.getSelectedSensorPosition();
   }
 
+  public void resetClimberEncoderCounts() {
+    climberMotor.setSelectedSensorPosition(0);
+  }
+
   public void setPerpendicular() {
     pivotPiston.setRetracted();
   };
@@ -164,6 +168,9 @@ public class Climber extends SubsystemBase {
       SmartDashboard.putBoolean("Climber Is At Minimum Switch", getMinSwitch());
       SmartDashboard.putBoolean("Climber Is At Maximum Switch", getMaxSwitch());
       SmartDashboard.putBoolean("Climber Is Angled", isAngled());
+    }
+    if (getMinSwitch()) {
+      resetClimberEncoderCounts();
     }
 
   }
