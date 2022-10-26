@@ -87,6 +87,10 @@ public class Hood extends SubsystemBase {
         SN_Math.degreesToFalcon(prefHood.hoodMinDegrees.getValue(), constHood.GEAR_RATIO));
   }
 
+  public void neutralOutput() {
+    hoodMotor.neutralOutput();
+  }
+
   public void displayValuesOnDashboard() {
     displayOnDashboard = true;
   }
