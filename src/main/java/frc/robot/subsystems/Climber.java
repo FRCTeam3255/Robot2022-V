@@ -85,12 +85,12 @@ public class Climber extends SubsystemBase {
     }
 
     // while angled, cannot go below minimum angled position
-    if (isPivoted() && getClimberEncoderCounts() <= prefClimber.climberAngledMinPos.getValue() && speed < 0) {
+    if (isAngled() && getClimberEncoderCounts() <= prefClimber.climberAngledMinPos.getValue() && speed < 0) {
       speed = 0;
     }
 
     // while perpendicular, cannot go above maximum perpendicular position
-    if (!isPivoted() && getClimberEncoderCounts() >= prefClimber.climberPerpendicularMaxPos.getValue() && speed > 0) {
+    if (!isAngled() && getClimberEncoderCounts() >= prefClimber.climberPerpendicularMaxPos.getValue() && speed > 0) {
       speed = 0;
     }
 
@@ -107,7 +107,7 @@ public class Climber extends SubsystemBase {
 
     double position = a_position.getValue();
 
-    if (isPivoted()) {
+    if (isAngled()) {
       MathUtil.clamp(position, prefClimber.climberAngledMinPos.getValue(),
           prefClimber.climberAngledMaxPos.getValue());
     }
