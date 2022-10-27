@@ -22,7 +22,6 @@ public class MoveClimber extends CommandBase {
   public MoveClimber(Climber subClimber, Turret subTurret, SN_F310Gamepad conDriver) {
     this.subClimber = subClimber;
     this.subTurret = subTurret;
-    this.conDriver = conDriver;
 
     speed = 0;
 
