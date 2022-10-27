@@ -55,6 +55,10 @@ public final class RobotPreferences {
 
     public static final SN_DoublePreference driveSlewRateLimit = new SN_DoublePreference("driveSlewRateLimit", 2);
 
+    // Not sure if this should go here due to it being purely for auto or stay here
+    // since its in the drivetrain (or climber??)
+    // TODO: Get a good value for this
+    public static final SN_DoublePreference navxOptimalSwingPitch = new SN_DoublePreference("navxOptimalSwingPitch", 1);
   }
 
   public static final class prefHood {
