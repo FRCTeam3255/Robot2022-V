@@ -27,7 +27,6 @@ import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.commands.Climber.MoveClimber;
 import frc.robot.commands.Turret.MoveTurret;
-import frc.robot.commands.Turret.OdometryAimTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
@@ -35,7 +34,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
 
@@ -53,7 +51,6 @@ public class RobotContainer {
   private final Shooter subShooter = new Shooter();
   private final Transfer subTransfer = new Transfer();
   private final Turret subTurret = new Turret();
-  private final Vision subVision = new Vision();
   private final Climber subClimber = new Climber();
 
   // Commands
