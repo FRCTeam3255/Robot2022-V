@@ -62,6 +62,7 @@ public class Shooter extends SubsystemBase {
 
   public void setMotorRPM(double rpm) {
     double velocity = SN_Math.RPMToVelocity(rpm, SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
+    leadMotor.set(ControlMode.Velocity, velocity);
   }
 
   public void neutralOutput() {
