@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.constField;
 import frc.robot.RobotPreferences.prefTurret;
@@ -53,7 +54,6 @@ public class OdometryAimTurret extends CommandBase {
 
   @Override
   public void execute() {
-
     robotPose = subDrivetrain.getPose();
 
     // maintain relative position between robot and hub, but put robot at the origin
@@ -77,6 +77,7 @@ public class OdometryAimTurret extends CommandBase {
     }
 
     subTurret.setAngle(outputToTurretDegrees);
+    SmartDashboard.putNumber("Output to turret", outputToTurretDegrees);
   }
 
   @Override

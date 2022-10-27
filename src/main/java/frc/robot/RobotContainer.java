@@ -11,6 +11,7 @@ import com.frcteam3255.preferences.SN_Preferences;
 import com.frcteam3255.utils.SN_InstantCommand;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,6 +27,7 @@ import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.commands.Climber.MoveClimber;
 import frc.robot.commands.Turret.MoveTurret;
+import frc.robot.commands.Turret.OdometryAimTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
@@ -33,6 +35,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
 
@@ -45,12 +48,13 @@ public class RobotContainer {
 
   // Subsystems
   private final Drivetrain subDrivetrain = new Drivetrain();
-  private final Hood subHood = new Hood();
+  // private final Hood subHood = new Hood();
   private final Intake subIntake = new Intake();
   private final Shooter subShooter = new Shooter();
   private final Transfer subTransfer = new Transfer();
   private final Turret subTurret = new Turret();
-  private final Climber subClimber = new Climber();
+  private final Vision subVision = new Vision();
+  // private final Climber subClimber = new Climber();
 
   // Commands
   private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
@@ -58,8 +62,10 @@ public class RobotContainer {
   private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
 
   private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
+  private final OdometryAimTurret comdOdometryAimTurret = new OdometryAimTurret(subTurret, subDrivetrain, subVision);
 
-  private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
+  // private final MoveClimber comMoveClimber = new MoveClimber(subClimber,
+  // subTurret, conDriver);
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -74,7 +80,7 @@ public class RobotContainer {
                 driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
             subDrivetrain));
 
-    subClimber.setDefaultCommand(comMoveClimber);
+    // subClimber.setDefaultCommand(comMoveClimber);
 
     cargoState = CargoState.NONE;
 
@@ -96,14 +102,14 @@ public class RobotContainer {
         .whenReleased(() -> subDrivetrain.setArcadeDriveSpeedMultiplier(prefDrivetrain.driveArcadeSpeedMid));
 
     // Climbing
-    conDriver.btn_A
-        .whenPressed(() -> subClimber.setAngled());
+    // conDriver.btn_A
+    // .whenPressed(() -> subClimber.setAngled());
 
-    conDriver.btn_B
-        .whenPressed(() -> subClimber.setPerpendicular());
-    conDriver.btn_Back
-        .whenPressed(() -> subTurret.setAngle(prefTurret.turretMinDegrees))
-        .whenPressed(() -> subHood.neutralOutput());
+    // conDriver.btn_B
+    // .whenPressed(() -> subClimber.setPerpendicular());
+    // conDriver.btn_Back
+    // .whenPressed(() -> subTurret.setAngle(prefTurret.turretMinDegrees))
+    // .whenPressed(() -> subHood.neutralOutput());
 
     // Operator Commands
 
@@ -127,30 +133,37 @@ public class RobotContainer {
 
     // Presets
     conOperator.POV_North
-        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM));
+    // .whenPressed(() ->
+    // subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
 
     conOperator.POV_South
-        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM));
+    // .whenPressed(() ->
+    // subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
 
     conOperator.POV_West
-        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
+        .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM));
+    // .whenPressed(() ->
+    // subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
+
+    conOperator.POV_East.whenPressed(comdOdometryAimTurret);
+    conOperator.POV_East
+        .whenPressed(() -> subDrivetrain.resetPose(new Pose2d(9.44, 3.72, subDrivetrain.getPose().getRotation())));
 
     // Switchboard Commands
 
     // btn_1 -> Send Values to SmartDashboard
     conSwitchboard.btn_1
         .whenPressed(() -> subDrivetrain.displayValuesOnDashboard())
-        .whenPressed(() -> subHood.displayValuesOnDashboard())
+        // .whenPressed(() -> subHood.displayValuesOnDashboard())
         .whenPressed(() -> subIntake.displayValuesOnDashboard())
         .whenPressed(() -> subShooter.displayValuesOnDashboard())
         .whenPressed(() -> subTransfer.displayValuesOnDashboard())
         .whenPressed(() -> subTurret.displayValuesOnDashboard());
     conSwitchboard.btn_1
         .whenReleased(() -> subDrivetrain.hideValuesOnDashboard())
-        .whenReleased(() -> subHood.hideValuesOnDashboard())
+        // .whenReleased(() -> subHood.hideValuesOnDashboard())
         .whenReleased(() -> subIntake.hideValuesOnDashboard())
         .whenReleased(() -> subShooter.hideValuesOnDashboard())
         .whenReleased(() -> subTransfer.hideValuesOnDashboard())
@@ -167,8 +180,8 @@ public class RobotContainer {
 
     SmartDashboard.putData(
         "Configure Drivetrain", new SN_InstantCommand(subDrivetrain::configure, true, subDrivetrain));
-    SmartDashboard.putData(
-        "Configure Hood", new SN_InstantCommand(subHood::configure, true, subHood));
+    // SmartDashboard.putData(
+    // "Configure Hood", new SN_InstantCommand(subHood::configure, true, subHood));
     SmartDashboard.putData(
         "Configure Intake", new SN_InstantCommand(subIntake::configure, true, subIntake));
     SmartDashboard.putData(
