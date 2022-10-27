@@ -62,7 +62,6 @@ public class Climber extends SubsystemBase {
     climberMotor.configAllSettings(config);
 
     climberMotor.configReverseSoftLimitEnable(false);
-    climberMotor.configReverseSoftLimitThreshold(prefClimber.climberPerpendicularMinPos.getValue());
     climberMotor.configForwardSoftLimitEnable(true);
     climberMotor.configForwardSoftLimitThreshold(prefClimber.climberAngledMaxPos.getValue());
 
@@ -77,11 +76,6 @@ public class Climber extends SubsystemBase {
     // cannot never go below min switch
     if ((getMinSwitch() && speed < 0)) {
       speed = 0;
-    }
-
-    // cannot never go above max switch
-    if ((getMaxSwitch() && speed > 0)) {
-      // speed = 0;
     }
 
     // while angled, cannot go below minimum angled position
