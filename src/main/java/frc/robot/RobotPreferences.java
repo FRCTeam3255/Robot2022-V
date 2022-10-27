@@ -105,10 +105,15 @@ public final class RobotPreferences {
 
   public static final class prefShooter {
 
-    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0);
-    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.02);
-    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.0002);
-    public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0.0088);
+    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0.04609);
+    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.21);
+    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.006);
+    public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 10);
+
+    public static final SN_DoublePreference shooterIZone = new SN_DoublePreference("shooterIZone", 200);
+
+    public static final SN_DoublePreference shooterClosedLoopRamp = new SN_DoublePreference(
+        "shooterClosedLoopRamp", 0.2);
 
     public static final SN_DoublePreference shooterAllowableClosedloopErrorRPM = new SN_DoublePreference(
         "shooterAllowableClosedloopErrorRPM", 15);
