@@ -60,7 +60,6 @@ public class RobotContainer {
   private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
 
   private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
-
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -126,7 +125,7 @@ public class RobotContainer {
     conOperator.btn_B.whileHeld(comDiscardCargo);
     conOperator.btn_Back.whenPressed(() -> subIntake.setRetracted());
 
-    // // Presets
+    // Presets
     conOperator.POV_North
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM))
         .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
