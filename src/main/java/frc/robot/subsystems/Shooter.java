@@ -115,12 +115,6 @@ public class Shooter extends SubsystemBase {
       SmartDashboard.putNumber("Shooter Motor Percent Output", leadMotor.getMotorOutputPercent());
       SmartDashboard.putNumber("Shooter Goal RPM", getGoalRPM());
       SmartDashboard.putBoolean("Shooter Is At Speed", isMotorAtSpeed());
-
-      SmartDashboard.putNumber("Shooter Native Velocity", leadMotor.getSelectedSensorVelocity());
-      SmartDashboard.putNumber("Shooter Native Error", leadMotor.getClosedLoopError());
-      SmartDashboard.putNumber("Shooter Native Target", leadMotor.getClosedLoopTarget());
-
     }
-
   }
 }
