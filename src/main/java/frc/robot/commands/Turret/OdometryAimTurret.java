@@ -53,6 +53,7 @@ public class OdometryAimTurret extends CommandBase {
 
   @Override
   public void execute() {
+
     robotPose = subDrivetrain.getPose();
 
     // maintain relative position between robot and hub, but put robot at the origin
