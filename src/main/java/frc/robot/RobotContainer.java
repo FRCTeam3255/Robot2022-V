@@ -62,10 +62,8 @@ public class RobotContainer {
   private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
 
   private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
-  private final OdometryAimTurret comdOdometryAimTurret = new OdometryAimTurret(subTurret, subDrivetrain, subVision);
 
-  private final MoveClimber comMoveClimber = new MoveClimber(subClimber,
-      subTurret, conDriver);
+  private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -143,10 +141,6 @@ public class RobotContainer {
     conOperator.POV_West
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
         .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
-
-    conOperator.POV_East.whenPressed(comdOdometryAimTurret);
-    conOperator.POV_East
-        .whenPressed(() -> subDrivetrain.resetPose(new Pose2d(9.44, 3.72, subDrivetrain.getPose().getRotation())));
 
     // Switchboard Commands
 
