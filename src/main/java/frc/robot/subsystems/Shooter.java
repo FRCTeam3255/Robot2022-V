@@ -47,8 +47,6 @@ public class Shooter extends SubsystemBase {
     config.slot0.kI = prefShooter.shooterI.getValue();
     config.slot0.kD = prefShooter.shooterD.getValue();
 
-    config.slot0.integralZone = prefShooter.shooterIZone.getValue();
-
     leadMotor.configFactoryDefault();
     followMotor.configFactoryDefault();
 
@@ -59,14 +57,11 @@ public class Shooter extends SubsystemBase {
 
     leadMotor.setNeutralMode(NeutralMode.Coast);
 
-    leadMotor.configClosedloopRamp(prefShooter.shooterClosedLoopRamp.getValue());
-
     followMotor.follow(leadMotor);
   }
 
   public void setMotorRPM(double rpm) {
     double velocity = SN_Math.RPMToVelocity(rpm, SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT);
-    leadMotor.set(ControlMode.Velocity, velocity);
   }
 
   public void neutralOutput() {
