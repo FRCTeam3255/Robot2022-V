@@ -21,11 +21,11 @@ public class MagicClimb extends SequentialCommandGroup {
 
     addCommands(
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberPerpendicularMinPos))
-            .until(() -> subClimber.getMinSwitch()),
+            .until(() -> subClimber.isMinSwitch()),
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberOptimalAnglingPosition))
             .until(() -> subClimber.isInOptimalAnglingRange()),
         new InstantCommand(() -> subClimber.setAngled()),
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberAngledMaxPos))
-            .until(() -> subClimber.getMaxSwitch()));
+            .until(() -> subClimber.isMaxSwitch()));
   }
 }
