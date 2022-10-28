@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.nio.file.Path;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -37,6 +38,13 @@ public final class Constants {
         .resolve("pathplanner/generatedJSON/B2toB4andB5.wpilib.json");
     public static final Path PATH_B4toB2 = Filesystem.getDeployDirectory().toPath()
         .resolve("pathplanner/generatedJSON/B4toB2.wpilib.json");
+
+  }
+
+  public static final class constField {
+
+    public static final Translation2d HUB_POSITION = new Translation2d(
+        Units.inchesToMeters(324), Units.inchesToMeters(162));
 
   }
 
