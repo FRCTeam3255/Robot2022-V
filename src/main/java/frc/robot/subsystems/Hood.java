@@ -70,6 +70,11 @@ public class Hood extends SubsystemBase {
   }
 
   public void setAngleDegrees(double degrees) {
+
+    if (degrees < prefHood.hoodMinDegrees.getValue()) {
+      degrees = prefHood.hoodMinDegrees.getValue();
+    }
+
     hoodMotor.set(ControlMode.Position, SN_Math.degreesToFalcon(degrees, constHood.GEAR_RATIO),
         DemandType.ArbitraryFeedForward, prefHood.hoodArbitraryFeedForward.getValue());
   }
