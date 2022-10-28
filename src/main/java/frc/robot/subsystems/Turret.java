@@ -75,8 +75,7 @@ public class Turret extends SubsystemBase {
    * @param degrees Degree count to set turret to
    */
   public void setAngle(SN_DoublePreference degrees) {
-    double position = SN_Math.degreesToFalcon(degrees.getValue(), constTurret.GEAR_RATIO);
-    turretMotor.set(ControlMode.Position, position);
+    setAngle(degrees.getValue());
   }
 
   /**
