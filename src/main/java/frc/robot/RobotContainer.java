@@ -33,6 +33,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
 
@@ -51,6 +52,7 @@ public class RobotContainer {
   private final Transfer subTransfer = new Transfer();
   private final Turret subTurret = new Turret();
   private final Climber subClimber = new Climber();
+  private final Vision subVision = new Vision();
 
   // Commands
   private final ShootCargo comShootCargo = new ShootCargo(subShooter, subTransfer);
