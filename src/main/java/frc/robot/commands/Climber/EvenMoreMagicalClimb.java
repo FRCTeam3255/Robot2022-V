@@ -28,24 +28,24 @@ public class EvenMoreMagicalClimb extends SequentialCommandGroup {
     addCommands(
         // Step 0: Hooks above the mid rung (done by the Driver)
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberPerpendicularMinPos))
-            .until(() -> subClimber.getMinSwitch()),
+            .until(() -> subClimber.isMinSwitch()),
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberOptimalAnglingPosition))
             .until(() -> subClimber.isInOptimalAnglingRange()),
         new InstantCommand(() -> subClimber.setAngled()),
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberAngledMaxPos))
-            .until(() -> subClimber.getMaxSwitch()),
+            .until(() -> subClimber.isMaxSwitch()),
         new InstantCommand(() -> subClimber.setPerpendicular()).until(() -> subDrivetrain.isOptimalSwing()),
         // my thinking here is that the good swing value would be slightly
         // below the end of the swing so that it has time to lower the climbers, if this
         // even works as intended
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberPerpendicularMinPos))
-            .until(() -> subClimber.getMinSwitch()),
+            .until(() -> subClimber.isMinSwitch()),
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberAngledMaxPos))
-            .until(() -> subClimber.getMaxSwitch()),
+            .until(() -> subClimber.isMaxSwitch()),
         new InstantCommand(() -> subClimber.setAngled()).until(() -> subDrivetrain.isOptimalSwing()),
         // Same thinking here
         new RunCommand(() -> subClimber.setClimberPosition(prefClimber.climberPerpendicularMinPos))
-            .until(() -> subClimber.getMinSwitch()),
+            .until(() -> subClimber.isMinSwitch()),
         new InstantCommand(() -> subClimber.setPerpendicular()));
   }
 }
