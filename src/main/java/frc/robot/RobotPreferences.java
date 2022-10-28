@@ -101,10 +101,15 @@ public final class RobotPreferences {
 
   public static final class prefShooter {
 
-    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0);
-    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.02);
-    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.0002);
-    public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 0.0088);
+    public static final SN_DoublePreference shooterF = new SN_DoublePreference("shooterF", 0.04609);
+    public static final SN_DoublePreference shooterP = new SN_DoublePreference("shooterP", 0.21);
+    public static final SN_DoublePreference shooterI = new SN_DoublePreference("shooterI", 0.006);
+    public static final SN_DoublePreference shooterD = new SN_DoublePreference("shooterD", 10);
+
+    public static final SN_DoublePreference shooterIZone = new SN_DoublePreference("shooterIZone", 200);
+
+    public static final SN_DoublePreference shooterClosedLoopRamp = new SN_DoublePreference(
+        "shooterClosedLoopRamp", 0.2);
 
     public static final SN_DoublePreference shooterAllowableClosedloopErrorRPM = new SN_DoublePreference(
         "shooterAllowableClosedloopErrorRPM", 15);
@@ -127,14 +132,14 @@ public final class RobotPreferences {
   public static final class prefTurret {
 
     public static final SN_DoublePreference turretArbitraryFeedForward = new SN_DoublePreference(
-        "turretArbitraryFeedForward", 0);
+        "turretArbitraryFeedForward", 0.01);
 
-    public static final SN_DoublePreference turretP = new SN_DoublePreference("turretP", 0.15);
-    public static final SN_DoublePreference turretI = new SN_DoublePreference("turretI", 0.00001);
-    public static final SN_DoublePreference turretD = new SN_DoublePreference("turretD", 8);
+    public static final SN_DoublePreference turretP = new SN_DoublePreference("turretP", 0.2);
+    public static final SN_DoublePreference turretI = new SN_DoublePreference("turretI", 0);
+    public static final SN_DoublePreference turretD = new SN_DoublePreference("turretD", 3.4);
 
     public static final SN_DoublePreference turretAllowableClosedloopErrorDegrees = new SN_DoublePreference(
-        "turretAllowableClosedloopErrorDegrees", 3);
+        "turretAllowableClosedloopErrorDegrees", 0.5);
     public static final SN_DoublePreference turretClosedLoopPeakOutput = new SN_DoublePreference(
         "turretClosedLoopPeakOutput", 1);
 
