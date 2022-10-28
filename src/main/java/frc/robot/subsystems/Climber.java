@@ -74,7 +74,7 @@ public class Climber extends SubsystemBase {
     double speed = a_speed;
 
     // cannot never go below min switch
-    if ((getMinSwitch() && speed < 0)) {
+    if ((isMinSwitch() && speed < 0)) {
       speed = 0;
     }
 
@@ -138,11 +138,11 @@ public class Climber extends SubsystemBase {
     return pivotPiston.isDeployed();
   }
 
-  public boolean getMaxSwitch() {
+  public boolean isMaxSwitch() {
     return !maxSwitch.get();
   }
 
-  public boolean getMinSwitch() {
+  public boolean isMinSwitch() {
     return !minSwitch.get();
   }
 
@@ -159,11 +159,11 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     if (displayOnDashboard) {
       SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
-      SmartDashboard.putBoolean("Climber Is At Minimum Switch", getMinSwitch());
-      SmartDashboard.putBoolean("Climber Is At Maximum Switch", getMaxSwitch());
+      SmartDashboard.putBoolean("Climber Is At Minimum Switch", isMinSwitch());
+      SmartDashboard.putBoolean("Climber Is At Maximum Switch", isMaxSwitch());
       SmartDashboard.putBoolean("Climber Is Angled", isAngled());
     }
-    if (getMinSwitch()) {
+    if (isMinSwitch()) {
       resetClimberEncoderCounts();
     }
 
