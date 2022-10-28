@@ -251,6 +251,8 @@ public class Drivetrain extends SubsystemBase {
     updatePose();
 
     if (displayOnDashboard) {
+      field.setRobotPose(getPose());
+      SmartDashboard.putData(field);
 
       SmartDashboard.putNumber("Drivetrain Left Encoder", leftLead.getSelectedSensorPosition());
       SmartDashboard.putNumber("Drivetrain Right Encoder", rightLead.getSelectedSensorPosition());
