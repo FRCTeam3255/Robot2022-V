@@ -13,25 +13,17 @@ public final class RobotPreferences {
   public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
 
   public static final class prefAuto {
-    public static final class prefFourBallAuto {
-      // Part 1 of 4 ball auto
-      // Sets shooter RPM for first part of auto
-      public static final SN_DoublePreference shooterRPM1FourBall = new SN_DoublePreference("shooterRPM", 0);
-      // Sets turret angle for first part of auto
-      public static final SN_DoublePreference turretAngle1FourBall = new SN_DoublePreference("turretAngle", 0);
-      // Sets hood angle for first part of auto
-      public static final SN_DoublePreference hoodAngle1FourBall = new SN_DoublePreference("hoodAngle", 0);
+    public static final class FourBall {
+      // Part 1 of four ball auto
+      public static final SN_DoublePreference shooterRPM1FourBall = new SN_DoublePreference("shooterRPM1FourBall", 0);
+      public static final SN_DoublePreference turretAngle1FourBall = new SN_DoublePreference("turretAngle1FourBall", 0);
+      public static final SN_DoublePreference hoodAngle1FourBall = new SN_DoublePreference("hoodAngle1FourBall", 0);
 
-      // Part 2 of 4 ball auto
-
-      // Sets shooter RPM for first part of auto
-      public static final SN_DoublePreference shooterRPM2FourBall = new SN_DoublePreference("shooterRPM", 0);
-      // Sets turret angle for first part of auto
-      public static final SN_DoublePreference turretAngle2FourBall = new SN_DoublePreference("turretAngle", 0);
-      // Sets hood angle for first part of auto
-      public static final SN_DoublePreference hoodAngle2FourBall = new SN_DoublePreference("hoodAngle", 0);
+      // Part 2 of four ball auto
+      public static final SN_DoublePreference shooterRPM2FourBall = new SN_DoublePreference("shooterRPM2FourBall", 0);
+      public static final SN_DoublePreference turretAngle2FourBall = new SN_DoublePreference("turretAngle2FourBall", 0);
+      public static final SN_DoublePreference hoodAngle2FourBall = new SN_DoublePreference("hoodAngle2FourBall", 0);
     }
-    // auto
   }
 
   public static final class prefClimber {

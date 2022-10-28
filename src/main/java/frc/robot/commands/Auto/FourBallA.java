@@ -6,7 +6,7 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.RobotPreferences.prefAuto.prefFourBallAuto;
+import frc.robot.RobotPreferences.prefAuto.FourBall;
 import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.subsystems.Drivetrain;
@@ -46,19 +46,19 @@ public class FourBallA extends SequentialCommandGroup {
         parallel(
 
             new CollectCargo(subIntake, subTransfer),
-            new InstantCommand(() -> subShooter.setGoalRPM(prefFourBallAuto.shooterRPM1FourBall)),
+            new InstantCommand(() -> subShooter.setGoalRPM(FourBall.shooterRPM1FourBall)),
             new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()),
-            new InstantCommand(() -> subTurret.setAngle(prefFourBallAuto.turretAngle1FourBall)),
-            new InstantCommand(() -> subHood.setAngleDegrees(prefFourBallAuto.hoodAngle1FourBall))),
+            new InstantCommand(() -> subTurret.setAngle(FourBall.turretAngle1FourBall)),
+            new InstantCommand(() -> subHood.setAngleDegrees(FourBall.hoodAngle1FourBall))),
 
         new ShootCargo(subShooter, subTransfer).withTimeout(3),
 
         parallel(
             new CollectCargo(subIntake, subTransfer),
-            new InstantCommand(() -> subShooter.setGoalRPM(prefFourBallAuto.shooterRPM2FourBall)),
+            new InstantCommand(() -> subShooter.setGoalRPM(FourBall.shooterRPM2FourBall)),
             new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()),
-            new InstantCommand(() -> subTurret.setAngle(prefFourBallAuto.turretAngle2FourBall)),
-            new InstantCommand(() -> subHood.setAngleDegrees(prefFourBallAuto.hoodAngle2FourBall)),
+            new InstantCommand(() -> subTurret.setAngle(FourBall.turretAngle2FourBall)),
+            new InstantCommand(() -> subHood.setAngleDegrees(FourBall.hoodAngle2FourBall)),
             new InstantCommand(
                 () -> subDrivetrain.resetPose(subDrivetrain.getTrajectory(T1toB1thenB2).getInitialPose()))
                     .andThen(new InstantCommand(() -> subDrivetrain.driveSpeed(0, 0)))),
