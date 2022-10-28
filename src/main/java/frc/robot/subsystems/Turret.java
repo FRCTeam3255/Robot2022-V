@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
@@ -66,7 +67,8 @@ public class Turret extends SubsystemBase {
    */
   public void setAngle(double degrees) {
     double position = SN_Math.degreesToFalcon(degrees, constTurret.GEAR_RATIO);
-    turretMotor.set(ControlMode.Position, position);
+    turretMotor.set(ControlMode.Position, position, DemandType.ArbitraryFeedForward,
+        prefTurret.turretArbitraryFeedForward.getValue());
   }
 
   /**

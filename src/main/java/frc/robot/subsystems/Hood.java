@@ -70,6 +70,11 @@ public class Hood extends SubsystemBase {
   }
 
   public void setAngleDegrees(double degrees) {
+
+    if (degrees < prefHood.hoodMinDegrees.getValue()) {
+      degrees = prefHood.hoodMinDegrees.getValue();
+    }
+
     hoodMotor.set(ControlMode.Position, SN_Math.degreesToFalcon(degrees, constHood.GEAR_RATIO),
         DemandType.ArbitraryFeedForward, prefHood.hoodArbitraryFeedForward.getValue());
   }
@@ -78,7 +83,7 @@ public class Hood extends SubsystemBase {
     setAngleDegrees(degrees.getValue());
   }
 
-  public boolean getBottomSwitch() {
+  public boolean isBottomSwitch() {
     return !bottomSwitch.get();
   }
 
@@ -105,11 +110,11 @@ public class Hood extends SubsystemBase {
     if (displayOnDashboard) {
 
       SmartDashboard.putNumber("Hood Angle Degrees", getAngleDegrees());
-      SmartDashboard.putBoolean("Hood Is Bottom Switch", getBottomSwitch());
+      SmartDashboard.putBoolean("Hood Is Bottom Switch", isBottomSwitch());
 
     }
 
-    if (getBottomSwitch()) {
+    if (isBottomSwitch()) {
       resetAngleToBottom();
     }
 
