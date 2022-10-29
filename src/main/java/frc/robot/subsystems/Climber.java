@@ -89,8 +89,8 @@ public class Climber extends SubsystemBase {
     }
 
     // slow down climber speed when switching hooks
-    if (getClimberEncoderCounts() > prefClimber.climberSlowdownMinThreshold.getValue()
-        && getClimberEncoderCounts() < prefClimber.climberSlowdownMaxThreshold.getValue()) {
+    if (getClimberEncoderCounts() > prefClimber.climberSlowdownMinThresholdEncoderCounts.getValue()
+        && getClimberEncoderCounts() < prefClimber.climberSlowdownMaxThresholdEncoderCounts.getValue()) {
       speed = speed * prefClimber.climberSlowdownSpeed.getValue();
     }
 
@@ -167,8 +167,8 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (getClimberEncoderCounts() > prefClimber.climberSlowdownMinThreshold.getValue()
-        && getClimberEncoderCounts() < prefClimber.climberSlowdownMaxThreshold.getValue()) {
+    if (getClimberEncoderCounts() > prefClimber.climberSlowdownMinThresholdEncoderCounts.getValue()
+        && getClimberEncoderCounts() < prefClimber.climberSlowdownMaxThresholdEncoderCounts.getValue()) {
       climberMotor.configClosedLoopPeakOutput(0, prefClimber.climberSlowdownSpeed.getValue());
     } else {
       climberMotor.configClosedLoopPeakOutput(0, prefClimber.climberClosedLoopSpeed.getValue());

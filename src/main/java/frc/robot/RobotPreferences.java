@@ -32,9 +32,9 @@ public final class RobotPreferences {
         "climberPerpendicularMaxPos", 163000);
     public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference("climberAngledMaxPos",
         277300);
-    public static final SN_DoublePreference climberSlowdownMinThreshold = new SN_DoublePreference(
+    public static final SN_DoublePreference climberSlowdownMinThresholdEncoderCounts = new SN_DoublePreference(
         "climberSlowdownMinThreshold", 3000);
-    public static final SN_DoublePreference climberSlowdownMaxThreshold = new SN_DoublePreference(
+    public static final SN_DoublePreference climberSlowdownMaxThresholdEncoderCounts = new SN_DoublePreference(
         "climberSlowdownMaxThreshold", 13000);
     public static final SN_DoublePreference climberSlowdownSpeed = new SN_DoublePreference("climberSlowdownSpeed", 0.5);
   }
