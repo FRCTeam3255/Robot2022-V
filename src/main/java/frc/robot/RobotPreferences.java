@@ -27,11 +27,16 @@ public final class RobotPreferences {
     public static final SN_DoublePreference climberPerpendicularMinPos = new SN_DoublePreference(
         "climberPerpendicularMinPos", 0);
     public static final SN_DoublePreference climberAngledMinPos = new SN_DoublePreference("climberAngledMinPos",
-        200000);
+        120000);
     public static final SN_DoublePreference climberPerpendicularMaxPos = new SN_DoublePreference(
-        "climberPerpendicularMaxPos", 163000);
+        "climberPerpendicularMaxPos", 207000);
     public static final SN_DoublePreference climberAngledMaxPos = new SN_DoublePreference("climberAngledMaxPos",
         277300);
+    public static final SN_DoublePreference climberSlowdownMinThresholdEncoderCounts = new SN_DoublePreference(
+        "climberSlowdownMinThreshold", 0);
+    public static final SN_DoublePreference climberSlowdownMaxThresholdEncoderCounts = new SN_DoublePreference(
+        "climberSlowdownMaxThreshold", 28000);
+    public static final SN_DoublePreference climberSlowdownSpeed = new SN_DoublePreference("climberSlowdownSpeed", 0.5);
   }
 
   public static final class prefDrivetrain {
