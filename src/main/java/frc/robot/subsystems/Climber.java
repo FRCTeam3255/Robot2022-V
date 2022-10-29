@@ -134,6 +134,10 @@ public class Climber extends SubsystemBase {
 
   };
 
+  public void neutralMotorOutput() {
+    climberMotor.neutralOutput();
+  }
+
   public boolean isAngled() {
     return pivotPiston.isDeployed();
   }
