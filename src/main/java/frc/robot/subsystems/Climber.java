@@ -73,7 +73,7 @@ public class Climber extends SubsystemBase {
 
     double speed = a_speed;
 
-    // cannot never go below min switch
+    // cannot ever go below min switch
     if ((isMinSwitch() && speed < 0)) {
       speed = 0;
     }
@@ -102,12 +102,12 @@ public class Climber extends SubsystemBase {
     double position = a_position.getValue();
 
     if (isAngled()) {
-      MathUtil.clamp(position, prefClimber.climberAngledMinPos.getValue(),
+      position = MathUtil.clamp(position, prefClimber.climberAngledMinPos.getValue(),
           prefClimber.climberAngledMaxPos.getValue());
     }
 
     else {
-      MathUtil.clamp(position, prefClimber.climberPerpendicularMinPos.getValue(),
+      position = MathUtil.clamp(position, prefClimber.climberPerpendicularMinPos.getValue(),
           prefClimber.climberPerpendicularMaxPos.getValue());
     }
 
@@ -133,6 +133,10 @@ public class Climber extends SubsystemBase {
     }
 
   };
+
+  public void neutralMotorOutput() {
+    climberMotor.neutralOutput();
+  }
 
   public boolean isAngled() {
     return pivotPiston.isDeployed();

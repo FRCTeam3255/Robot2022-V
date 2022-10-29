@@ -46,6 +46,7 @@ public class MoveClimber extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    subClimber.neutralMotorOutput();
   }
 
   @Override
