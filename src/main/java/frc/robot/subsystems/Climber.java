@@ -150,6 +150,10 @@ public class Climber extends SubsystemBase {
     return !minSwitch.get();
   }
 
+  public boolean isInOptimalAnglingRange() {
+    return (getClimberEncoderCounts() > prefClimber.climberOptimalAnglingPosition.getValue());
+  }
+
   public void displayValuesOnDashboard() {
     displayOnDashboard = true;
   }
@@ -163,6 +167,7 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     if (displayOnDashboard) {
       SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
+      SmartDashboard.putBoolean("Climber in Optimal Angling Range", isInOptimalAnglingRange());
       SmartDashboard.putBoolean("Climber Is At Minimum Switch", isMinSwitch());
       SmartDashboard.putBoolean("Climber Is At Maximum Switch", isMaxSwitch());
       SmartDashboard.putBoolean("Climber Is Angled", isAngled());

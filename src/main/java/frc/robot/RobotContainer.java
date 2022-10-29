@@ -24,6 +24,8 @@ import frc.robot.commands.Auto.FourBallA;
 import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
+import frc.robot.commands.Climber.MagicClimb;
+
 import frc.robot.commands.Climber.MoveClimber;
 import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.subsystems.Climber;
@@ -61,7 +63,9 @@ public class RobotContainer {
 
   private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
 
+  private final MagicClimb comMagicClimb = new MagicClimb(subClimber);
   private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
+
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -106,6 +110,8 @@ public class RobotContainer {
     conDriver.btn_Back
         .whenPressed(() -> subTurret.setAngle(prefTurret.turretMinDegrees))
         .whenPressed(() -> subHood.neutralOutput());
+
+    conDriver.btn_Start.whileHeld(comMagicClimb);
 
     // Operator Commands
 
