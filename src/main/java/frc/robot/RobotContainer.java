@@ -140,29 +140,33 @@ public class RobotContainer {
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
         .whenPressed(() -> subHood.setAngle(prefPreset.presetTarmacHoodDegrees));
 
-    // Switchboard Commands
+  }
+
+  public void useSwitchboardButtons() {
 
     // btn_1 -> Send Values to SmartDashboard
-    conSwitchboard.btn_1
-        .whenPressed(() -> subDrivetrain.displayValuesOnDashboard())
-        .whenPressed(() -> subHood.displayValuesOnDashboard())
-        .whenPressed(() -> subIntake.displayValuesOnDashboard())
-        .whenPressed(() -> subShooter.displayValuesOnDashboard())
-        .whenPressed(() -> subTransfer.displayValuesOnDashboard())
-        .whenPressed(() -> subTurret.displayValuesOnDashboard());
-    conSwitchboard.btn_1
-        .whenReleased(() -> subDrivetrain.hideValuesOnDashboard())
-        .whenReleased(() -> subHood.hideValuesOnDashboard())
-        .whenReleased(() -> subIntake.hideValuesOnDashboard())
-        .whenReleased(() -> subShooter.hideValuesOnDashboard())
-        .whenReleased(() -> subTransfer.hideValuesOnDashboard())
-        .whenReleased(() -> subTurret.hideValuesOnDashboard());
+    if (conSwitchboard.btn_1.get()) {
+      subDrivetrain.displayValuesOnDashboard();
+      subHood.displayValuesOnDashboard();
+      subIntake.displayValuesOnDashboard();
+      subShooter.displayValuesOnDashboard();
+      subTransfer.displayValuesOnDashboard();
+      subTurret.displayValuesOnDashboard();
+    } else {
+      subDrivetrain.hideValuesOnDashboard();
+      subHood.hideValuesOnDashboard();
+      subIntake.hideValuesOnDashboard();
+      subShooter.hideValuesOnDashboard();
+      subTransfer.hideValuesOnDashboard();
+      subTurret.hideValuesOnDashboard();
+    }
 
     // btn_2 -> Use Hardcoded or Default Preference Values
-    conSwitchboard.btn_2
-        .whenPressed(() -> SN_Preferences.usePreferences())
-        .whenReleased(() -> SN_Preferences.useDefaults());
-
+    if (conSwitchboard.btn_2.get()) {
+      SN_Preferences.usePreferences();
+    } else {
+      SN_Preferences.useDefaults();
+    }
   }
 
   private void configureDashboardButtons() {
