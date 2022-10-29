@@ -62,7 +62,7 @@ public class DiscardCargo extends CommandBase {
       }
 
       subTransfer.setTopBeltSpeed(prefTransfer.transferBeltReverseSpeed);
-      subTransfer.setBottomBeltSpeed(prefTransfer.transferBeltSpeed);
+      subTransfer.setBottomBeltSpeed(prefTransfer.transferBeltReverseSpeed);
       subTransfer.setEntranceWheelSpeed(prefTransfer.transferEntranceReverseSpeed);
 
     }
