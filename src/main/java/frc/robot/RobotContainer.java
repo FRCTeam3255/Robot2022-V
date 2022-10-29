@@ -127,15 +127,15 @@ public class RobotContainer {
     // Presets
     conOperator.POV_North
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetFenderShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetFenderHoodDegrees));
+        .whenPressed(() -> subHood.setAngle(prefPreset.presetFenderHoodDegrees));
 
     conOperator.POV_South
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetLaunchpadShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetLaunchpadHoodDegrees));
+        .whenPressed(() -> subHood.setAngle(prefPreset.presetLaunchpadHoodDegrees));
 
     conOperator.POV_West
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
-        .whenPressed(() -> subHood.setAngleDegrees(prefPreset.presetTarmacHoodDegrees));
+        .whenPressed(() -> subHood.setAngle(prefPreset.presetTarmacHoodDegrees));
 
     // Switchboard Commands
 
