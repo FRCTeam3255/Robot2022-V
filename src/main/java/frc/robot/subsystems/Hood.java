@@ -69,7 +69,7 @@ public class Hood extends SubsystemBase {
     return SN_Math.falconToDegrees(hoodMotor.getSelectedSensorPosition(), constHood.GEAR_RATIO);
   }
 
-  public void setAngleDegrees(double degrees) {
+  public void setAngle(double degrees) {
 
     if (degrees < prefHood.hoodMinDegrees.getValue()) {
       degrees = prefHood.hoodMinDegrees.getValue();
@@ -79,8 +79,8 @@ public class Hood extends SubsystemBase {
         DemandType.ArbitraryFeedForward, prefHood.hoodArbitraryFeedForward.getValue());
   }
 
-  public void setAngleDegrees(SN_DoublePreference degrees) {
-    setAngleDegrees(degrees.getValue());
+  public void setAngle(SN_DoublePreference degrees) {
+    setAngle(degrees.getValue());
   }
 
   public boolean isBottomSwitch() {
