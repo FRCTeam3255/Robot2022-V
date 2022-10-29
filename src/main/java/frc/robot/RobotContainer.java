@@ -11,11 +11,13 @@ import com.frcteam3255.preferences.SN_Preferences;
 import com.frcteam3255.utils.SN_InstantCommand;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.CargoState;
+import frc.robot.Constants.constVision;
 import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
@@ -166,6 +168,18 @@ public class RobotContainer {
       SN_Preferences.usePreferences();
     } else {
       SN_Preferences.useDefaults();
+    }
+
+    if (conSwitchboard.btn_3.get()) {
+      subDrivetrain.resetPose(
+          subVision.calculatePoseFromVision(
+              constVision.tyDistanceTable.getOutput(
+                  subVision.limelight.getOffsetY()),
+              subDrivetrain.getPose().getRotation().getRadians(),
+              Units.degreesToRadians(
+                  subTurret.getAngle() - 90),
+              Units.degreesToRadians(
+                  -subVision.limelight.getOffsetX())));
     }
   }
 
