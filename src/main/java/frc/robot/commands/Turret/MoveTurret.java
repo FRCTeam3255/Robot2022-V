@@ -33,7 +33,7 @@ public class MoveTurret extends CommandBase {
   public void execute() {
     speed = -conOperator.getRightStickX();
 
-    speed *= subClimber.getMinSwitch() ? 1 : 0;
+    speed *= subClimber.isMinSwitch() ? 1 : 0;
 
     subTurret.setSpeed(speed * prefTurret.turretOpenLoopSpeed.getValue());
   }

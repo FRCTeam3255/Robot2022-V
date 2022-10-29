@@ -120,9 +120,9 @@ public class RobotContainer {
 
     // Turret
     conOperator.btn_LBump.whileHeld(comMoveTurret);
-    conOperator.btn_LStick.and(new Trigger(subClimber::getMinSwitch))
+    conOperator.btn_LStick.and(new Trigger(subClimber::isMinSwitch))
         .whenActive(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
-    conOperator.btn_RStick.and(new Trigger(subClimber::getMinSwitch))
+    conOperator.btn_RStick.and(new Trigger(subClimber::isMinSwitch))
         .whenActive(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
 
     // Intake
