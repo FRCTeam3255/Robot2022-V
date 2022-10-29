@@ -6,6 +6,9 @@ package frc.robot;
 
 import java.nio.file.Path;
 
+import com.frcteam3255.utils.SN_Lerp;
+import com.frcteam3255.utils.SN_Point2D;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -53,6 +56,16 @@ public final class Constants {
     public static final double GEAR_RATIO = 69.33333;
     public static final boolean INVERTED = true;
 
+    // distance (x): meters from center of hub
+    // angle (y): angle of hood to make shot from given distance
+    // relies on shooter table
+    private static final SN_Point2D[] distanceAnglePoints = {
+        new SN_Point2D(0, 0),
+        new SN_Point2D(1, 1)
+    };
+
+    public static final SN_Lerp distanceAngleTable = new SN_Lerp(distanceAnglePoints);
+
   }
 
   public static final class constIntake {
@@ -66,6 +79,16 @@ public final class Constants {
 
     public static final boolean INVERTED = false;
 
+    // distance (x): meters from center of hub
+    // velocity (y): rpm of shooter flywheel to make shot from given distance
+    // relies on hood table
+    private static final SN_Point2D[] distanceVelocityPoints = {
+        new SN_Point2D(0, 0),
+        new SN_Point2D(1, 1)
+    };
+
+    public static final SN_Lerp distanceVelocityTable = new SN_Lerp(distanceVelocityPoints);
+
   }
 
   public static final class constTransfer {
@@ -78,6 +101,19 @@ public final class Constants {
 
     public static final boolean INVERTED = false;
     public static final double GEAR_RATIO = 65;
+
+  }
+
+  public static final class constVision {
+
+    // ty (x): limelight y offset in limelight native units
+    // distance (y): distance in meters when limelight has given y offset
+    private static final SN_Point2D[] tyDistancePoints = {
+        new SN_Point2D(0, 0),
+        new SN_Point2D(1, 1)
+    };
+
+    public static final SN_Lerp tyDistanceTable = new SN_Lerp(tyDistancePoints);
 
   }
 
