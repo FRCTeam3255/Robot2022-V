@@ -88,6 +88,12 @@ public class Climber extends SubsystemBase {
       speed = 0;
     }
 
+    // slow down climber speed when switching hooks
+    if (getClimberEncoderCounts() > prefClimber.climberSlowdownMinThreshold.getValue()
+        && getClimberEncoderCounts() < prefClimber.climberSlowdownMaxThreshold.getValue()) {
+      speed = speed * prefClimber.climberSlowdownSpeed.getValue();
+    }
+
     // maximum angled position is the physical maximum position, where the max
     // switch and forward soft limit are
 
@@ -161,6 +167,12 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (getClimberEncoderCounts() > prefClimber.climberSlowdownMinThreshold.getValue()
+        && getClimberEncoderCounts() < prefClimber.climberSlowdownMaxThreshold.getValue()) {
+      climberMotor.configClosedLoopPeakOutput(0, prefClimber.climberSlowdownSpeed.getValue());
+    } else {
+      climberMotor.configClosedLoopPeakOutput(0, prefClimber.climberClosedLoopSpeed.getValue());
+    }
     if (displayOnDashboard) {
       SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
       SmartDashboard.putBoolean("Climber Is At Minimum Switch", isMinSwitch());
