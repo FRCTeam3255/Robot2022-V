@@ -49,7 +49,7 @@ public class FourBallA extends SequentialCommandGroup {
             new InstantCommand(() -> subShooter.setGoalRPM(FourBall.shooterRPM1FourBall)),
             new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()),
             new InstantCommand(() -> subTurret.setAngle(FourBall.turretAngle1FourBall)),
-            new InstantCommand(() -> subHood.setAngleDegrees(FourBall.hoodAngle1FourBall))),
+            new InstantCommand(() -> subHood.setAngle(FourBall.hoodAngle1FourBall))),
 
         new ShootCargo(subShooter, subTransfer).withTimeout(3),
 
@@ -58,7 +58,7 @@ public class FourBallA extends SequentialCommandGroup {
             new InstantCommand(() -> subShooter.setGoalRPM(FourBall.shooterRPM2FourBall)),
             new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()),
             new InstantCommand(() -> subTurret.setAngle(FourBall.turretAngle2FourBall)),
-            new InstantCommand(() -> subHood.setAngleDegrees(FourBall.hoodAngle2FourBall)),
+            new InstantCommand(() -> subHood.setAngle(FourBall.hoodAngle2FourBall)),
             new InstantCommand(
                 () -> subDrivetrain.resetPose(subDrivetrain.getTrajectory(T1toB1thenB2).getInitialPose()))
                     .andThen(new InstantCommand(() -> subDrivetrain.driveSpeed(0, 0)))),
