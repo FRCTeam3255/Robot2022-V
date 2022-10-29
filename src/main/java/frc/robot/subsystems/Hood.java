@@ -83,7 +83,7 @@ public class Hood extends SubsystemBase {
     setAngleDegrees(degrees.getValue());
   }
 
-  public boolean getBottomSwitch() {
+  public boolean isBottomSwitch() {
     return !bottomSwitch.get();
   }
 
@@ -110,11 +110,11 @@ public class Hood extends SubsystemBase {
     if (displayOnDashboard) {
 
       SmartDashboard.putNumber("Hood Angle Degrees", getAngleDegrees());
-      SmartDashboard.putBoolean("Hood Is Bottom Switch", getBottomSwitch());
+      SmartDashboard.putBoolean("Hood Is Bottom Switch", isBottomSwitch());
 
     }
 
-    if (getBottomSwitch()) {
+    if (isBottomSwitch()) {
       resetAngleToBottom();
     }
 
