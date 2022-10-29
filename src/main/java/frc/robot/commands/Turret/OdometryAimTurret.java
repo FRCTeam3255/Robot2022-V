@@ -44,7 +44,7 @@ public class OdometryAimTurret extends CommandBase {
     hubPosition = constField.HUB_POSITION;
     adjustedHubPosition = new Translation2d(0, 0);
 
-    addRequirements();
+    addRequirements(this.subTurret);
   }
 
   @Override
