@@ -107,7 +107,7 @@ public final class Constants {
   public static final class constVision {
 
     // ty (x): limelight y offset in limelight native units
-    // distance (y): distance in meters when limelight has given y offset
+    // distance (y): distance in inches when limelight has given y offset
     private static final SN_Point2D[] tyDistancePoints = {
         new SN_Point2D(-15.32, 211),
         new SN_Point2D(-14.5, 199),
