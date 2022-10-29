@@ -172,6 +172,8 @@ public class RobotContainer {
   private void configureDashboardButtons() {
 
     SmartDashboard.putData(
+        "Configure Climber", new SN_InstantCommand(subClimber::configure, true, subClimber));
+    SmartDashboard.putData(
         "Configure Drivetrain", new SN_InstantCommand(subDrivetrain::configure, true, subDrivetrain));
     SmartDashboard.putData(
         "Configure Hood", new SN_InstantCommand(subHood::configure, true, subHood));
