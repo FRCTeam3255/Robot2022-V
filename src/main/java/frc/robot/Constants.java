@@ -56,15 +56,17 @@ public final class Constants {
     public static final double GEAR_RATIO = 69.33333;
     public static final boolean INVERTED = true;
 
-    // distance (x): meters from center of hub
+    // ty (x): limelight y offset
     // angle (y): angle of hood to make shot from given distance
     // relies on shooter table
-    private static final SN_Point2D[] distanceAnglePoints = {
-        new SN_Point2D(0, 0),
-        new SN_Point2D(1, 1)
+    private static final SN_Point2D[] tyAnglePoints = {
+        new SN_Point2D(37, 3800),
+        new SN_Point2D(34, 3500),
+        new SN_Point2D(28, 3255),
+        new SN_Point2D(20, 3200)
     };
 
-    public static final SN_Lerp distanceAngleTable = new SN_Lerp(distanceAnglePoints);
+    public static final SN_Lerp distanceAngleTable = new SN_Lerp(tyAnglePoints);
 
   }
 
@@ -79,15 +81,18 @@ public final class Constants {
 
     public static final boolean INVERTED = false;
 
-    // distance (x): meters from center of hub
-    // velocity (y): rpm of shooter flywheel to make shot from given distance
+    // ty (x): y offset of limelight
+    // velocity (y): rpm of shooter flywheel to make shot
     // relies on hood table
-    private static final SN_Point2D[] distanceVelocityPoints = {
-        new SN_Point2D(0, 0),
-        new SN_Point2D(1, 1)
+
+    private static final SN_Point2D[] tyVelocityPoints = {
+        new SN_Point2D(-13.33, 3800),
+        new SN_Point2D(-6.82, 3500),
+        new SN_Point2D(1.55, 3255),
+        new SN_Point2D(16.09, 3200)
     };
 
-    public static final SN_Lerp distanceVelocityTable = new SN_Lerp(distanceVelocityPoints);
+    public static final SN_Lerp tyVelocityTable = new SN_Lerp(tyVelocityPoints);
 
   }
 
