@@ -102,12 +102,12 @@ public class Climber extends SubsystemBase {
     double position = a_position.getValue();
 
     if (isAngled()) {
-      MathUtil.clamp(position, prefClimber.climberAngledMinPos.getValue(),
+      position = MathUtil.clamp(position, prefClimber.climberAngledMinPos.getValue(),
           prefClimber.climberAngledMaxPos.getValue());
     }
 
     else {
-      MathUtil.clamp(position, prefClimber.climberPerpendicularMinPos.getValue(),
+      position = MathUtil.clamp(position, prefClimber.climberPerpendicularMinPos.getValue(),
           prefClimber.climberPerpendicularMaxPos.getValue());
     }
 
