@@ -73,7 +73,7 @@ public class Climber extends SubsystemBase {
 
     double speed = a_speed;
 
-    // cannot never go below min switch
+    // cannot ever go below min switch
     if ((isMinSwitch() && speed < 0)) {
       speed = 0;
     }
