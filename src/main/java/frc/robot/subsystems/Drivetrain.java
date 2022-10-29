@@ -226,6 +226,12 @@ public class Drivetrain extends SubsystemBase {
         this);
   }
 
+  // kinda bad name here
+  public boolean isOptimalSwing() {
+    // May need to change the sign if the optimal pitch is negative
+    return navx.getPitch() >= prefDrivetrain.navxOptimalSwingPitch.getValue();
+  }
+
   public void displayValuesOnDashboard() {
     displayOnDashboard = true;
   }
