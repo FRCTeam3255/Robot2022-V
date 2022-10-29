@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.frcteam3255.preferences.SN_DoublePreference;
 import com.frcteam3255.utils.SN_Math;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -69,21 +70,19 @@ public class Hood extends SubsystemBase {
     return SN_Math.falconToDegrees(hoodMotor.getSelectedSensorPosition(), constHood.GEAR_RATIO);
   }
 
-  public void setAngleDegrees(double degrees) {
+  public void setAngle(double a_degrees) {
 
-    if (degrees < prefHood.hoodMinDegrees.getValue()) {
-      degrees = prefHood.hoodMinDegrees.getValue();
-    }
+    double degrees = MathUtil.clamp(a_degrees, prefHood.hoodMinDegrees.getValue(), prefHood.hoodMaxDegrees.getValue());
 
     hoodMotor.set(ControlMode.Position, SN_Math.degreesToFalcon(degrees, constHood.GEAR_RATIO),
         DemandType.ArbitraryFeedForward, prefHood.hoodArbitraryFeedForward.getValue());
   }
 
-  public void setAngleDegrees(SN_DoublePreference degrees) {
-    setAngleDegrees(degrees.getValue());
+  public void setAngle(SN_DoublePreference degrees) {
+    setAngle(degrees.getValue());
   }
 
-  public boolean getBottomSwitch() {
+  public boolean isBottomSwitch() {
     return !bottomSwitch.get();
   }
 
@@ -110,11 +109,11 @@ public class Hood extends SubsystemBase {
     if (displayOnDashboard) {
 
       SmartDashboard.putNumber("Hood Angle Degrees", getAngleDegrees());
-      SmartDashboard.putBoolean("Hood Is Bottom Switch", getBottomSwitch());
+      SmartDashboard.putBoolean("Hood Is Bottom Switch", isBottomSwitch());
 
     }
 
-    if (getBottomSwitch()) {
+    if (isBottomSwitch()) {
       resetAngleToBottom();
     }
 

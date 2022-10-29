@@ -61,8 +61,7 @@ public class Climber extends SubsystemBase {
     climberMotor.configFactoryDefault();
     climberMotor.configAllSettings(config);
 
-    climberMotor.configReverseSoftLimitEnable(true);
-    climberMotor.configReverseSoftLimitThreshold(prefClimber.climberPerpendicularMinPos.getValue());
+    climberMotor.configReverseSoftLimitEnable(false);
     climberMotor.configForwardSoftLimitEnable(true);
     climberMotor.configForwardSoftLimitThreshold(prefClimber.climberAngledMaxPos.getValue());
 
@@ -74,13 +73,8 @@ public class Climber extends SubsystemBase {
 
     double speed = a_speed;
 
-    // cannot never go below min switch
-    if ((getMinSwitch() && speed < 0)) {
-      speed = 0;
-    }
-
-    // cannot never go above max switch
-    if ((getMaxSwitch() && speed > 0)) {
+    // cannot ever go below min switch
+    if ((isMinSwitch() && speed < 0)) {
       speed = 0;
     }
 
@@ -108,12 +102,12 @@ public class Climber extends SubsystemBase {
     double position = a_position.getValue();
 
     if (isAngled()) {
-      MathUtil.clamp(position, prefClimber.climberAngledMinPos.getValue(),
+      position = MathUtil.clamp(position, prefClimber.climberAngledMinPos.getValue(),
           prefClimber.climberAngledMaxPos.getValue());
     }
 
     else {
-      MathUtil.clamp(position, prefClimber.climberPerpendicularMinPos.getValue(),
+      position = MathUtil.clamp(position, prefClimber.climberPerpendicularMinPos.getValue(),
           prefClimber.climberPerpendicularMaxPos.getValue());
     }
 
@@ -140,15 +134,19 @@ public class Climber extends SubsystemBase {
 
   };
 
+  public void neutralMotorOutput() {
+    climberMotor.neutralOutput();
+  }
+
   public boolean isAngled() {
     return pivotPiston.isDeployed();
   }
 
-  public boolean getMaxSwitch() {
+  public boolean isMaxSwitch() {
     return !maxSwitch.get();
   }
 
-  public boolean getMinSwitch() {
+  public boolean isMinSwitch() {
     return !minSwitch.get();
   }
 
@@ -165,11 +163,11 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     if (displayOnDashboard) {
       SmartDashboard.putNumber("Climber Encoder Counts", getClimberEncoderCounts());
-      SmartDashboard.putBoolean("Climber Is At Minimum Switch", getMinSwitch());
-      SmartDashboard.putBoolean("Climber Is At Maximum Switch", getMaxSwitch());
+      SmartDashboard.putBoolean("Climber Is At Minimum Switch", isMinSwitch());
+      SmartDashboard.putBoolean("Climber Is At Maximum Switch", isMaxSwitch());
       SmartDashboard.putBoolean("Climber Is Angled", isAngled());
     }
-    if (getMinSwitch()) {
+    if (isMinSwitch()) {
       resetClimberEncoderCounts();
     }
 
