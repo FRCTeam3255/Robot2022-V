@@ -157,6 +157,18 @@ public class Drivetrain extends SubsystemBase {
     arcadeDriveSpeedMultiplier = multiplier.getValue();
   }
 
+  /**
+   * @return Distance from hub in meters
+   */
+  public double getDistanceFromHub() {
+    double robotX = getPose().getX();
+    double robotY = getPose().getY();
+
+    double distanceToHub = Math.sqrt((robotX * robotX) + (robotY * robotY));
+
+    return distanceToHub;
+  }
+
   public void setArcadeDriveTurnMultiplier(SN_DoublePreference multiplier) {
     arcadeDriveTurnMultiplier = multiplier.getValue();
   }

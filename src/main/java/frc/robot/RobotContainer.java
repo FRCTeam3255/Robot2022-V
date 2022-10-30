@@ -11,15 +11,14 @@ import com.frcteam3255.preferences.SN_Preferences;
 import com.frcteam3255.utils.SN_InstantCommand;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants.AimState;
 import frc.robot.Constants.CargoState;
+import frc.robot.Constants.constField;
+import frc.robot.Constants.constShooter;
 import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
@@ -31,6 +30,7 @@ import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.commands.Climber.MoveClimber;
 import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.commands.Turret.OdometryAimTurret;
+import frc.robot.commands.Turret.VisionAimTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
@@ -65,6 +65,7 @@ public class RobotContainer {
   private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
 
   private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
+  private final VisionAimTurret comVisionAimTurret = new VisionAimTurret(subTurret, subVision);
   private final OdometryAimTurret comOdometryAimTurret = new OdometryAimTurret(subTurret, subDrivetrain, subVision);
 
   private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
@@ -73,6 +74,7 @@ public class RobotContainer {
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public static CargoState cargoState;
+  public static AimState aimState;
 
   public RobotContainer() {
 
@@ -85,6 +87,7 @@ public class RobotContainer {
     subClimber.setDefaultCommand(comMoveClimber);
 
     cargoState = CargoState.NONE;
+    aimState = AimState.NONE;
 
     configureButtonBindings();
     configureDashboardButtons();
@@ -115,7 +118,7 @@ public class RobotContainer {
 
     conDriver.btn_X.whenPressed(
         () -> subDrivetrain
-            .resetPose(new Pose2d(new Translation2d(9.5, 3.8), new Rotation2d(Units.degreesToRadians(-21)))));
+            .resetPose(constField.LEFT_FENDER_POSITION));
 
     // Operator Commands
 
@@ -131,6 +134,11 @@ public class RobotContainer {
     conOperator.btn_LBump.whileHeld(comMoveTurret);
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
+    conOperator.btn_X.whileHeld(comVisionAimTurret);
+    conOperator.btn_X
+        .and(conSwitchboard.btn_7)
+        .whileActiveContinuous(() -> subShooter.setGoalRPM(
+            constShooter.tyVelocityTable.getOutput(subVision.limelight.getOffsetY())));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
@@ -150,7 +158,11 @@ public class RobotContainer {
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
         .whenPressed(() -> subHood.setAngle(prefPreset.presetTarmacHoodDegrees));
 
-    conSwitchboard.btn_3.whileHeld(comOdometryAimTurret);
+    conSwitchboard.btn_10.whileHeld(comOdometryAimTurret);
+    conSwitchboard.btn_9.whileHeld(
+        () -> subShooter.setGoalRPM(
+            constShooter.distanceVelocityTable.getOutput(
+                subDrivetrain.getDistanceFromHub())));
 
   }
 
@@ -181,11 +193,13 @@ public class RobotContainer {
     }
 
     // btn_3 -> Use Odometry Aim
-    if (conSwitchboard.btn_3.get()) {
 
-    } else {
+    // btn_7 -> Vision Aim Y
+    // btn_8 -> Vision Aim X
 
-    }
+    // btn_9 -> Odometry Aim Y
+    // btn_10 -> Odometry Aim X
+
   }
 
   private void configureDashboardButtons() {

@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import com.frcteam3255.utils.SN_Lerp;
 import com.frcteam3255.utils.SN_Point2D;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -49,6 +51,9 @@ public final class Constants {
     public static final Translation2d HUB_POSITION = new Translation2d(
         Units.inchesToMeters(324), Units.inchesToMeters(162));
 
+    public static final Pose2d LEFT_FENDER_POSITION = new Pose2d(
+        new Translation2d(9.5, 3.8), new Rotation2d(-21));
+
   }
 
   public static final class constHood {
@@ -57,7 +62,7 @@ public final class Constants {
     public static final boolean INVERTED = true;
 
     // ty (x): limelight y offset
-    // angle (y): angle of hood to make shot from given distance
+    // angle (y): angle of hood to make shot from given ty
     // relies on shooter table
     private static final SN_Point2D[] tyAnglePoints = {
         new SN_Point2D(37, 3800),
@@ -92,7 +97,19 @@ public final class Constants {
         new SN_Point2D(16.09, 3200)
     };
 
+    // distance (x): distance from hub in meters
+    // velocity (y): rpm of shooter flywheel
+    private static final SN_Point2D[] distanceVelocityPoints = {
+        new SN_Point2D(Units.inchesToMeters(187.0), 3800.0),
+        new SN_Point2D(Units.inchesToMeters(151.0), 3500.0),
+        new SN_Point2D(Units.inchesToMeters(115.0), 3255.0),
+        new SN_Point2D(Units.inchesToMeters(79.0), 3200.0)
+
+    };
+
     public static final SN_Lerp tyVelocityTable = new SN_Lerp(tyVelocityPoints);
+
+    public static final SN_Lerp distanceVelocityTable = new SN_Lerp(distanceVelocityPoints);
 
   }
 
@@ -112,20 +129,20 @@ public final class Constants {
   public static final class constVision {
 
     // ty (x): limelight y offset in limelight native units
-    // distance (y): distance in inches when limelight has given y offset
+    // distance (y): distance in meters when limelight has given y offset
     private static final SN_Point2D[] tyDistancePoints = {
-        new SN_Point2D(-15.32, 211),
-        new SN_Point2D(-14.5, 199),
-        new SN_Point2D(-13.33, 187),
-        new SN_Point2D(-11.56, 175),
-        new SN_Point2D(-8.56, 163),
-        new SN_Point2D(-6.82, 151),
-        new SN_Point2D(-4.74, 139),
-        new SN_Point2D(-2.19, 127),
-        new SN_Point2D(1.55, 115),
-        new SN_Point2D(5.63, 103),
-        new SN_Point2D(10.55, 91),
-        new SN_Point2D(16.09, 79)
+        new SN_Point2D(Units.inchesToMeters(-15.32), 211),
+        new SN_Point2D(Units.inchesToMeters(-14.5), 199),
+        new SN_Point2D(Units.inchesToMeters(-13.33), 187),
+        new SN_Point2D(Units.inchesToMeters(-11.56), 175),
+        new SN_Point2D(Units.inchesToMeters(-8.56), 163),
+        new SN_Point2D(Units.inchesToMeters(-6.82), 151),
+        new SN_Point2D(Units.inchesToMeters(-4.74), 139),
+        new SN_Point2D(Units.inchesToMeters(-2.19), 127),
+        new SN_Point2D(Units.inchesToMeters(1.55), 115),
+        new SN_Point2D(Units.inchesToMeters(5.63), 103),
+        new SN_Point2D(Units.inchesToMeters(10.55), 91),
+        new SN_Point2D(Units.inchesToMeters(16.09), 79)
     };
 
     public static final SN_Lerp tyDistanceTable = new SN_Lerp(tyDistancePoints);
@@ -136,4 +153,7 @@ public final class Constants {
     SHOOTING, COLLECTING, DISCARDING, PROCESSING, NONE
   }
 
+  public enum AimState {
+    MANUAL, VISION, ODOMETRY, NONE
+  }
 }
