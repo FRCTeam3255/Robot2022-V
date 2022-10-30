@@ -7,8 +7,9 @@ package frc.robot.commands.Shooter;
 import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.utils.SN_Lerp;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.AimState;
 import frc.robot.Constants.constHood;
 import frc.robot.Constants.constShooter;
 import frc.robot.subsystems.Hood;
@@ -29,6 +30,8 @@ public class VisionSetShooter extends CommandBase {
 
   SN_Limelight limelight;
 
+  boolean precedence;
+
   public VisionSetShooter(Shooter subShooter, Hood subHood, Vision subVision) {
     this.subShooter = subShooter;
     this.subHood = subHood;
@@ -39,7 +42,9 @@ public class VisionSetShooter extends CommandBase {
     goalRPM = 0;
     angle = 0;
 
-    addRequirements(subHood);
+    precedence = false;
+
+    addRequirements();
 
   }
 
@@ -53,16 +58,33 @@ public class VisionSetShooter extends CommandBase {
     goalRPM = tyVelocityTable.getOutput(limelight.getOffsetY());
     angle = tyAngleTable.getOutput(limelight.getOffsetY());
 
-    subShooter.setGoalRPM(goalRPM);
-    subHood.setAngle(angle);
+    switch (RobotContainer.aimState) {
+      case MANUAL:
+        precedence = false;
+        break;
+      case VISION:
+        precedence = true;
+        break;
+      case ODOMETRY:
+        precedence = true;
+      case NONE:
+        precedence = true;
+      default:
+        break;
+    }
 
-    SmartDashboard.putNumber("!ty", limelight.getOffsetY());
-    SmartDashboard.putNumber("!goalRPM", goalRPM);
-    SmartDashboard.putNumber("!angle", angle);
+    if (precedence) {
+      RobotContainer.aimState = AimState.VISION;
+      subShooter.setGoalRPM(goalRPM);
+      subHood.setAngle(angle);
+    }
   }
 
   @Override
   public void end(boolean interrupted) {
+    if (precedence) {
+      RobotContainer.aimState = AimState.NONE;
+    }
   }
 
   @Override

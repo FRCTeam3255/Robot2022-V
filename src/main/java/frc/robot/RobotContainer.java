@@ -69,6 +69,9 @@ public class RobotContainer {
   private final VisionAimTurret comVisionAimTurret = new VisionAimTurret(subTurret, subVision);
   private final OdometryAimTurret comOdometryAimTurret = new OdometryAimTurret(subTurret, subDrivetrain, subVision);
 
+  private final VisionSetShooter comVisionSetShooter = new VisionSetShooter(subShooter, subHood, subVision);
+  private final OdometrySetShooter comOdometrySetShooter = new OdometrySetShooter(subDrivetrain, subShooter, subHood);
+
   private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
@@ -135,10 +138,6 @@ public class RobotContainer {
     conOperator.btn_LBump.whileHeld(comMoveTurret);
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
-    conOperator.btn_X.whileHeld(comVisionAimTurret);
-    conOperator.btn_X.whileHeld(new VisionSetShooter(subShooter, subHood, subVision));
-    conOperator.btn_Y.whileHeld(new OdometrySetShooter(subDrivetrain, subShooter, subHood));
-    conOperator.btn_Y.whileHeld(new OdometryAimTurret(subTurret, subDrivetrain, subVision));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);

@@ -6,8 +6,9 @@ package frc.robot.commands.Shooter;
 
 import com.frcteam3255.utils.SN_Lerp;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.AimState;
 import frc.robot.Constants.constHood;
 import frc.robot.Constants.constShooter;
 import frc.robot.Constants.constVision;
@@ -30,6 +31,8 @@ public class OdometrySetShooter extends CommandBase {
   SN_Lerp distanceVelocityTable = constShooter.distanceVelocityTable;
   SN_Lerp distanceAngleTable = constHood.distanceAngleTable;
 
+  boolean precedence;
+
   public OdometrySetShooter(Drivetrain subDrivetrain, Shooter subShooter, Hood subHood) {
 
     this.subDrivetrain = subDrivetrain;
@@ -40,7 +43,9 @@ public class OdometrySetShooter extends CommandBase {
     angle = 0;
     distance = 0;
 
-    addRequirements(subHood);
+    precedence = false;
+
+    addRequirements();
   }
 
   @Override
@@ -54,16 +59,32 @@ public class OdometrySetShooter extends CommandBase {
     goalRPM = distanceVelocityTable.getOutput(distance);
     angle = distanceAngleTable.getOutput(distance);
 
-    subShooter.setGoalRPM(goalRPM);
-    subHood.setAngle(angle);
+    switch (RobotContainer.aimState) {
+      case MANUAL:
+        precedence = false;
+        break;
+      case VISION:
+        precedence = false;
+        break;
+      case ODOMETRY:
+        precedence = true;
+      case NONE:
+        precedence = true;
+      default:
+        break;
+    }
 
-    SmartDashboard.putNumber("!!distance", distance);
-    SmartDashboard.putNumber("!!goalRPM", goalRPM);
-    SmartDashboard.putNumber("!!angle", angle);
+    if (precedence) {
+      subShooter.setGoalRPM(goalRPM);
+      subHood.setAngle(angle);
+    }
   }
 
   @Override
   public void end(boolean interrupted) {
+    if (precedence) {
+      RobotContainer.aimState = AimState.NONE;
+    }
   }
 
   @Override
