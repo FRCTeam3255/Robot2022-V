@@ -73,6 +73,9 @@ public final class Constants {
         new SN_Point2D(16.09, 20.0)
     };
 
+    // distance (x): distance to center of hub from limelight lens in meters
+    // angle (y): angle of hood to make shot from given distance
+    // relies on shooter table
     private static final SN_Point2D[] distanceAnglePoints = {
         new SN_Point2D(Units.inchesToMeters(79.0), 20.0),
         new SN_Point2D(Units.inchesToMeters(115.0), 28.0),
