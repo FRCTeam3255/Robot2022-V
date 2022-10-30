@@ -153,18 +153,18 @@ public final class Constants {
     // ty (x): limelight y offset in limelight native units
     // distance (y): distance in meters when limelight has given y offset
     private static final SN_Point2D[] tyDistancePoints = {
-        new SN_Point2D(Units.inchesToMeters(-15.32), 211),
-        new SN_Point2D(Units.inchesToMeters(-14.5), 199),
-        new SN_Point2D(Units.inchesToMeters(-13.33), 187),
-        new SN_Point2D(Units.inchesToMeters(-11.56), 175),
-        new SN_Point2D(Units.inchesToMeters(-8.56), 163),
-        new SN_Point2D(Units.inchesToMeters(-6.82), 151),
-        new SN_Point2D(Units.inchesToMeters(-4.74), 139),
-        new SN_Point2D(Units.inchesToMeters(-2.19), 127),
-        new SN_Point2D(Units.inchesToMeters(1.55), 115),
-        new SN_Point2D(Units.inchesToMeters(5.63), 103),
-        new SN_Point2D(Units.inchesToMeters(10.55), 91),
-        new SN_Point2D(Units.inchesToMeters(16.09), 79)
+        new SN_Point2D(-15.32, Units.inchesToMeters(211)),
+        new SN_Point2D(-14.5, Units.inchesToMeters(199)),
+        new SN_Point2D(-13.33, Units.inchesToMeters(187)),
+        new SN_Point2D(-11.56, Units.inchesToMeters(175)),
+        new SN_Point2D(-8.56, Units.inchesToMeters(163)),
+        new SN_Point2D(-6.82, Units.inchesToMeters(151)),
+        new SN_Point2D(-4.74, Units.inchesToMeters(139)),
+        new SN_Point2D(-2.19, Units.inchesToMeters(127)),
+        new SN_Point2D(1.55, Units.inchesToMeters(115)),
+        new SN_Point2D(5.63, Units.inchesToMeters(103)),
+        new SN_Point2D(10.55, Units.inchesToMeters(91)),
+        new SN_Point2D(16.09, Units.inchesToMeters(79)),
     };
 
     public static final SN_Lerp tyDistanceTable = new SN_Lerp(tyDistancePoints);
