@@ -183,7 +183,7 @@ public class RobotContainer {
 
   public void useSwitchboardButtons() {
 
-    // btn_1 -> Send Values to SmartDashboard
+    // btn_1 -> Don't Send Values to SmartDashboard
     if (!conSwitchboard.btn_1.get()) {
       subDrivetrain.displayValuesOnDashboard();
       subHood.displayValuesOnDashboard();
