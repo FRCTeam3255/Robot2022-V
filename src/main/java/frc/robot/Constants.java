@@ -103,7 +103,6 @@ public final class Constants {
     // ty (x): y offset of limelight
     // velocity (y): rpm of shooter flywheel to make shot
     // relies on hood table
-
     private static final SN_Point2D[] tyVelocityPoints = {
         new SN_Point2D(-13.33, 3800),
         new SN_Point2D(-6.82, 3500),
