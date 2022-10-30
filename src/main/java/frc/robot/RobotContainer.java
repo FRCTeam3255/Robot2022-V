@@ -14,6 +14,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.AimState;
 import frc.robot.Constants.CargoState;
@@ -120,9 +121,19 @@ public class RobotContainer {
         .whenPressed(() -> subTurret.setAngle(prefTurret.turretMinDegrees))
         .whenPressed(() -> subHood.neutralOutput());
 
-    conDriver.btn_X.whenPressed(
+    // Pose resetting
+    conDriver.POV_North.whenPressed(
         () -> subDrivetrain
-            .resetPose(constField.LEFT_FENDER_POSITION));
+            .resetPose(constField.LEFT_FENDER_POSITION_FRONT));
+    conDriver.POV_South.whenPressed(
+        () -> subDrivetrain
+            .resetPose(constField.LEFT_FENDER_POSITION_BACK));
+    conDriver.POV_West.whenPressed(
+        () -> subDrivetrain
+            .resetPose(constField.RIGHT_FENDER_POSITION_FRONT));
+    conDriver.POV_East.whenPressed(
+        () -> subDrivetrain
+            .resetPose(constField.RIGHT_FENDER_POSITION_BACK));
 
     // Operator Commands
 
@@ -225,6 +236,14 @@ public class RobotContainer {
   private void configureAutoSelector() {
     autoChooser.setDefaultOption("null", null);
     autoChooser.addOption("Four Ball A", autoFourBallA);
+    autoChooser.addOption("LEFT_FENDER_POSITION_FRONT",
+        new InstantCommand(() -> subDrivetrain.resetPose(constField.LEFT_FENDER_POSITION_FRONT)));
+    autoChooser.addOption("LEFT_FENDER_POSITION_BACK",
+        new InstantCommand(() -> subDrivetrain.resetPose(constField.LEFT_FENDER_POSITION_BACK)));
+    autoChooser.addOption("RIGHT_FENDER_POSITION_FRONT",
+        new InstantCommand(() -> subDrivetrain.resetPose(constField.RIGHT_FENDER_POSITION_FRONT)));
+    autoChooser.addOption("RIGHT_FENDER_POSITION_BACK",
+        new InstantCommand(() -> subDrivetrain.resetPose(constField.RIGHT_FENDER_POSITION_BACK)));
     SmartDashboard.putData(autoChooser);
   }
 
