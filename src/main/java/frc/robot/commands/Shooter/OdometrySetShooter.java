@@ -4,12 +4,10 @@
 
 package frc.robot.commands.Shooter;
 
-import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.utils.SN_Lerp;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.constDrivetrain;
 import frc.robot.Constants.constHood;
 import frc.robot.Constants.constShooter;
 import frc.robot.Constants.constVision;

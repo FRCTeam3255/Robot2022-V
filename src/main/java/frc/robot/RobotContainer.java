@@ -18,8 +18,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.AimState;
 import frc.robot.Constants.CargoState;
 import frc.robot.Constants.constField;
-import frc.robot.Constants.constHood;
-import frc.robot.Constants.constShooter;
 import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
