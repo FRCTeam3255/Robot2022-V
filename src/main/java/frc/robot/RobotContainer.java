@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.AimState;
 import frc.robot.Constants.CargoState;
 import frc.robot.Constants.constField;
+import frc.robot.Constants.constHood;
 import frc.robot.Constants.constShooter;
 import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
@@ -28,6 +29,7 @@ import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.commands.Climber.MoveClimber;
+import frc.robot.commands.Shooter.VisionSetShooter;
 import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.commands.Turret.OdometryAimTurret;
 import frc.robot.commands.Turret.VisionAimTurret;
@@ -135,10 +137,22 @@ public class RobotContainer {
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
     conOperator.btn_X.whileHeld(comVisionAimTurret);
-    conOperator.btn_X
-        .and(conSwitchboard.btn_7)
-        .whileActiveContinuous(() -> subShooter.setGoalRPM(
-            constShooter.tyVelocityTable.getOutput(subVision.limelight.getOffsetY())));
+    // conOperator.btn_X
+    // .whileHeld(
+    // () -> subShooter.setGoalRPM(
+    // constShooter.tyVelocityTable.getOutput(
+    // subVision.limelight.getOffsetY())));
+    // conOperator.btn_X
+    // .whileHeld(
+    // () -> subHood.setAngle(
+    // constHood.tyAngleTable.getOutput(
+    // subVision.limelight.getOffsetY())));
+    // conOperator.btn_X.whileHeld(() -> SmartDashboard.putNumber("!ty",
+    // subVision.limelight.getOffsetY()));
+    // conOperator.btn_X.whileHeld(
+    // () -> SmartDashboard.putNumber("!output",
+    // constHood.tyAngleTable.getOutput(subVision.limelight.getOffsetY())));
+    conOperator.btn_X.whileHeld(new VisionSetShooter(subShooter, subHood, subVision));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);

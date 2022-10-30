@@ -52,7 +52,7 @@ public final class Constants {
         Units.inchesToMeters(324), Units.inchesToMeters(162));
 
     public static final Pose2d LEFT_FENDER_POSITION = new Pose2d(
-        new Translation2d(9.5, 3.8), new Rotation2d(-21));
+        new Translation2d(9.5, 3.8), new Rotation2d(Units.degreesToRadians(-21)));
 
   }
 
@@ -65,13 +65,13 @@ public final class Constants {
     // angle (y): angle of hood to make shot from given ty
     // relies on shooter table
     private static final SN_Point2D[] tyAnglePoints = {
-        new SN_Point2D(37, 3800),
-        new SN_Point2D(34, 3500),
+        new SN_Point2D(20, 3200),
         new SN_Point2D(28, 3255),
-        new SN_Point2D(20, 3200)
+        new SN_Point2D(34, 3500),
+        new SN_Point2D(37, 3800)
     };
 
-    public static final SN_Lerp distanceAngleTable = new SN_Lerp(tyAnglePoints);
+    public static final SN_Lerp tyAngleTable = new SN_Lerp(tyAnglePoints);
 
   }
 
@@ -100,10 +100,10 @@ public final class Constants {
     // distance (x): distance from hub in meters
     // velocity (y): rpm of shooter flywheel
     private static final SN_Point2D[] distanceVelocityPoints = {
-        new SN_Point2D(Units.inchesToMeters(187.0), 3800.0),
+        new SN_Point2D(Units.inchesToMeters(79.0), 3200.0),
         new SN_Point2D(Units.inchesToMeters(151.0), 3500.0),
         new SN_Point2D(Units.inchesToMeters(115.0), 3255.0),
-        new SN_Point2D(Units.inchesToMeters(79.0), 3200.0)
+        new SN_Point2D(Units.inchesToMeters(187.0), 3800.0)
 
     };
 
