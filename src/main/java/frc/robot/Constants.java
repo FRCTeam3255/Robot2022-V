@@ -51,10 +51,15 @@ public final class Constants {
     public static final Translation2d HUB_POSITION = new Translation2d(
         Units.inchesToMeters(324), Units.inchesToMeters(162));
 
-    public static final Pose2d LEFT_FENDER_POSITION = new Pose2d(
+    public static final Pose2d LEFT_FENDER_POSITION_FRONT = new Pose2d(
         6.98, 4.61, Rotation2d.fromDegrees(-21));
-    public static final Pose2d RIGHT_FENDER_POSITION = new Pose2d(
+    public static final Pose2d LEFT_FENDER_POSITION_BACK = new Pose2d(
+        6.98, 4.61, Rotation2d.fromDegrees(159));
+
+    public static final Pose2d RIGHT_FENDER_POSITION_FRONT = new Pose2d(
         7.78, 2.84, Rotation2d.fromDegrees(69));
+    public static final Pose2d RIGHT_FENDER_POSITION_BACK = new Pose2d(
+        7.78, 2.84, Rotation2d.fromDegrees(-111));
 
   }
 
