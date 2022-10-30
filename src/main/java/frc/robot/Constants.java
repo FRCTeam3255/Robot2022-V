@@ -51,6 +51,9 @@ public final class Constants {
     public static final Translation2d HUB_POSITION = new Translation2d(
         Units.inchesToMeters(324), Units.inchesToMeters(162));
 
+    // front refers to the intake side of robot facing in the fender
+    // left and right is relative to the drivers station
+    // only positions for allied alliance color, opposing alliance is not included
     public static final Pose2d LEFT_FENDER_POSITION_FRONT = new Pose2d(
         6.98, 4.61, Rotation2d.fromDegrees(-21));
     public static final Pose2d LEFT_FENDER_POSITION_BACK = new Pose2d(
