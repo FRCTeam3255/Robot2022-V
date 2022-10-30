@@ -29,6 +29,7 @@ import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
 import frc.robot.commands.Cargo.ShootCargo;
 import frc.robot.commands.Climber.MoveClimber;
+import frc.robot.commands.Shooter.OdometrySetShooter;
 import frc.robot.commands.Shooter.VisionSetShooter;
 import frc.robot.commands.Turret.MoveTurret;
 import frc.robot.commands.Turret.OdometryAimTurret;
@@ -153,6 +154,8 @@ public class RobotContainer {
     // () -> SmartDashboard.putNumber("!output",
     // constHood.tyAngleTable.getOutput(subVision.limelight.getOffsetY())));
     conOperator.btn_X.whileHeld(new VisionSetShooter(subShooter, subHood, subVision));
+    conOperator.btn_Y.whileHeld(new OdometrySetShooter(subDrivetrain, subShooter, subHood));
+    conOperator.btn_Y.whileHeld(new OdometryAimTurret(subTurret, subDrivetrain, subVision));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
@@ -172,11 +175,11 @@ public class RobotContainer {
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
         .whenPressed(() -> subHood.setAngle(prefPreset.presetTarmacHoodDegrees));
 
-    conSwitchboard.btn_10.whileHeld(comOdometryAimTurret);
-    conSwitchboard.btn_9.whileHeld(
-        () -> subShooter.setGoalRPM(
-            constShooter.distanceVelocityTable.getOutput(
-                subDrivetrain.getDistanceFromHub())));
+    // conSwitchboard.btn_10.whileHeld(comOdometryAimTurret);
+    // conSwitchboard.btn_9.whileHeld(
+    // () -> subShooter.setGoalRPM(
+    // constShooter.distanceVelocityTable.getOutput(
+    // subDrivetrain.getDistanceFromHub())));
 
   }
 

@@ -9,38 +9,40 @@ import com.frcteam3255.utils.SN_Lerp;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.constDrivetrain;
 import frc.robot.Constants.constHood;
 import frc.robot.Constants.constShooter;
+import frc.robot.Constants.constVision;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
 
-public class VisionSetShooter extends CommandBase {
+public class OdometrySetShooter extends CommandBase {
 
+  Drivetrain subDrivetrain;
   Shooter subShooter;
   Hood subHood;
-  Vision subVision;
 
   double goalRPM;
   double angle;
 
-  SN_Lerp tyVelocityTable = constShooter.tyVelocityTable;
-  SN_Lerp tyAngleTable = constHood.tyAngleTable;
+  double distance;
 
-  SN_Limelight limelight;
+  SN_Lerp tyDistanceTable = constVision.tyDistanceTable;
+  SN_Lerp distanceVelocityTable = constShooter.distanceVelocityTable;
+  SN_Lerp distanceAngleTable = constHood.distanceAngleTable;
 
-  public VisionSetShooter(Shooter subShooter, Hood subHood, Vision subVision) {
+  public OdometrySetShooter(Drivetrain subDrivetrain, Shooter subShooter, Hood subHood) {
+
+    this.subDrivetrain = subDrivetrain;
     this.subShooter = subShooter;
     this.subHood = subHood;
-    this.subVision = subVision;
-
-    limelight = subVision.limelight;
 
     goalRPM = 0;
     angle = 0;
+    distance = 0;
 
     addRequirements(subHood);
-
   }
 
   @Override
@@ -49,16 +51,17 @@ public class VisionSetShooter extends CommandBase {
 
   @Override
   public void execute() {
+    distance = subDrivetrain.getDistanceFromHub();
 
-    goalRPM = tyVelocityTable.getOutput(limelight.getOffsetY());
-    angle = tyAngleTable.getOutput(limelight.getOffsetY());
+    goalRPM = distanceVelocityTable.getOutput(distance);
+    angle = distanceAngleTable.getOutput(distance);
 
     subShooter.setGoalRPM(goalRPM);
     subHood.setAngle(angle);
 
-    SmartDashboard.putNumber("!ty", limelight.getOffsetY());
-    SmartDashboard.putNumber("!goalRPM", goalRPM);
-    SmartDashboard.putNumber("!angle", angle);
+    SmartDashboard.putNumber("!!distance", distance);
+    SmartDashboard.putNumber("!!goalRPM", goalRPM);
+    SmartDashboard.putNumber("!!angle", angle);
   }
 
   @Override

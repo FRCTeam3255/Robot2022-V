@@ -72,10 +72,10 @@ public final class Constants {
     };
 
     private static final SN_Point2D[] distanceAnglePoints = {
-        new SN_Point2D(Units.inchesToMeters(187.0), 37.0),
-        new SN_Point2D(Units.inchesToMeters(151.0), 34.0),
+        new SN_Point2D(Units.inchesToMeters(79.0), 20.0),
         new SN_Point2D(Units.inchesToMeters(115.0), 28.0),
-        new SN_Point2D(Units.inchesToMeters(79.0), 20.0)
+        new SN_Point2D(Units.inchesToMeters(151.0), 34.0),
+        new SN_Point2D(Units.inchesToMeters(187.0), 37.0)
     };
 
     public static final SN_Lerp tyAngleTable = new SN_Lerp(tyAnglePoints);
