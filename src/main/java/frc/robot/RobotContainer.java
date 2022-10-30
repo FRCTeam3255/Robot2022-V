@@ -139,6 +139,14 @@ public class RobotContainer {
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
 
+    conOperator.btn_X
+        .and(conSwitchboard.btn_8)
+        .whileActiveContinuous(comVisionAimTurret);
+
+    conOperator.btn_X
+        .and(conSwitchboard.btn_7)
+        .whileActiveContinuous(comVisionSetShooter);
+
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
     conOperator.btn_B.whileHeld(comDiscardCargo);
@@ -157,11 +165,8 @@ public class RobotContainer {
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
         .whenPressed(() -> subHood.setAngle(prefPreset.presetTarmacHoodDegrees));
 
-    // conSwitchboard.btn_10.whileHeld(comOdometryAimTurret);
-    // conSwitchboard.btn_9.whileHeld(
-    // () -> subShooter.setGoalRPM(
-    // constShooter.distanceVelocityTable.getOutput(
-    // subDrivetrain.getDistanceFromHub())));
+    conSwitchboard.btn_9.whileHeld(comOdometrySetShooter);
+    conSwitchboard.btn_10.whileHeld(comOdometryAimTurret);
 
   }
 
@@ -190,8 +195,6 @@ public class RobotContainer {
     } else {
       SN_Preferences.useDefaults();
     }
-
-    // btn_3 -> Use Odometry Aim
 
     // btn_7 -> Vision Aim Y
     // btn_8 -> Vision Aim X
