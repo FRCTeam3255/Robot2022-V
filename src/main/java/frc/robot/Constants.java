@@ -65,13 +65,22 @@ public final class Constants {
     // angle (y): angle of hood to make shot from given ty
     // relies on shooter table
     private static final SN_Point2D[] tyAnglePoints = {
-        new SN_Point2D(20, 3200),
-        new SN_Point2D(28, 3255),
-        new SN_Point2D(34, 3500),
-        new SN_Point2D(37, 3800)
+        new SN_Point2D(-13.33, 37.0),
+        new SN_Point2D(-6.82, 34.0),
+        new SN_Point2D(1.55, 28.0),
+        new SN_Point2D(16.09, 20.0)
+    };
+
+    private static final SN_Point2D[] distanceAnglePoints = {
+        new SN_Point2D(Units.inchesToMeters(187.0), 37.0),
+        new SN_Point2D(Units.inchesToMeters(151.0), 34.0),
+        new SN_Point2D(Units.inchesToMeters(115.0), 28.0),
+        new SN_Point2D(Units.inchesToMeters(79.0), 20.0)
     };
 
     public static final SN_Lerp tyAngleTable = new SN_Lerp(tyAnglePoints);
+
+    public static final SN_Lerp distanceAngleTable = new SN_Lerp(distanceAnglePoints);
 
   }
 

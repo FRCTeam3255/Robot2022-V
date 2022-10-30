@@ -39,7 +39,6 @@ public class VisionSetShooter extends CommandBase {
     goalRPM = 0;
     angle = 0;
 
-    addRequirements(subShooter, subHood);
   }
 
   @Override
