@@ -75,6 +75,7 @@ public class OdometrySetShooter extends CommandBase {
     }
 
     if (precedence) {
+      RobotContainer.aimState = AimState.ODOMETRY;
       subShooter.setGoalRPM(goalRPM);
       subHood.setAngle(angle);
     }
