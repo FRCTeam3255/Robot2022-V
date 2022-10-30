@@ -112,10 +112,11 @@ public final class Constants {
 
     // distance (x): distance from hub in meters
     // velocity (y): rpm of shooter flywheel
+    // relies on hood table
     private static final SN_Point2D[] distanceVelocityPoints = {
         new SN_Point2D(Units.inchesToMeters(79.0), 3200.0),
-        new SN_Point2D(Units.inchesToMeters(151.0), 3500.0),
         new SN_Point2D(Units.inchesToMeters(115.0), 3255.0),
+        new SN_Point2D(Units.inchesToMeters(151.0), 3500.0),
         new SN_Point2D(Units.inchesToMeters(187.0), 3800.0)
 
     };
