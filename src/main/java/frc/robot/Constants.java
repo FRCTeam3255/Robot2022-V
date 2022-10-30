@@ -52,7 +52,9 @@ public final class Constants {
         Units.inchesToMeters(324), Units.inchesToMeters(162));
 
     public static final Pose2d LEFT_FENDER_POSITION = new Pose2d(
-        new Translation2d(9.5, 3.8), new Rotation2d(Units.degreesToRadians(-21)));
+        6.98, 4.61, Rotation2d.fromDegrees(-21));
+    public static final Pose2d RIGHT_FENDER_POSITION = new Pose2d(
+        7.78, 2.84, Rotation2d.fromDegrees(69));
 
   }
 
