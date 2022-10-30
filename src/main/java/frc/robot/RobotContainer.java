@@ -136,21 +136,6 @@ public class RobotContainer {
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
     conOperator.btn_X.whileHeld(comVisionAimTurret);
-    // conOperator.btn_X
-    // .whileHeld(
-    // () -> subShooter.setGoalRPM(
-    // constShooter.tyVelocityTable.getOutput(
-    // subVision.limelight.getOffsetY())));
-    // conOperator.btn_X
-    // .whileHeld(
-    // () -> subHood.setAngle(
-    // constHood.tyAngleTable.getOutput(
-    // subVision.limelight.getOffsetY())));
-    // conOperator.btn_X.whileHeld(() -> SmartDashboard.putNumber("!ty",
-    // subVision.limelight.getOffsetY()));
-    // conOperator.btn_X.whileHeld(
-    // () -> SmartDashboard.putNumber("!output",
-    // constHood.tyAngleTable.getOutput(subVision.limelight.getOffsetY())));
     conOperator.btn_X.whileHeld(new VisionSetShooter(subShooter, subHood, subVision));
     conOperator.btn_Y.whileHeld(new OdometrySetShooter(subDrivetrain, subShooter, subHood));
     conOperator.btn_Y.whileHeld(new OdometryAimTurret(subTurret, subDrivetrain, subVision));
