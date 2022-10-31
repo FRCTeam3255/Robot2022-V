@@ -15,13 +15,11 @@ import frc.robot.Constants.constField;
 import frc.robot.RobotPreferences.prefTurret;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.Vision;
 
 public class OdometryAimTurret extends CommandBase {
 
   Turret subTurret;
   Drivetrain subDrivetrain;
-  Vision subVision;
 
   // Pose2d is position (x, y) and rotation (theta)
   Pose2d robotPose;
@@ -39,10 +37,9 @@ public class OdometryAimTurret extends CommandBase {
 
   boolean precedence;
 
-  public OdometryAimTurret(Turret subTurret, Drivetrain subDrivetrain, Vision subVision) {
+  public OdometryAimTurret(Turret subTurret, Drivetrain subDrivetrain) {
     this.subTurret = subTurret;
     this.subDrivetrain = subDrivetrain;
-    this.subVision = subVision;
 
     robotPose = new Pose2d(0, 0, new Rotation2d(0));
     hubPosition = constField.HUB_POSITION;
