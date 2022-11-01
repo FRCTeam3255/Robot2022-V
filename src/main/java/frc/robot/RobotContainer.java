@@ -118,7 +118,10 @@ public class RobotContainer {
 
     conDriver.btn_B
         .whenPressed(() -> subClimber.setPerpendicular());
+
+    // Prep Climb
     conDriver.btn_Back
+        .whenPressed(() -> subShooter.neutralOutput())
         .whenPressed(() -> subTurret.setAngle(prefTurret.turretMinDegrees))
         .whenPressed(() -> subHood.neutralOutput());
 
