@@ -189,6 +189,9 @@ public class Drivetrain extends SubsystemBase {
       TRAJ_T1toB1thenB2 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_T1toB1thenB2);
       TRAJ_B2toB4andB5 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B2toB4andB5);
       TRAJ_B4toB2 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B4toB2);
+      TRAJ_F1toB1 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_F1toB1);
+      TRAJ_T4toB3 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_T4toB3);
+      TRAJ_B3toRB3toB3 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B3toRB3toB3);
 
     } catch (Exception e) {
 
