@@ -200,7 +200,10 @@ public class Drivetrain extends SubsystemBase {
   public enum AutoPath {
     T1toB1thenB2,
     B2toB4andB5,
-    B4toB2
+    B4toB2,
+    F1toB1,
+    T4toB3,
+    B3toRB3toB3
   }
 
   public Trajectory getTrajectory(AutoPath trajectory) {
