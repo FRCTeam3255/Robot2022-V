@@ -46,12 +46,12 @@ public class Drivetrain extends SubsystemBase {
   double arcadeDriveTurnMultiplier;
   boolean displayOnDashboard;
 
-  Trajectory TRAJ_T1toB1thenB2;
-  Trajectory TRAJ_B2toB4andB5;
-  Trajectory TRAJ_B4toB2;
-  Trajectory TRAJ_F1toB1;
-  Trajectory TRAJ_T4toB3;
-  Trajectory TRAJ_B3toRB3toB3;
+  Trajectory TRAJ_T1toB1thenB2; // tarmac 1 to ball 1 then ball 2
+  Trajectory TRAJ_B2toB4andB5; // ball 2 to ball 4 and ball 5 (terminal)
+  Trajectory TRAJ_B4toB2; // ball 4 to ball 2
+  Trajectory TRAJ_F1toB1; // fender 1 to ball 1
+  Trajectory TRAJ_T4toB3; // tarmac 4 to ball 3
+  Trajectory TRAJ_B3toRB3toB3; // ball 3 to red ball 3 to ball 3 (in a circle)
 
   public Drivetrain() {
 
