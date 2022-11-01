@@ -41,6 +41,12 @@ public final class Constants {
         .resolve("pathplanner/generatedJSON/B2toB4andB5.wpilib.json");
     public static final Path PATH_B4toB2 = Filesystem.getDeployDirectory().toPath()
         .resolve("pathplanner/generatedJSON/B4toB2.wpilib.json");
+    public static final Path PATH_F1toB1 = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/F1toB1.wpilib.json");
+    public static final Path PATH_T4toB3 = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/T4toB3.wpilib.json");
+    public static final Path PATH_B3toRB3toB3 = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/B3toRB3toB3.wpilib.json");
 
   }
 
