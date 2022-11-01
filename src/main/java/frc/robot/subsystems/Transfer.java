@@ -99,7 +99,7 @@ public class Transfer extends SubsystemBase {
       SmartDashboard.putBoolean("Transfer Is Top Left Switch", topLeftSwitch.get());
       SmartDashboard.putBoolean("Transfer Is Top Right Switch", topRightSwitch.get());
       SmartDashboard.putBoolean("Transfer Is Bottom Left Switch", bottomLeftSwitch.get());
-      SmartDashboard.putBoolean("Transfer Is Bottom Right Switch", bottomLeftSwitch.get());
+      SmartDashboard.putBoolean("Transfer Is Bottom Right Switch", bottomRightSwitch.get());
 
     }
 

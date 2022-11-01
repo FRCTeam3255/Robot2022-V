@@ -9,17 +9,17 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.AimState;
 import frc.robot.Constants.constField;
 import frc.robot.RobotPreferences.prefTurret;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Turret;
-import frc.robot.subsystems.Vision;
 
 public class OdometryAimTurret extends CommandBase {
 
   Turret subTurret;
   Drivetrain subDrivetrain;
-  Vision subVision;
 
   // Pose2d is position (x, y) and rotation (theta)
   Pose2d robotPose;
@@ -35,16 +35,19 @@ public class OdometryAimTurret extends CommandBase {
   // angle turret needs to turn to face hub
   double outputToTurretDegrees;
 
-  public OdometryAimTurret(Turret subTurret, Drivetrain subDrivetrain, Vision subVision) {
+  boolean precedence;
+
+  public OdometryAimTurret(Turret subTurret, Drivetrain subDrivetrain) {
     this.subTurret = subTurret;
     this.subDrivetrain = subDrivetrain;
-    this.subVision = subVision;
 
     robotPose = new Pose2d(0, 0, new Rotation2d(0));
     hubPosition = constField.HUB_POSITION;
     adjustedHubPosition = new Translation2d(0, 0);
 
-    addRequirements(this.subTurret);
+    precedence = false;
+
+    addRequirements();
   }
 
   @Override
@@ -76,11 +79,33 @@ public class OdometryAimTurret extends CommandBase {
       outputToTurretDegrees += 360;
     }
 
-    subTurret.setAngle(outputToTurretDegrees);
+    switch (RobotContainer.aimState) {
+      case MANUAL:
+        precedence = false;
+        break;
+      case VISION:
+        precedence = false;
+        break;
+      case ODOMETRY:
+        precedence = true;
+      case NONE:
+        precedence = true;
+      default:
+        break;
+    }
+
+    if (precedence) {
+      RobotContainer.aimState = AimState.ODOMETRY;
+      subTurret.setAngle(outputToTurretDegrees);
+    }
   }
 
   @Override
   public void end(boolean interrupted) {
+    if (precedence) {
+      RobotContainer.aimState = AimState.NONE;
+      subTurret.setSpeed(0);
+    }
   }
 
   @Override
