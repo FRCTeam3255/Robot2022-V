@@ -149,7 +149,7 @@ public class RobotContainer {
     conOperator.btn_LBump.whileHeld(comMoveTurret);
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
-    
+
     conOperator.btn_X
         .and(conSwitchboard.btn_1)
         .whileActiveContinuous(comVisionSetShooter);
@@ -183,7 +183,19 @@ public class RobotContainer {
 
   public void useSwitchboardButtons() {
 
-    // btn_1 -> Don't Send Values to SmartDashboard
+    // btn_1 -> Vision Aim Y
+    // btn_2 -> Odometry Aim Y
+    // btn_3 -> Vision Aim X
+    // btn_4 -> Odometry Aim X
+
+    // btn_9 -> Use Hardcoded or Default Preference Values
+    if (conSwitchboard.btn_9.get()) {
+      SN_Preferences.usePreferences();
+    } else {
+      SN_Preferences.useDefaults();
+    }
+
+    // btn_10 -> Don't Send Values to SmartDashboard
     if (!conSwitchboard.btn_10.get()) {
       subDrivetrain.displayValuesOnDashboard();
       subHood.displayValuesOnDashboard();
@@ -199,20 +211,6 @@ public class RobotContainer {
       subTransfer.hideValuesOnDashboard();
       subTurret.hideValuesOnDashboard();
     }
-
-    // btn_2 -> Use Hardcoded or Default Preference Values
-    if (conSwitchboard.btn_9.get()) {
-      SN_Preferences.usePreferences();
-    } else {
-      SN_Preferences.useDefaults();
-    }
-
-    // btn_7 -> Vision Aim Y
-    // btn_8 -> Vision Aim X
-
-    // btn_9 -> Odometry Aim Y
-    // btn_10 -> Odometry Aim X
-
   }
 
   private void configureDashboardButtons() {
