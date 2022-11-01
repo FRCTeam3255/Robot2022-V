@@ -215,6 +215,12 @@ public class Drivetrain extends SubsystemBase {
         return TRAJ_B2toB4andB5;
       case B4toB2:
         return TRAJ_B4toB2;
+      case F1toB1:
+        return TRAJ_F1toB1;
+      case T4toB3:
+        return TRAJ_T4toB3;
+      case B3toRB3toB3:
+        return TRAJ_B3toRB3toB3;
 
       default:
         return null;
