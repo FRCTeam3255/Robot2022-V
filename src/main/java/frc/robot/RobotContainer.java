@@ -11,6 +11,7 @@ import com.frcteam3255.preferences.SN_Preferences;
 import com.frcteam3255.utils.SN_InstantCommand;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -178,6 +179,12 @@ public class RobotContainer {
 
     conSwitchboard.btn_2.whileHeld(comOdometrySetShooter);
     conSwitchboard.btn_4.whileHeld(comOdometryAimTurret);
+
+    conSwitchboard.btn_8.whileHeld(() -> subDrivetrain.resetPose(
+        subVision.calculatePoseFromVision(subVision.getDistanceFromHub(),
+            subDrivetrain.getPose().getRotation().getRadians(),
+            Rotation2d.fromDegrees(subTurret.getAngle()).getRadians(),
+            Rotation2d.fromDegrees(-subVision.limelight.getOffsetX()).getRadians())));
 
   }
 
