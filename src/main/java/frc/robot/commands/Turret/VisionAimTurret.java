@@ -7,6 +7,7 @@ package frc.robot.commands.Turret;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.AimState;
+import frc.robot.RobotPreferences.prefTurret;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
@@ -33,6 +34,13 @@ public class VisionAimTurret extends CommandBase {
   @Override
   public void execute() {
     position = subTurret.getAngle() - subVision.limelight.getOffsetX();
+
+    while (position > prefTurret.turretMaxDegrees.getValue()) {
+      position -= 360;
+    }
+    while (position < prefTurret.turretMinDegrees.getValue()) {
+      position += 360;
+    }
 
     switch (RobotContainer.aimState) {
       case MANUAL:
