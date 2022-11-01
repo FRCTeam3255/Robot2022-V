@@ -63,7 +63,13 @@ public class RobotContainer {
 
   private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
   // Autos
-  private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
+  private final FourBallA autoFourBallA = new FourBallA(
+      subDrivetrain,
+      subShooter,
+      subTurret,
+      subHood,
+      subTransfer,
+      subIntake);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public static CargoState cargoState;

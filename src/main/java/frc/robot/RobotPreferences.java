@@ -12,6 +12,20 @@ public final class RobotPreferences {
   public static final SN_ZeroIntPreference zeroIntPref = new SN_ZeroIntPreference();
   public static final SN_ZeroDoublePreference zeroDoublePref = new SN_ZeroDoublePreference();
 
+  public static final class prefAuto {
+    public static final class FourBall {
+      // Part 1 of four ball auto
+      public static final SN_DoublePreference shooterRPM1FourBall = new SN_DoublePreference("shooterRPM1FourBall", 0);
+      public static final SN_DoublePreference turretAngle1FourBall = new SN_DoublePreference("turretAngle1FourBall", 0);
+      public static final SN_DoublePreference hoodAngle1FourBall = new SN_DoublePreference("hoodAngle1FourBall", 0);
+
+      // Part 2 of four ball auto
+      public static final SN_DoublePreference shooterRPM2FourBall = new SN_DoublePreference("shooterRPM2FourBall", 0);
+      public static final SN_DoublePreference turretAngle2FourBall = new SN_DoublePreference("turretAngle2FourBall", 0);
+      public static final SN_DoublePreference hoodAngle2FourBall = new SN_DoublePreference("hoodAngle2FourBall", 0);
+    }
+  }
+
   public static final class prefClimber {
     public static final SN_DoublePreference climberArbitraryFeedForward = new SN_DoublePreference(
         "climberArbitraryFeedForward", 0);
@@ -150,7 +164,6 @@ public final class RobotPreferences {
 
     public static final SN_DoublePreference turretOpenLoopSpeed = new SN_DoublePreference("turretOpenLoopSpeed",
         0.3);
-
     public static final SN_DoublePreference turretMinDegrees = new SN_DoublePreference("turretMinDegrees", -270);
     public static final SN_DoublePreference turretMaxDegrees = new SN_DoublePreference("turretMaxDegrees", 110);
     public static final SN_DoublePreference turretFacingTowardsIntakeDegrees = new SN_DoublePreference(
@@ -161,5 +174,4 @@ public final class RobotPreferences {
     public static final SN_DoublePreference turretClimberThreshold = new SN_DoublePreference(
         "turretClimberThreshold", -269);
   }
-
 }
