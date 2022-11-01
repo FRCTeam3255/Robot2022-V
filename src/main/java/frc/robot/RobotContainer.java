@@ -149,14 +149,14 @@ public class RobotContainer {
     conOperator.btn_LBump.whileHeld(comMoveTurret);
     conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
     conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
-
+    
     conOperator.btn_X
-        .and(conSwitchboard.btn_8)
-        .whileActiveContinuous(comVisionAimTurret);
-
-    conOperator.btn_X
-        .and(conSwitchboard.btn_7)
+        .and(conSwitchboard.btn_1)
         .whileActiveContinuous(comVisionSetShooter);
+
+    conOperator.btn_X
+        .and(conSwitchboard.btn_3)
+        .whileActiveContinuous(comVisionAimTurret);
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);
@@ -176,15 +176,15 @@ public class RobotContainer {
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
         .whenPressed(() -> subHood.setAngle(prefPreset.presetTarmacHoodDegrees));
 
-    conSwitchboard.btn_9.whileHeld(comOdometrySetShooter);
-    conSwitchboard.btn_10.whileHeld(comOdometryAimTurret);
+    conSwitchboard.btn_2.whileHeld(comOdometrySetShooter);
+    conSwitchboard.btn_4.whileHeld(comOdometryAimTurret);
 
   }
 
   public void useSwitchboardButtons() {
 
     // btn_1 -> Don't Send Values to SmartDashboard
-    if (!conSwitchboard.btn_1.get()) {
+    if (!conSwitchboard.btn_10.get()) {
       subDrivetrain.displayValuesOnDashboard();
       subHood.displayValuesOnDashboard();
       subIntake.displayValuesOnDashboard();
@@ -201,7 +201,7 @@ public class RobotContainer {
     }
 
     // btn_2 -> Use Hardcoded or Default Preference Values
-    if (conSwitchboard.btn_2.get()) {
+    if (conSwitchboard.btn_9.get()) {
       SN_Preferences.usePreferences();
     } else {
       SN_Preferences.useDefaults();
