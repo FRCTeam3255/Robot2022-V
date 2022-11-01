@@ -75,10 +75,14 @@ public final class Constants {
     // angle (y): angle of hood to make shot from given ty
     // relies on shooter table
     private static final SN_Point2D[] tyAnglePoints = {
+        new SN_Point2D(-17.16, 38.0),
         new SN_Point2D(-13.33, 37.0),
+        new SN_Point2D(-10.6, 35.0),
         new SN_Point2D(-6.82, 34.0),
+        new SN_Point2D(-4.21, 31.0),
         new SN_Point2D(1.55, 28.0),
-        new SN_Point2D(16.09, 20.0)
+        new SN_Point2D(6.79, 24.0),
+        new SN_Point2D(16.09, 20.0),
     };
 
     // distance (x): distance to center of hub from limelight lens in meters
@@ -86,9 +90,13 @@ public final class Constants {
     // relies on shooter table
     private static final SN_Point2D[] distanceAnglePoints = {
         new SN_Point2D(Units.inchesToMeters(79.0), 20.0),
+        new SN_Point2D(Units.inchesToMeters(97.0), 24.0),
         new SN_Point2D(Units.inchesToMeters(115.0), 28.0),
+        new SN_Point2D(Units.inchesToMeters(133.0), 31.0),
         new SN_Point2D(Units.inchesToMeters(151.0), 34.0),
-        new SN_Point2D(Units.inchesToMeters(187.0), 37.0)
+        new SN_Point2D(Units.inchesToMeters(169.0), 35.0),
+        new SN_Point2D(Units.inchesToMeters(187.0), 37.0),
+        new SN_Point2D(Units.inchesToMeters(229.0), 38.0)
     };
 
     public static final SN_Lerp tyAngleTable = new SN_Lerp(tyAnglePoints);
@@ -112,10 +120,14 @@ public final class Constants {
     // velocity (y): rpm of shooter flywheel to make shot
     // relies on hood table
     private static final SN_Point2D[] tyVelocityPoints = {
-        new SN_Point2D(-13.33, 3800),
-        new SN_Point2D(-6.82, 3500),
-        new SN_Point2D(1.55, 3255),
-        new SN_Point2D(16.09, 3200)
+        new SN_Point2D(-17.16, 5300.0),
+        new SN_Point2D(-13.33, 3800.0),
+        new SN_Point2D(-10.6, 3650.0),
+        new SN_Point2D(-6.82, 3500.0),
+        new SN_Point2D(-4.21, 3350.0),
+        new SN_Point2D(1.55, 3255.0),
+        new SN_Point2D(6.79, 3100.0),
+        new SN_Point2D(16.09, 3200.0),
     };
 
     // distance (x): distance from hub in meters
@@ -123,10 +135,13 @@ public final class Constants {
     // relies on hood table
     private static final SN_Point2D[] distanceVelocityPoints = {
         new SN_Point2D(Units.inchesToMeters(79.0), 3200.0),
+        new SN_Point2D(Units.inchesToMeters(97.0), 3100.0),
         new SN_Point2D(Units.inchesToMeters(115.0), 3255.0),
+        new SN_Point2D(Units.inchesToMeters(133.0), 3350.0),
         new SN_Point2D(Units.inchesToMeters(151.0), 3500.0),
-        new SN_Point2D(Units.inchesToMeters(187.0), 3800.0)
-
+        new SN_Point2D(Units.inchesToMeters(169.0), 3650.0),
+        new SN_Point2D(Units.inchesToMeters(187.0), 3800.0),
+        new SN_Point2D(Units.inchesToMeters(229.0), 5300.0),
     };
 
     public static final SN_Lerp tyVelocityTable = new SN_Lerp(tyVelocityPoints);
@@ -153,18 +168,22 @@ public final class Constants {
     // ty (x): limelight y offset in limelight native units
     // distance (y): distance in meters when limelight has given y offset
     private static final SN_Point2D[] tyDistancePoints = {
-        new SN_Point2D(-15.32, Units.inchesToMeters(211)),
-        new SN_Point2D(-14.5, Units.inchesToMeters(199)),
-        new SN_Point2D(-13.33, Units.inchesToMeters(187)),
-        new SN_Point2D(-11.56, Units.inchesToMeters(175)),
-        new SN_Point2D(-8.56, Units.inchesToMeters(163)),
-        new SN_Point2D(-6.82, Units.inchesToMeters(151)),
-        new SN_Point2D(-4.74, Units.inchesToMeters(139)),
-        new SN_Point2D(-2.19, Units.inchesToMeters(127)),
-        new SN_Point2D(1.55, Units.inchesToMeters(115)),
-        new SN_Point2D(5.63, Units.inchesToMeters(103)),
-        new SN_Point2D(10.55, Units.inchesToMeters(91)),
-        new SN_Point2D(16.09, Units.inchesToMeters(79)),
+        new SN_Point2D(-17.16, Units.inchesToMeters(229.0)),
+        new SN_Point2D(-15.32, Units.inchesToMeters(211.0)),
+        new SN_Point2D(-14.5, Units.inchesToMeters(199.0)),
+        new SN_Point2D(-13.33, Units.inchesToMeters(187.0)),
+        new SN_Point2D(-11.56, Units.inchesToMeters(175.0)),
+        new SN_Point2D(-10.6, Units.inchesToMeters(169.0)),
+        new SN_Point2D(-8.56, Units.inchesToMeters(163.0)),
+        new SN_Point2D(-6.82, Units.inchesToMeters(151.0)),
+        new SN_Point2D(-4.74, Units.inchesToMeters(139.0)),
+        new SN_Point2D(-4.21, Units.inchesToMeters(133.0)),
+        new SN_Point2D(-2.19, Units.inchesToMeters(127.0)),
+        new SN_Point2D(1.55, Units.inchesToMeters(115.0)),
+        new SN_Point2D(5.63, Units.inchesToMeters(103.0)),
+        new SN_Point2D(6.79, Units.inchesToMeters(97.0)),
+        new SN_Point2D(10.55, Units.inchesToMeters(91.0)),
+        new SN_Point2D(16.09, Units.inchesToMeters(79.0)),
     };
 
     public static final SN_Lerp tyDistanceTable = new SN_Lerp(tyDistancePoints);
