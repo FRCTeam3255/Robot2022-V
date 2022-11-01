@@ -50,7 +50,8 @@ public class Drivetrain extends SubsystemBase {
   Trajectory TRAJ_B2toB4andB5;
   Trajectory TRAJ_B4toB2;
   Trajectory TRAJ_F1toB1;
-  Trajectory TRAJ_
+  Trajectory TRAJ_T4toB3;
+  Trajectory TRAJ_B3toRB3toB3;
 
   public Drivetrain() {
 
