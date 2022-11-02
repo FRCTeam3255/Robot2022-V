@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import com.frcteam3255.utils.SN_Lerp;
 import com.frcteam3255.utils.SN_Point2D;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -49,6 +51,19 @@ public final class Constants {
     public static final Translation2d HUB_POSITION = new Translation2d(
         Units.inchesToMeters(324), Units.inchesToMeters(162));
 
+    // front refers to the intake side of robot facing in the fender
+    // left and right is relative to the drivers station
+    // only positions for allied alliance color, opposing alliance is not included
+    public static final Pose2d LEFT_FENDER_POSITION_FRONT = new Pose2d(
+        6.98, 4.61, Rotation2d.fromDegrees(-21));
+    public static final Pose2d LEFT_FENDER_POSITION_BACK = new Pose2d(
+        6.98, 4.61, Rotation2d.fromDegrees(159));
+
+    public static final Pose2d RIGHT_FENDER_POSITION_FRONT = new Pose2d(
+        7.78, 2.84, Rotation2d.fromDegrees(69));
+    public static final Pose2d RIGHT_FENDER_POSITION_BACK = new Pose2d(
+        7.78, 2.84, Rotation2d.fromDegrees(-111));
+
   }
 
   public static final class constHood {
@@ -56,13 +71,35 @@ public final class Constants {
     public static final double GEAR_RATIO = 69.33333;
     public static final boolean INVERTED = true;
 
-    // distance (x): meters from center of hub
+    // ty (x): limelight y offset
+    // angle (y): angle of hood to make shot from given ty
+    // relies on shooter table
+    private static final SN_Point2D[] tyAnglePoints = {
+        new SN_Point2D(-17.16, 38.0),
+        new SN_Point2D(-13.33, 37.0),
+        new SN_Point2D(-10.6, 35.0),
+        new SN_Point2D(-6.82, 34.0),
+        new SN_Point2D(-4.21, 31.0),
+        new SN_Point2D(1.55, 28.0),
+        new SN_Point2D(6.79, 24.0),
+        new SN_Point2D(16.09, 20.0),
+    };
+
+    // distance (x): distance to center of hub from limelight lens in meters
     // angle (y): angle of hood to make shot from given distance
     // relies on shooter table
     private static final SN_Point2D[] distanceAnglePoints = {
-        new SN_Point2D(0, 0),
-        new SN_Point2D(1, 1)
+        new SN_Point2D(Units.inchesToMeters(79.0), 20.0),
+        new SN_Point2D(Units.inchesToMeters(97.0), 24.0),
+        new SN_Point2D(Units.inchesToMeters(115.0), 28.0),
+        new SN_Point2D(Units.inchesToMeters(133.0), 31.0),
+        new SN_Point2D(Units.inchesToMeters(151.0), 34.0),
+        new SN_Point2D(Units.inchesToMeters(169.0), 35.0),
+        new SN_Point2D(Units.inchesToMeters(187.0), 37.0),
+        new SN_Point2D(Units.inchesToMeters(229.0), 38.0)
     };
+
+    public static final SN_Lerp tyAngleTable = new SN_Lerp(tyAnglePoints);
 
     public static final SN_Lerp distanceAngleTable = new SN_Lerp(distanceAnglePoints);
 
@@ -79,13 +116,35 @@ public final class Constants {
 
     public static final boolean INVERTED = false;
 
-    // distance (x): meters from center of hub
-    // velocity (y): rpm of shooter flywheel to make shot from given distance
+    // ty (x): y offset of limelight
+    // velocity (y): rpm of shooter flywheel to make shot
+    // relies on hood table
+    private static final SN_Point2D[] tyVelocityPoints = {
+        new SN_Point2D(-17.16, 5300.0),
+        new SN_Point2D(-13.33, 3800.0),
+        new SN_Point2D(-10.6, 3650.0),
+        new SN_Point2D(-6.82, 3500.0),
+        new SN_Point2D(-4.21, 3350.0),
+        new SN_Point2D(1.55, 3255.0),
+        new SN_Point2D(6.79, 3100.0),
+        new SN_Point2D(16.09, 3200.0),
+    };
+
+    // distance (x): distance from hub in meters
+    // velocity (y): rpm of shooter flywheel
     // relies on hood table
     private static final SN_Point2D[] distanceVelocityPoints = {
-        new SN_Point2D(0, 0),
-        new SN_Point2D(1, 1)
+        new SN_Point2D(Units.inchesToMeters(79.0), 3200.0),
+        new SN_Point2D(Units.inchesToMeters(97.0), 3100.0),
+        new SN_Point2D(Units.inchesToMeters(115.0), 3255.0),
+        new SN_Point2D(Units.inchesToMeters(133.0), 3350.0),
+        new SN_Point2D(Units.inchesToMeters(151.0), 3500.0),
+        new SN_Point2D(Units.inchesToMeters(169.0), 3650.0),
+        new SN_Point2D(Units.inchesToMeters(187.0), 3800.0),
+        new SN_Point2D(Units.inchesToMeters(229.0), 5300.0),
     };
+
+    public static final SN_Lerp tyVelocityTable = new SN_Lerp(tyVelocityPoints);
 
     public static final SN_Lerp distanceVelocityTable = new SN_Lerp(distanceVelocityPoints);
 
@@ -109,8 +168,22 @@ public final class Constants {
     // ty (x): limelight y offset in limelight native units
     // distance (y): distance in meters when limelight has given y offset
     private static final SN_Point2D[] tyDistancePoints = {
-        new SN_Point2D(0, 0),
-        new SN_Point2D(1, 1)
+        new SN_Point2D(-17.16, Units.inchesToMeters(229.0)),
+        new SN_Point2D(-15.32, Units.inchesToMeters(211.0)),
+        new SN_Point2D(-14.5, Units.inchesToMeters(199.0)),
+        new SN_Point2D(-13.33, Units.inchesToMeters(187.0)),
+        new SN_Point2D(-11.56, Units.inchesToMeters(175.0)),
+        new SN_Point2D(-10.6, Units.inchesToMeters(169.0)),
+        new SN_Point2D(-8.56, Units.inchesToMeters(163.0)),
+        new SN_Point2D(-6.82, Units.inchesToMeters(151.0)),
+        new SN_Point2D(-4.74, Units.inchesToMeters(139.0)),
+        new SN_Point2D(-4.21, Units.inchesToMeters(133.0)),
+        new SN_Point2D(-2.19, Units.inchesToMeters(127.0)),
+        new SN_Point2D(1.55, Units.inchesToMeters(115.0)),
+        new SN_Point2D(5.63, Units.inchesToMeters(103.0)),
+        new SN_Point2D(6.79, Units.inchesToMeters(97.0)),
+        new SN_Point2D(10.55, Units.inchesToMeters(91.0)),
+        new SN_Point2D(16.09, Units.inchesToMeters(79.0)),
     };
 
     public static final SN_Lerp tyDistanceTable = new SN_Lerp(tyDistancePoints);
@@ -121,4 +194,7 @@ public final class Constants {
     SHOOTING, COLLECTING, DISCARDING, PROCESSING, NONE
   }
 
+  public enum AimState {
+    MANUAL, VISION, ODOMETRY, NONE
+  }
 }

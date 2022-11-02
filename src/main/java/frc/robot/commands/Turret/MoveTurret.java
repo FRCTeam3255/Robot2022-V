@@ -7,6 +7,8 @@ package frc.robot.commands.Turret;
 import com.frcteam3255.joystick.SN_DualActionStick;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.AimState;
 import frc.robot.RobotPreferences.prefTurret;
 import frc.robot.subsystems.Turret;
 
@@ -24,6 +26,7 @@ public class MoveTurret extends CommandBase {
 
   @Override
   public void initialize() {
+    RobotContainer.aimState = AimState.MANUAL;
   }
 
   @Override
@@ -36,6 +39,7 @@ public class MoveTurret extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     subTurret.setSpeed(0);
+    RobotContainer.aimState = AimState.NONE;
   }
 
   @Override
