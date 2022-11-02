@@ -63,8 +63,8 @@ public final class RobotMap {
     public static final int BOTTOM_MOTOR_CAN = 51;
     public static final int TOP_MOTOR_CAN = 52;
 
-    public static final int TOP_LEFT_SWITCH_DIO = 1;
-    public static final int TOP_RIGHT_SWITCH_DIO = 4;
+    public static final int TOP_LEFT_SWITCH_DIO = 4;
+    public static final int TOP_RIGHT_SWITCH_DIO = 1;
     public static final int BOTTOM_RIGHT_SWITCH_DIO = 2;
     public static final int BOTTOM_LEFT_SWITCH_DIO = 3;
 
