@@ -36,7 +36,7 @@ public class Defense extends SequentialCommandGroup {
   Trajectory circleTraj;
   RamseteCommand circle;
 
-  double aimTimeout = 2;
+  double aimTimeout = 1;
   double shootTimeout = 2;
 
   public Defense(
@@ -69,28 +69,29 @@ public class Defense extends SequentialCommandGroup {
     // discard red ball
 
     addCommands(
-        new InstantCommand(() -> subDrivetrain.resetPose(tarmacToBallTraj.getInitialPose())),
+        new InstantCommand(() -> subDrivetrain.resetPose(tarmacToBallTraj.getInitialPose())), // reset pose
 
         parallel(
-            new OdometryAimTurret(subTurret, subDrivetrain).withTimeout(aimTimeout),
-            new OdometrySetShooter(subDrivetrain, subShooter, subHood).withTimeout(aimTimeout)),
+            new OdometryAimTurret(subTurret, subDrivetrain).withTimeout(aimTimeout), // aim
+            new OdometrySetShooter(subDrivetrain, subShooter, subHood).withTimeout(aimTimeout)), // aim
 
-        new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()),
-        new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout),
-
-        parallel(
-            new OdometryAimTurret(subTurret, subDrivetrain).until(() -> tarmacToBall.isFinished()),
-            new OdometrySetShooter(subDrivetrain, subShooter, subHood).until(() -> tarmacToBall.isFinished()),
-            new InstantCommand(() -> subDrivetrain.resetPose(tarmacToBallTraj.getInitialPose())).andThen(tarmacToBall)),
-
-        new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()),
-        new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout),
-        new InstantCommand(() -> subShooter.setGoalRPM(0)),
+        new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()), // aim
+        new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout), // shoot
 
         parallel(
-            new InstantCommand(() -> subDrivetrain.resetPose(circleTraj.getInitialPose())).andThen(circle),
-            new CollectCargo(subIntake, subTransfer).until(() -> circle.isFinished())),
+            new CollectCargo(subIntake, subTransfer).until(() -> tarmacToBall.isFinished()), // collect cargo
+            new OdometryAimTurret(subTurret, subDrivetrain).until(() -> tarmacToBall.isFinished()), // aim
+            new OdometrySetShooter(subDrivetrain, subShooter, subHood).until(() -> tarmacToBall.isFinished()), // aim
+            new InstantCommand(() -> subDrivetrain.resetPose(tarmacToBallTraj.getInitialPose())).andThen(tarmacToBall)), // drive
 
-        new DiscardCargo(subIntake, subTransfer));
+        new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()), // aim
+        new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout), // shoot
+        new InstantCommand(() -> subShooter.neutralOutput()), // turn off shooter
+
+        parallel(
+            new InstantCommand(() -> subDrivetrain.resetPose(circleTraj.getInitialPose())).andThen(circle), // drive
+            new CollectCargo(subIntake, subTransfer).until(() -> circle.isFinished())), // collect cargo
+
+        new DiscardCargo(subIntake, subTransfer)); // discard cargo
   }
 }
