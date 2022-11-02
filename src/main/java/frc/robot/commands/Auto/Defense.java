@@ -30,11 +30,11 @@ public class Defense extends SequentialCommandGroup {
   Turret subTurret;
   Hood subHood;
 
-  Trajectory tarmacToBallTraj = subDrivetrain.getTrajectory(AutoPath.T4toB3);
-  RamseteCommand tarmacToBall = subDrivetrain.getRamseteCommand(tarmacToBallTraj);
+  Trajectory tarmacToBallTraj;
+  RamseteCommand tarmacToBall;
 
-  Trajectory circleTraj = subDrivetrain.getTrajectory(AutoPath.B3toRB3toB3);
-  RamseteCommand circle = subDrivetrain.getRamseteCommand(circleTraj);
+  Trajectory circleTraj;
+  RamseteCommand circle;
 
   double aimTimeout = 2;
   double shootTimeout = 2;
@@ -53,6 +53,12 @@ public class Defense extends SequentialCommandGroup {
     this.subShooter = subShooter;
     this.subTurret = subTurret;
     this.subHood = subHood;
+
+    tarmacToBallTraj = subDrivetrain.getTrajectory(AutoPath.T4toB3);
+    tarmacToBall = subDrivetrain.getRamseteCommand(tarmacToBallTraj);
+
+    circleTraj = subDrivetrain.getTrajectory(AutoPath.B3toRB3toB3);
+    circle = subDrivetrain.getRamseteCommand(circleTraj);
 
     // reset pose
     // aim with odometry
@@ -79,10 +85,10 @@ public class Defense extends SequentialCommandGroup {
 
         new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()),
         new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout),
-        new InstantCommand(() -> subDrivetrain.resetPose(circleTraj.getInitialPose())).andThen(circle),
+        new InstantCommand(() -> subShooter.setGoalRPM(0)),
 
         parallel(
-            new InstantCommand(() -> subDrivetrain.resetPose(tarmacToBallTraj.getInitialPose())).andThen(circle),
+            new InstantCommand(() -> subDrivetrain.resetPose(circleTraj.getInitialPose())).andThen(circle),
             new CollectCargo(subIntake, subTransfer).until(() -> circle.isFinished())),
 
         new DiscardCargo(subIntake, subTransfer));

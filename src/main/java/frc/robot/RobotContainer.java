@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.AimState;
 import frc.robot.Constants.CargoState;
@@ -24,6 +25,7 @@ import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
 import frc.robot.RobotPreferences.prefTurret;
+import frc.robot.commands.Auto.Defense;
 import frc.robot.commands.Auto.FourBallA;
 import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
@@ -42,6 +44,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Drivetrain.AutoPath;
 
 public class RobotContainer {
 
@@ -83,6 +86,16 @@ public class RobotContainer {
       subHood,
       subTransfer,
       subIntake);
+
+  private final Defense autoDefence = new Defense(
+      subDrivetrain,
+      subIntake,
+      subTransfer,
+      subShooter,
+      subTurret,
+      subHood);
+
+  private final RamseteCommand test = subDrivetrain.getRamseteCommand(subDrivetrain.getTrajectory(AutoPath.T4toB3));
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   public static CargoState cargoState;
@@ -250,6 +263,7 @@ public class RobotContainer {
   private void configureAutoSelector() {
     autoChooser.setDefaultOption("null", null);
     autoChooser.addOption("Four Ball A", autoFourBallA);
+    autoChooser.addOption("Defense", autoDefence);
     autoChooser.addOption("LEFT_FENDER_POSITION_FRONT",
         new InstantCommand(() -> subDrivetrain.resetPose(constField.LEFT_FENDER_POSITION_FRONT)));
     autoChooser.addOption("LEFT_FENDER_POSITION_BACK",
