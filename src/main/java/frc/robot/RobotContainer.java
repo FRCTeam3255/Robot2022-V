@@ -142,7 +142,10 @@ public class RobotContainer {
     // Operator Commands
 
     // Shooting
-    conOperator.btn_RTrig.whileHeld(comShootCargo);
+    conOperator.btn_RTrig
+        .whileHeld(comShootCargo)
+        .whileHeld(new RunCommand(() -> subShooter.setMotorRPMToGoalRPM(), subShooter))
+        .whenReleased(new InstantCommand(() -> subShooter.neutralOutput(), subShooter));
 
     conOperator.btn_RBump.whenPressed(new RunCommand(() -> subShooter.setMotorRPMToGoalRPM(), subShooter));
     conOperator.btn_Start.whenPressed(new InstantCommand(() -> subShooter.neutralOutput(), subShooter));
