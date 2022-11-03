@@ -54,6 +54,7 @@ public class Drivetrain extends SubsystemBase {
   Trajectory TRAJ_T4toB3; // tarmac 4 to ball 3
   Trajectory TRAJ_B3toRB3toB3; // ball 3 to red ball 3 to ball 3 (in a circle)
   Trajectory TRAJ_TestAuto; // straight forward for two meters
+  Trajectory TRAJ_T3toTaxi; // tarmac 3 with simple taxi
 
   public Drivetrain() {
 
@@ -209,6 +210,7 @@ public class Drivetrain extends SubsystemBase {
       TRAJ_T4toB3 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_T4toB3);
       TRAJ_B3toRB3toB3 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B3toRB3toB3);
       TRAJ_TestAuto = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_TESTAUTO);
+      TRAJ_T3toTaxi = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_T3toTaxi);
 
     } catch (Exception e) {
 
@@ -224,7 +226,8 @@ public class Drivetrain extends SubsystemBase {
     F1toB1,
     T4toB3,
     B3toRB3toB3,
-    TestAuto
+    TestAuto,
+    T3toTaxi
   }
 
   public Trajectory getTrajectory(AutoPath trajectory) {
@@ -244,6 +247,8 @@ public class Drivetrain extends SubsystemBase {
         return TRAJ_B3toRB3toB3;
       case TestAuto:
         return TRAJ_TestAuto;
+      case T3toTaxi:
+        return TRAJ_T3toTaxi;
 
       default:
         return null;
