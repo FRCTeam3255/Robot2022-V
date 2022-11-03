@@ -62,7 +62,7 @@ public class Vision extends SubsystemBase {
     double goalAngle = robotAngle + turretAngle + offsetToTarget;
 
     double calculatedRobotXPosition = constField.HUB_POSITION.getX() - (distanceFromHub * Math.cos(goalAngle));
-    double calculatedRobotYPosition = constField.HUB_POSITION.getY() - (distanceFromHub * Math.sin(goalAngle));
+    double calculatedRobotYPosition = constField.HUB_POSITION.getY() + (distanceFromHub * Math.sin(goalAngle));
 
     return new Pose2d(calculatedRobotXPosition, calculatedRobotYPosition, new Rotation2d(-robotAngle));
   }

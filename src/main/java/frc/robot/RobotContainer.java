@@ -24,6 +24,7 @@ import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
 import frc.robot.RobotPreferences.prefTurret;
+import frc.robot.commands.VisionResetPose;
 import frc.robot.commands.Auto.Defense;
 import frc.robot.commands.Auto.F1toB1;
 import frc.robot.commands.Auto.FourBallA;
