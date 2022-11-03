@@ -25,6 +25,7 @@ import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
 import frc.robot.RobotPreferences.prefTurret;
 import frc.robot.commands.Auto.Defense;
+import frc.robot.commands.Auto.F1toB1;
 import frc.robot.commands.Auto.FourBallA;
 import frc.robot.commands.Auto.TestAuto;
 import frc.robot.commands.Cargo.CollectCargo;
@@ -95,6 +96,7 @@ public class RobotContainer {
       subHood);
 
   private final TestAuto testAuto = new TestAuto(subDrivetrain);
+  private final F1toB1 autoF1toB1 = new F1toB1(subDrivetrain, subIntake, subTransfer, subShooter, subTurret, subHood);
 
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -264,6 +266,7 @@ public class RobotContainer {
     autoChooser.addOption("Four Ball A", autoFourBallA);
     autoChooser.addOption("Defense", autoDefence);
     autoChooser.addOption("Test", testAuto);
+    autoChooser.addOption("F1toB1", autoF1toB1);
     autoChooser.addOption("LEFT_FENDER_POSITION_FRONT",
         new InstantCommand(() -> subDrivetrain.resetPose(constField.LEFT_FENDER_POSITION_FRONT)));
     autoChooser.addOption("LEFT_FENDER_POSITION_BACK",
