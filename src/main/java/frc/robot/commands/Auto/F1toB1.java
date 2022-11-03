@@ -69,7 +69,7 @@ public class F1toB1 extends SequentialCommandGroup {
         new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout),
 
         parallel(
-            new InstantCommand(() -> subDrivetrain.resetPose(F1toB1Traj.getInitialPose())),
+            new InstantCommand(() -> subDrivetrain.resetPose(F1toB1Traj.getInitialPose())).andThen(F1toB1),
             new CollectCargo(subIntake, subTransfer).withTimeout(F1toB1Time),
             new OdometryAimTurret(subTurret, subDrivetrain).withTimeout(F1toB1Time),
             new OdometrySetShooter(subDrivetrain, subShooter, subHood).withTimeout(F1toB1Time),
