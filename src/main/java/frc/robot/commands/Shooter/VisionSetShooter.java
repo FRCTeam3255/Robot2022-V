@@ -12,7 +12,6 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.AimState;
 import frc.robot.Constants.constHood;
 import frc.robot.Constants.constShooter;
-import frc.robot.RobotPreferences.prefTurret;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;

@@ -28,7 +28,6 @@ import frc.robot.Constants.constDrivetrain;
 import frc.robot.Constants.constField;
 import frc.robot.RobotMap.mapDrivetrain;
 import frc.robot.RobotPreferences.prefDrivetrain;
-import frc.robot.commands.Auto.TestAuto;
 
 public class Drivetrain extends SubsystemBase {
 
