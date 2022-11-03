@@ -23,6 +23,10 @@ public class ShootCargo extends CommandBase {
   SN_DoublePreference outputBottom;
   SN_DoublePreference outputTop;
 
+  boolean isShooterReady;
+
+  int buffer;
+
   public ShootCargo(Shooter subShooter, Transfer subTransfer) {
 
     this.subShooter = subShooter;
@@ -34,6 +38,7 @@ public class ShootCargo extends CommandBase {
 
   @Override
   public void initialize() {
+    buffer = 0;
   }
 
   @Override
@@ -45,7 +50,11 @@ public class ShootCargo extends CommandBase {
     outputBottom = prefTransfer.transferBeltSpeed;
     outputTop = prefTransfer.transferBeltSpeed;
 
-    if (!subShooter.isMotorAtSpeed()) {
+    buffer++;
+
+    isShooterReady = subShooter.isMotorAtSpeed() && buffer > 15;
+
+    if (!isShooterReady) {
 
       if (subTransfer.isTopBallCollected()) {
         outputTop = RobotPreferences.zeroDoublePref;

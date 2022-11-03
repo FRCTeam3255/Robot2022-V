@@ -39,6 +39,9 @@ public class Defense extends SequentialCommandGroup {
   double aimTimeout = 1;
   double shootTimeout = 2;
 
+  double tarmacToBallTime;
+  double circleTime;
+
   public Defense(
       Drivetrain subDrivetrain,
       Intake subIntake,
@@ -60,6 +63,9 @@ public class Defense extends SequentialCommandGroup {
     circleTraj = subDrivetrain.getTrajectory(AutoPath.B3toRB3toB3);
     circle = subDrivetrain.getRamseteCommand(circleTraj);
 
+    tarmacToBallTime = tarmacToBallTraj.getTotalTimeSeconds();
+    circleTime = circleTraj.getTotalTimeSeconds();
+
     // reset pose
     // aim with odometry
     // shoot ball
@@ -79,10 +85,10 @@ public class Defense extends SequentialCommandGroup {
         new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout), // shoot
 
         parallel(
-            new CollectCargo(subIntake, subTransfer).until(() -> tarmacToBall.isFinished()), // collect cargo
-            new OdometryAimTurret(subTurret, subDrivetrain).until(() -> tarmacToBall.isFinished()), // aim
-            new OdometrySetShooter(subDrivetrain, subShooter, subHood).until(() -> tarmacToBall.isFinished()), // aim
-            new InstantCommand(() -> subDrivetrain.resetPose(tarmacToBallTraj.getInitialPose())).andThen(tarmacToBall)), // drive
+            new InstantCommand(() -> subDrivetrain.resetPose(tarmacToBallTraj.getInitialPose())).andThen(tarmacToBall), // drive
+            new CollectCargo(subIntake, subTransfer).withTimeout(tarmacToBallTime), // collect cargo
+            new OdometryAimTurret(subTurret, subDrivetrain).withTimeout(tarmacToBallTime), // aim
+            new OdometrySetShooter(subDrivetrain, subShooter, subHood).withTimeout(tarmacToBallTime)), // aim
 
         new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()), // aim
         new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout), // shoot
@@ -90,7 +96,7 @@ public class Defense extends SequentialCommandGroup {
 
         parallel(
             new InstantCommand(() -> subDrivetrain.resetPose(circleTraj.getInitialPose())).andThen(circle), // drive
-            new CollectCargo(subIntake, subTransfer).until(() -> circle.isFinished())), // collect cargo
+            new CollectCargo(subIntake, subTransfer).withTimeout(circleTime)), // collect cargo
 
         new DiscardCargo(subIntake, subTransfer)); // discard cargo
   }
