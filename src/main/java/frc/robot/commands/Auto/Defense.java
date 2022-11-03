@@ -7,6 +7,7 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
@@ -88,9 +89,9 @@ public class Defense extends SequentialCommandGroup {
             new InstantCommand(() -> subDrivetrain.resetPose(tarmacToBallTraj.getInitialPose())).andThen(tarmacToBall), // drive
             new CollectCargo(subIntake, subTransfer).withTimeout(tarmacToBallTime), // collect cargo
             new OdometryAimTurret(subTurret, subDrivetrain).withTimeout(tarmacToBallTime), // aim
-            new OdometrySetShooter(subDrivetrain, subShooter, subHood).withTimeout(tarmacToBallTime)), // aim
+            new OdometrySetShooter(subDrivetrain, subShooter, subHood).withTimeout(tarmacToBallTime),
+            new RunCommand(() -> subShooter.setMotorRPMToGoalRPM()).withTimeout(tarmacToBallTime)), // aim
 
-        new InstantCommand(() -> subShooter.setMotorRPMToGoalRPM()), // aim
         new ShootCargo(subShooter, subTransfer).withTimeout(shootTimeout), // shoot
         new InstantCommand(() -> subShooter.neutralOutput()), // turn off shooter
 
