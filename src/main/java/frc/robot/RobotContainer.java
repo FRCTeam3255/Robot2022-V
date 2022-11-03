@@ -74,7 +74,7 @@ public class RobotContainer {
   private final VisionAimTurret comVisionAimTurret = new VisionAimTurret(subTurret, subVision);
   private final OdometryAimTurret comOdometryAimTurret = new OdometryAimTurret(subTurret, subDrivetrain);
 
-  private final VisionSetShooter comVisionSetShooter = new VisionSetShooter(subShooter, subHood, subVision);
+  private final VisionSetShooter comVisionSetShooter = new VisionSetShooter(subShooter, subHood, subVision, subTurret);
   private final OdometrySetShooter comOdometrySetShooter = new OdometrySetShooter(subDrivetrain, subShooter, subHood);
 
   private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);

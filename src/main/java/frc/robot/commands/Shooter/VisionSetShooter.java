@@ -12,8 +12,10 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.AimState;
 import frc.robot.Constants.constHood;
 import frc.robot.Constants.constShooter;
+import frc.robot.RobotPreferences.prefTurret;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Vision;
 
 public class VisionSetShooter extends CommandBase {
@@ -21,6 +23,7 @@ public class VisionSetShooter extends CommandBase {
   Shooter subShooter;
   Hood subHood;
   Vision subVision;
+  Turret subTurret;
 
   double goalRPM;
   double angle;
@@ -31,11 +34,13 @@ public class VisionSetShooter extends CommandBase {
   SN_Limelight limelight;
 
   boolean precedence;
+  boolean inDeadzone;
 
-  public VisionSetShooter(Shooter subShooter, Hood subHood, Vision subVision) {
+  public VisionSetShooter(Shooter subShooter, Hood subHood, Vision subVision, Turret subTurret) {
     this.subShooter = subShooter;
     this.subHood = subHood;
     this.subVision = subVision;
+    this.subTurret = subTurret;
 
     limelight = subVision.limelight;
 
@@ -43,6 +48,7 @@ public class VisionSetShooter extends CommandBase {
     angle = 0;
 
     precedence = false;
+    inDeadzone = false;
 
     addRequirements();
 
@@ -73,7 +79,10 @@ public class VisionSetShooter extends CommandBase {
         break;
     }
 
-    if (precedence) {
+    inDeadzone = subTurret.getAngle() < prefTurret.turretDeadzoneSmall.getValue()
+        || subTurret.getAngle() > prefTurret.turretDeadzoneLarge.getValue();
+
+    if (precedence && !inDeadzone) {
       RobotContainer.aimState = AimState.VISION;
       subShooter.setGoalRPM(goalRPM);
       subHood.setAngle(angle);
