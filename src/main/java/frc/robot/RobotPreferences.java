@@ -173,5 +173,9 @@ public final class RobotPreferences {
 
     public static final SN_DoublePreference turretClimberThreshold = new SN_DoublePreference(
         "turretClimberThreshold", -269);
+
+    public static final SN_DoublePreference turretDeadzoneSmall = new SN_DoublePreference("turretDeadzoneMin", -205);
+    public static final SN_DoublePreference turretDeadzoneLarge = new SN_DoublePreference("turretDeadzoneMax", 25);
+
   }
 }
