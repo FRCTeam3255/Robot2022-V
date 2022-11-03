@@ -49,6 +49,8 @@ public final class Constants {
         .resolve("pathplanner/generatedJSON/T4toB3.wpilib.json");
     public static final Path PATH_B3toRB3toB3 = Filesystem.getDeployDirectory().toPath()
         .resolve("pathplanner/generatedJSON/B3toRB3toB3.wpilib.json");
+    public static final Path PATH_TESTAUTO = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/TestPath.wpilib.json");
 
   }
 

@@ -28,6 +28,7 @@ import frc.robot.Constants.constDrivetrain;
 import frc.robot.Constants.constField;
 import frc.robot.RobotMap.mapDrivetrain;
 import frc.robot.RobotPreferences.prefDrivetrain;
+import frc.robot.commands.Auto.TestAuto;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -53,6 +54,7 @@ public class Drivetrain extends SubsystemBase {
   Trajectory TRAJ_F1toB1; // fender 1 to ball 1
   Trajectory TRAJ_T4toB3; // tarmac 4 to ball 3
   Trajectory TRAJ_B3toRB3toB3; // ball 3 to red ball 3 to ball 3 (in a circle)
+  Trajectory TRAJ_TestAuto; // straight forward for two meters
 
   public Drivetrain() {
 
@@ -207,6 +209,7 @@ public class Drivetrain extends SubsystemBase {
       TRAJ_F1toB1 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_F1toB1);
       TRAJ_T4toB3 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_T4toB3);
       TRAJ_B3toRB3toB3 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B3toRB3toB3);
+      TRAJ_TestAuto = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_TESTAUTO);
 
     } catch (Exception e) {
 
@@ -221,7 +224,8 @@ public class Drivetrain extends SubsystemBase {
     B4toB2,
     F1toB1,
     T4toB3,
-    B3toRB3toB3
+    B3toRB3toB3,
+    TestAuto
   }
 
   public Trajectory getTrajectory(AutoPath trajectory) {
@@ -239,6 +243,8 @@ public class Drivetrain extends SubsystemBase {
         return TRAJ_T4toB3;
       case B3toRB3toB3:
         return TRAJ_B3toRB3toB3;
+      case TestAuto:
+        return TRAJ_TestAuto;
 
       default:
         return null;
