@@ -18,7 +18,6 @@ public class VisionAimTurret extends CommandBase {
   double position;
 
   boolean precedence;
-  boolean inDeadzone;
 
   public VisionAimTurret(Turret subTurret, Vision subVision) {
     this.subTurret = subTurret;
@@ -26,7 +25,6 @@ public class VisionAimTurret extends CommandBase {
     addRequirements(subTurret);
 
     precedence = false;
-    inDeadzone = false;
   }
 
   @Override
@@ -59,10 +57,7 @@ public class VisionAimTurret extends CommandBase {
         break;
     }
 
-    inDeadzone = subTurret.getAngle() < prefTurret.turretDeadzoneSmall.getValue()
-        || subTurret.getAngle() > prefTurret.turretDeadzoneLarge.getValue();
-
-    if (precedence && !inDeadzone) {
+    if (precedence) {
       subTurret.setAngle(position);
     }
   }

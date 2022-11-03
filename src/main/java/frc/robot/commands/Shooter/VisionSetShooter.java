@@ -34,7 +34,6 @@ public class VisionSetShooter extends CommandBase {
   SN_Limelight limelight;
 
   boolean precedence;
-  boolean inDeadzone;
 
   public VisionSetShooter(Shooter subShooter, Hood subHood, Vision subVision, Turret subTurret) {
     this.subShooter = subShooter;
@@ -48,7 +47,6 @@ public class VisionSetShooter extends CommandBase {
     angle = 0;
 
     precedence = false;
-    inDeadzone = false;
 
     addRequirements();
 
@@ -79,10 +77,7 @@ public class VisionSetShooter extends CommandBase {
         break;
     }
 
-    inDeadzone = subTurret.getAngle() < prefTurret.turretDeadzoneSmall.getValue()
-        || subTurret.getAngle() > prefTurret.turretDeadzoneLarge.getValue();
-
-    if (precedence && !inDeadzone) {
+    if (precedence) {
       RobotContainer.aimState = AimState.VISION;
       subShooter.setGoalRPM(goalRPM);
       subHood.setAngle(angle);
