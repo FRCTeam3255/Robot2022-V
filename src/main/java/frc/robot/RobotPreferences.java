@@ -107,9 +107,9 @@ public final class RobotPreferences {
         "presetFenderHoodDegrees", 7);
 
     public static final SN_DoublePreference presetTarmacShooterRPM = new SN_DoublePreference(
-        "presetTarmacShooterRPM", 3255);
+        "presetTarmacShooterRPM", 3400);
     public static final SN_DoublePreference presetTarmacHoodDegrees = new SN_DoublePreference(
-        "presetTarmacHoodDegrees", 15);
+        "presetTarmacHoodDegrees", 32);
 
     public static final SN_DoublePreference presetLaunchpadShooterRPM = new SN_DoublePreference(
         "presetLaunchpadShooterRPM", 4200);
