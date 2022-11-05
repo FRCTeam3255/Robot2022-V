@@ -55,6 +55,9 @@ public class Drivetrain extends SubsystemBase {
   Trajectory TRAJ_B3toRB3toB3; // ball 3 to red ball 3 to ball 3 (in a circle)
   Trajectory TRAJ_TestAuto; // straight forward for two meters
   Trajectory TRAJ_T3toTaxi; // tarmac 3 with simple taxi
+  Trajectory TRAJ_T2toB2;
+  Trajectory TRAJ_FendertoB2;
+  Trajectory TRAJ_B2toFender;
 
   public Drivetrain() {
 
@@ -211,6 +214,9 @@ public class Drivetrain extends SubsystemBase {
       TRAJ_B3toRB3toB3 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B3toRB3toB3);
       TRAJ_TestAuto = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_TESTAUTO);
       TRAJ_T3toTaxi = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_T3toTaxi);
+      TRAJ_T2toB2 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_T2toB2);
+      TRAJ_B2toFender = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_B2toFender);
+      TRAJ_FendertoB2 = TrajectoryUtil.fromPathweaverJson(constDrivetrain.PATH_FendertoB2);
 
     } catch (Exception e) {
 
@@ -227,7 +233,10 @@ public class Drivetrain extends SubsystemBase {
     T4toB3,
     B3toRB3toB3,
     TestAuto,
-    T3toTaxi
+    T3toTaxi,
+    T2toB2,
+    FendertoB2,
+    B2toFender
   }
 
   public Trajectory getTrajectory(AutoPath trajectory) {
@@ -249,16 +258,22 @@ public class Drivetrain extends SubsystemBase {
         return TRAJ_TestAuto;
       case T3toTaxi:
         return TRAJ_T3toTaxi;
+      case T2toB2:
+        return TRAJ_T2toB2;
+      case FendertoB2:
+        return TRAJ_FendertoB2;
+      case B2toFender:
+        return TRAJ_B2toFender;
 
       default:
         return null;
     }
   }
 
-  public RamseteCommand getRamseteCommand(Trajectory trajectory) {
+  public RamseteCommand getRamseteCommand(Trajectory tarmacToBallTraj) {
 
     return new RamseteCommand(
-        trajectory,
+        tarmacToBallTraj,
         this::getPose,
         new RamseteController(),
         constDrivetrain.KINEMATICS,

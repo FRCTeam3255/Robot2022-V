@@ -48,12 +48,17 @@ public final class Constants {
     public static final Path PATH_T4toB3 = Filesystem.getDeployDirectory().toPath()
         .resolve("pathplanner/generatedJSON/T4toB3.wpilib.json");
     public static final Path PATH_B3toRB3toB3 = Filesystem.getDeployDirectory().toPath()
-        .resolve("pathplanner/generatedJSON/B3toRB3toB3.wpilib.json");
+        .resolve("pathplanner/generatedJSON/B3toRB3toB3two.wpilib.json");
     public static final Path PATH_TESTAUTO = Filesystem.getDeployDirectory().toPath()
         .resolve("pathplanner/generatedJSON/TestPath.wpilib.json");
     public static final Path PATH_T3toTaxi = Filesystem.getDeployDirectory().toPath()
         .resolve("pathplanner/generatedJSON/T3toTaxi.wpilib.json");
-
+    public static final Path PATH_T2toB2 = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/T2toB2.wpilib.json");
+    public static final Path PATH_FendertoB2 = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/FendertoB2.wpilib.json");
+    public static final Path PATH_B2toFender = Filesystem.getDeployDirectory().toPath()
+        .resolve("pathplanner/generatedJSON/B2toFender.wpilib.json");
   }
 
   public static final class constField {
@@ -85,14 +90,15 @@ public final class Constants {
     // angle (y): angle of hood to make shot from given ty
     // relies on shooter table
     private static final SN_Point2D[] tyAnglePoints = {
-        new SN_Point2D(-17.16, 38.0),
+        new SN_Point2D(-17.46, 37.0),
+        new SN_Point2D(-17.16, 37.0),
         new SN_Point2D(-13.33, 37.0),
         new SN_Point2D(-10.6, 35.0),
         new SN_Point2D(-6.82, 34.0),
         new SN_Point2D(-4.21, 31.0),
         new SN_Point2D(1.55, 28.0),
         new SN_Point2D(6.79, 24.0),
-        new SN_Point2D(16.09, 20.0),
+        new SN_Point2D(16.09, 20.0)
     };
 
     // distance (x): distance to center of hub from limelight lens in meters
@@ -130,7 +136,8 @@ public final class Constants {
     // velocity (y): rpm of shooter flywheel to make shot
     // relies on hood table
     private static final SN_Point2D[] tyVelocityPoints = {
-        new SN_Point2D(-17.16, 5300.0),
+        new SN_Point2D(-17.46, 4800.0),
+        // new SN_Point2D(-17.16, 5300.0), (point looks REALLY weird)
         new SN_Point2D(-13.33, 3800.0),
         new SN_Point2D(-10.6, 3650.0),
         new SN_Point2D(-6.82, 3500.0),
