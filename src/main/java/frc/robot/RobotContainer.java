@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.CargoState;
 import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
@@ -59,7 +60,7 @@ public class RobotContainer {
   private final CollectCargo comCollectCargo = new CollectCargo(subIntake, subTransfer);
   private final DiscardCargo comDiscardCargo = new DiscardCargo(subIntake, subTransfer);
 
-  private final MoveTurret comMoveTurret = new MoveTurret(subTurret, conOperator);
+  private final MoveTurret comMoveTurret = new MoveTurret(subTurret, subClimber, conOperator);
 
   private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
   // Autos
@@ -120,8 +121,10 @@ public class RobotContainer {
 
     // Turret
     conOperator.btn_LBump.whileHeld(comMoveTurret);
-    conOperator.btn_LStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
-    conOperator.btn_RStick.whenPressed(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
+    conOperator.btn_LStick.and(new Trigger(subClimber::isMinSwitch))
+        .whenActive(() -> subTurret.setAngle(prefTurret.turretFacingTowardsIntakeDegrees));
+    conOperator.btn_RStick.and(new Trigger(subClimber::isMinSwitch))
+        .whenActive(() -> subTurret.setAngle(prefTurret.turretFacingAwayFromIntakeDegrees));
 
     // Intake
     conOperator.btn_LTrig.whileHeld(comCollectCargo);

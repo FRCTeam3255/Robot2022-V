@@ -8,16 +8,19 @@ import com.frcteam3255.joystick.SN_DualActionStick;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotPreferences.prefTurret;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Turret;
 
 public class MoveTurret extends CommandBase {
 
   Turret subTurret;
+  Climber subClimber;
   SN_DualActionStick conOperator;
   double speed;
 
-  public MoveTurret(Turret subTurret, SN_DualActionStick conOperator) {
+  public MoveTurret(Turret subTurret, Climber subClimber, SN_DualActionStick conOperator) {
     this.subTurret = subTurret;
+    this.subClimber = subClimber;
     this.conOperator = conOperator;
     addRequirements(subTurret);
   }
@@ -29,6 +32,8 @@ public class MoveTurret extends CommandBase {
   @Override
   public void execute() {
     speed = -conOperator.getRightStickX();
+
+    speed *= subClimber.isMinSwitch() ? 1 : 0;
 
     subTurret.setSpeed(speed * prefTurret.turretOpenLoopSpeed.getValue());
   }
