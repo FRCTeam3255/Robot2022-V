@@ -79,7 +79,7 @@ public class RobotContainer {
   private final VisionSetShooter comVisionSetShooter = new VisionSetShooter(subShooter, subHood, subVision, subTurret);
   private final OdometrySetShooter comOdometrySetShooter = new OdometrySetShooter(subDrivetrain, subShooter, subHood);
 
-  private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver);
+  private final MoveClimber comMoveClimber = new MoveClimber(subClimber, subTurret, conDriver, conSwitchboard);
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(
       subDrivetrain,
@@ -208,6 +208,7 @@ public class RobotContainer {
 
     conSwitchboard.btn_2.whileHeld(comOdometrySetShooter);
     conSwitchboard.btn_4.whileHeld(comOdometryAimTurret);
+    conSwitchboard.btn_5.whileHeld(() -> subTurret.resetEncoderCounts());
 
     conSwitchboard.btn_8.whileHeld(() -> subDrivetrain.resetPose(
         subVision.calculatePoseFromVision(subVision.getDistanceFromHub(),
@@ -223,6 +224,8 @@ public class RobotContainer {
     // btn_2 -> Odometry Aim Y
     // btn_3 -> Vision Aim X
     // btn_4 -> Odometry Aim X
+    // btn_5 -> Reset turret encoder counts
+    // btn_6 -> Override Climber Safety
 
     // btn_9 -> Use Hardcoded or Default Preference Values
     if (conSwitchboard.btn_9.get()) {

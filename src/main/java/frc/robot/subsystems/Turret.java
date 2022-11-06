@@ -93,6 +93,10 @@ public class Turret extends SubsystemBase {
     turretMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  public void resetEncoderCounts() {
+    turretMotor.setSelectedSensorPosition(prefTurret.turretFacingTowardsIntakeDegrees.getValue());
+  }
+
   public void displayValuesOnDashboard() {
     displayOnDashboard = true;
   }
