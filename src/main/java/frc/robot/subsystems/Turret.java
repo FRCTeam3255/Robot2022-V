@@ -94,7 +94,8 @@ public class Turret extends SubsystemBase {
   }
 
   public void resetEncoderCounts() {
-    turretMotor.setSelectedSensorPosition(prefTurret.turretFacingTowardsIntakeDegrees.getValue());
+    turretMotor.setSelectedSensorPosition(
+        SN_Math.degreesToFalcon(prefTurret.turretFacingTowardsIntakeDegrees.getValue(), constTurret.GEAR_RATIO));
   }
 
   public void displayValuesOnDashboard() {
