@@ -55,6 +55,8 @@ public final class RobotPreferences {
     public static final SN_DoublePreference driveArcadeTurnMid = new SN_DoublePreference("driveArcadeTurn", 0.7);
 
     public static final SN_DoublePreference driveSlewRateLimit = new SN_DoublePreference("driveSlewRateLimit", 2);
+    public static final SN_DoublePreference driveTurnSlewRateLimit = new SN_DoublePreference(
+        "driveTurnSlewRateLimit", .25);
 
   }
 

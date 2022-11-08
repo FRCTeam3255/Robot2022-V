@@ -15,6 +15,7 @@ import com.frcteam3255.utils.SN_Math;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.trajectory.Trajectory;
@@ -50,6 +51,9 @@ public class Drivetrain extends SubsystemBase {
   Trajectory TRAJ_B2toB4andB5;
   Trajectory TRAJ_B4toB2;
 
+  SlewRateLimiter driveSlewRateLimiter;
+  SlewRateLimiter turnSlewRateLimiter;
+
   public Drivetrain() {
 
     leftLead = new TalonFX(mapDrivetrain.LEFT_LEAD_MOTOR_CAN);
@@ -66,6 +70,9 @@ public class Drivetrain extends SubsystemBase {
 
     odometry = new DifferentialDriveOdometry(navx.getRotation2d());
     field = new Field2d();
+
+    driveSlewRateLimiter = new SlewRateLimiter(prefDrivetrain.driveSlewRateLimit.getValue());
+    turnSlewRateLimiter = new SlewRateLimiter(prefDrivetrain.driveTurnSlewRateLimit.getValue());
 
     config = new TalonFXConfiguration();
 
@@ -161,11 +168,16 @@ public class Drivetrain extends SubsystemBase {
     arcadeDriveTurnMultiplier = multiplier.getValue();
   }
 
-  public void arcadeDrive(double speed, double turn) {
-    leftLead.set(ControlMode.PercentOutput, speed * arcadeDriveSpeedMultiplier,
-        DemandType.ArbitraryFeedForward, +turn * arcadeDriveTurnMultiplier);
-    rightLead.set(ControlMode.PercentOutput, speed * arcadeDriveSpeedMultiplier,
-        DemandType.ArbitraryFeedForward, -turn * arcadeDriveTurnMultiplier);
+  public void arcadeDrive(double a_speed, double a_turn) {
+
+    double speed = a_speed * arcadeDriveSpeedMultiplier;
+    speed = driveSlewRateLimiter.calculate(speed);
+
+    double turn = a_turn * arcadeDriveTurnMultiplier;
+    turn = turnSlewRateLimiter.calculate(turn);
+
+    leftLead.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, +turn);
+    rightLead.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -turn);
   }
 
   public void driveSpeed(double leftMPS, double rightMPS) {

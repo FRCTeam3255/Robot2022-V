@@ -10,7 +10,6 @@ import com.frcteam3255.joystick.SN_SwitchboardStick;
 import com.frcteam3255.preferences.SN_Preferences;
 import com.frcteam3255.utils.SN_InstantCommand;
 
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -39,8 +38,6 @@ public class RobotContainer {
 
   // Controllers
   private final SN_F310Gamepad conDriver = new SN_F310Gamepad(mapControllers.DRIVER_CONTROLLER);
-  private final SlewRateLimiter driveSlewRateLimiter = new SlewRateLimiter(
-      prefDrivetrain.driveSlewRateLimit.getValue());
   private final SN_DualActionStick conOperator = new SN_DualActionStick(mapControllers.OPERATOR_CONTROLLER);
   private final SN_SwitchboardStick conSwitchboard = new SN_SwitchboardStick(mapControllers.SWITCHBOARD);
 
@@ -73,7 +70,7 @@ public class RobotContainer {
     subDrivetrain.setDefaultCommand(
         new RunCommand(
             () -> subDrivetrain.arcadeDrive(
-                driveSlewRateLimiter.calculate(conDriver.getArcadeMove()), conDriver.getArcadeRotate()),
+                conDriver.getArcadeMove(), conDriver.getArcadeRotate()),
             subDrivetrain));
 
     subClimber.setDefaultCommand(comMoveClimber);
