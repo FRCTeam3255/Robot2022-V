@@ -20,6 +20,7 @@ import frc.robot.RobotMap.mapControllers;
 import frc.robot.RobotPreferences.prefDrivetrain;
 import frc.robot.RobotPreferences.prefPreset;
 import frc.robot.RobotPreferences.prefTurret;
+import frc.robot.commands.CalculatePoseFromApriltag;
 import frc.robot.commands.Auto.FourBallA;
 import frc.robot.commands.Cargo.CollectCargo;
 import frc.robot.commands.Cargo.DiscardCargo;
@@ -65,6 +66,9 @@ public class RobotContainer {
   // Autos
   private final FourBallA autoFourBallA = new FourBallA(subDrivetrain);
   SendableChooser<Command> autoChooser = new SendableChooser<>();
+
+  private final CalculatePoseFromApriltag comCalculatePoseFromApriltag = new CalculatePoseFromApriltag(subVision,
+      subDrivetrain);
 
   public static CargoState cargoState;
 
@@ -141,6 +145,8 @@ public class RobotContainer {
         .whenPressed(() -> subShooter.setGoalRPM(prefPreset.presetTarmacShooterRPM))
         .whenPressed(() -> subHood.setAngle(prefPreset.presetTarmacHoodDegrees));
 
+    conOperator.btn_A
+        .whileHeld(comCalculatePoseFromApriltag);
   }
 
   public void useSwitchboardButtons() {

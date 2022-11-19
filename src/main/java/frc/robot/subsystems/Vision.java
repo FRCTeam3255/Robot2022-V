@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.frcteam3255.components.SN_Limelight;
 import com.frcteam3255.components.SN_Limelight.LEDMode;
 
+import org.photonvision.PhotonCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotController;
@@ -15,20 +16,22 @@ import frc.robot.Constants.constField;
 
 public class Vision extends SubsystemBase {
 
-  public SN_Limelight limelight;
+  public SN_Limelight alimelight;
+  public PhotonCamera limelight;
 
   int buttonTimerLoops;
 
   public Vision() {
-    limelight = new SN_Limelight();
+    alimelight = new SN_Limelight();
+    limelight = new PhotonCamera("limelight");
   }
 
   public void setLEDOn() {
-    limelight.setLEDMode(LEDMode.on);
+    alimelight.setLEDMode(LEDMode.on);
   }
 
   public void setLEDOff() {
-    limelight.setLEDMode(LEDMode.off);
+    alimelight.setLEDMode(LEDMode.off);
   }
 
   /**
@@ -62,7 +65,7 @@ public class Vision extends SubsystemBase {
 
     buttonTimerLoops++;
     if (RobotController.getUserButton() && buttonTimerLoops > 25) {
-      limelight.toggleLEDs();
+      alimelight.toggleLEDs();
       buttonTimerLoops = 0;
     }
   }
