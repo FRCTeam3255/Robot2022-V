@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.constField;
+import frc.robot.Constants.constVision;
 
 public class Vision extends SubsystemBase {
 
@@ -29,6 +30,15 @@ public class Vision extends SubsystemBase {
 
   public void setLEDOff() {
     limelight.setLEDMode(LEDMode.off);
+  }
+
+  /**
+   * Get distance from hub using ty inputed to the lerp
+   * 
+   * @return Distance from limelight lens to center of hub
+   */
+  public double getDistanceFromHub() {
+    return constVision.tyDistanceTable.getOutput(limelight.getOffsetY());
   }
 
   /**
@@ -52,7 +62,7 @@ public class Vision extends SubsystemBase {
     double goalAngle = robotAngle + turretAngle + offsetToTarget;
 
     double calculatedRobotXPosition = constField.HUB_POSITION.getX() - (distanceFromHub * Math.cos(goalAngle));
-    double calculatedRobotYPosition = constField.HUB_POSITION.getY() - (distanceFromHub * Math.sin(goalAngle));
+    double calculatedRobotYPosition = constField.HUB_POSITION.getY() + (distanceFromHub * Math.sin(goalAngle));
 
     return new Pose2d(calculatedRobotXPosition, calculatedRobotYPosition, new Rotation2d(-robotAngle));
   }

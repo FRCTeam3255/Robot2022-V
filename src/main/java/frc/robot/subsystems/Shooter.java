@@ -78,8 +78,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean isMotorAtSpeed() {
-    return SN_Math.velocityToRPM(leadMotor.getClosedLoopError(),
-        SN_Math.TALONFX_ENCODER_PULSES_PER_COUNT) < prefShooter.shooterAllowableClosedloopErrorRPM.getValue();
+    return getMotorErrorToGoalRPM() < prefShooter.shooterAllowableClosedloopErrorRPM.getValue();
+  }
+
+  private double getMotorErrorToGoalRPM() {
+    return Math.abs(getGoalRPM() - getMotorRPM());
   }
 
   public void setGoalRPM(double goalRPM) {
@@ -115,6 +118,7 @@ public class Shooter extends SubsystemBase {
       SmartDashboard.putNumber("Shooter Motor Percent Output", leadMotor.getMotorOutputPercent());
       SmartDashboard.putNumber("Shooter Goal RPM", getGoalRPM());
       SmartDashboard.putBoolean("Shooter Is At Speed", isMotorAtSpeed());
+      SmartDashboard.putNumber("Shooter Error to Goal RPM", getMotorErrorToGoalRPM());
 
     }
 
