@@ -9,8 +9,8 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotPreferences.prefVision;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
@@ -55,16 +55,11 @@ public class CalculatePoseFromApriltag extends CommandBase {
 
     if (subVision.limelight.getLatestResult().hasTargets()) {
       // camera Position relative to robot @ 0,0
-      // TODO: GET THESE VALUES & move to constants eventually
-      double cameraXPosition = 0;
-      double cameraYPosition = 0;
-      double cameraZPosition = 0;
-      double cameraPitch = 0;
-      double cameraYaw = 0;
-      double cameraRoll = 0;
+      Pose3d cameraPose = new Pose3d(prefVision.cameraXPosition.getValue(), prefVision.cameraYPosition.getValue(),
+          prefVision.cameraZPosition.getValue(),
+          new Rotation3d(prefVision.cameraRoll.getValue(), prefVision.cameraPitch.getValue(),
+              prefVision.cameraYaw.getValue()));
 
-      Pose3d cameraPose = new Pose3d(cameraXPosition, cameraYPosition, cameraZPosition,
-          new Rotation3d(cameraRoll, cameraPitch, cameraYaw));
       Transform3d cameraToRobotTrans = new Transform3d(new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0)), cameraPose);
 
       PhotonPipelineResult result = subVision.limelight.getLatestResult();
@@ -83,8 +78,7 @@ public class CalculatePoseFromApriltag extends CommandBase {
       // 4. you know where your camera is relative to you
       Pose3d robotOnFieldPose = cameraOnFieldPose.transformBy(cameraToRobotTrans);
 
-      SmartDashboard.putNumber("robotOnFieldPose Z", robotOnFieldPose.getZ());
-
+      // Reset the robot's 2d pose
       subDrivetrain.resetPose(robotOnFieldPose.toPose2d());
     }
   }

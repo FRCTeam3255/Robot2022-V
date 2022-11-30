@@ -162,4 +162,14 @@ public final class RobotPreferences {
         "turretClimberThreshold", -269);
   }
 
+  public static final class prefVision {
+    // Camera pose relative to robot
+    public static final SN_DoublePreference cameraXPosition = new SN_DoublePreference("cameraXPosition", 0);
+    public static final SN_DoublePreference cameraYPosition = new SN_DoublePreference("cameraYPosition", 0);
+    public static final SN_DoublePreference cameraZPosition = new SN_DoublePreference("cameraZPosition", 0);
+    public static final SN_DoublePreference cameraPitch = new SN_DoublePreference("cameraPitch", 0);
+    public static final SN_DoublePreference cameraYaw = new SN_DoublePreference("cameraYaw", 0);
+    public static final SN_DoublePreference cameraRoll = new SN_DoublePreference("cameraRoll", 0);
+  }
+
 }
