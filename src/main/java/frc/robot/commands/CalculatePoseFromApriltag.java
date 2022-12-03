@@ -4,7 +4,10 @@
 
 package frc.robot.commands;
 
+import java.util.Optional;
+
 import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -18,6 +21,11 @@ public class CalculatePoseFromApriltag extends CommandBase {
   Vision subVision;
   Drivetrain subDrivetrain;
 
+  PhotonPipelineResult result;
+  Optional<PhotonTrackedTarget> filteredResult;
+  PhotonTrackedTarget target;
+  PhotonTrackedTarget lastTarget;
+
   public CalculatePoseFromApriltag(Vision subVision, Drivetrain subDrivetrain) {
     this.subVision = subVision;
     this.subDrivetrain = subDrivetrain;
@@ -28,6 +36,9 @@ public class CalculatePoseFromApriltag extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    lastTarget = null;
+    // Calculates a field-relative robot pose using 1 constant april tag location.
+
     // PhotonVision will add something similar to this in their documentation!
     // https://docs.photonvision.org/en/latest/docs/examples/apriltag.html
 
@@ -37,7 +48,6 @@ public class CalculatePoseFromApriltag extends CommandBase {
      * html
      *
      * https://github.com/PhotonVision/photonvision/pull/571
-     * - The getFieldToRobot thing suggested might actually just... do this
      */
 
     // Notable WPI updates
@@ -52,8 +62,21 @@ public class CalculatePoseFromApriltag extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    result = subVision.limelight.getLatestResult();
 
-    if (subVision.limelight.getLatestResult().hasTargets()) {
+    // Filter it down to just 1 tag position that we know is accurate
+    // t.equals(lastTarget) is used to check if the camera has updated
+    // convert to !t.equals(lastTargetMap[t.getFiducialId()]) when we need mutliple
+    // tag locations
+    filteredResult = result.getTargets().stream()
+        .filter(t -> !t.equals(lastTarget) && t.getPoseAmbiguity() <= .2 && t.getPoseAmbiguity() != -1)
+        .findFirst();
+
+    // if the filtered result exists, we see a target
+    if (filteredResult.isPresent()) {
+      target = filteredResult.get();
+      lastTarget = target;
+
       // camera Position relative to robot @ 0,0
       Pose3d cameraPose = new Pose3d(prefVision.cameraXPosition.getValue(), prefVision.cameraYPosition.getValue(),
           prefVision.cameraZPosition.getValue(),
@@ -62,14 +85,11 @@ public class CalculatePoseFromApriltag extends CommandBase {
 
       Transform3d cameraToRobotTrans = new Transform3d(new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0)), cameraPose);
 
-      PhotonPipelineResult result = subVision.limelight.getLatestResult();
-
       // 1. you know where your camera is relative to the target
       Transform3d camToTargetTrans = result.getBestTarget().getBestCameraToTarget();
 
       // 2. you know where the target is relative to the field
-      // currently implementing w/ 1 point @ origin
-      // this is the part WPI will handle IN 2023
+      // currently implementing w/ 1 point @ origin, WPI will handle in 2023
       Pose3d aprilTagPose = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0));
 
       // 3. determine where your camera is relative to field

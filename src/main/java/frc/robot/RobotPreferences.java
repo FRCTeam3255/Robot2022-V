@@ -171,5 +171,4 @@ public final class RobotPreferences {
     public static final SN_DoublePreference cameraYaw = new SN_DoublePreference("cameraYaw", 0);
     public static final SN_DoublePreference cameraRoll = new SN_DoublePreference("cameraRoll", 0);
   }
-
 }
