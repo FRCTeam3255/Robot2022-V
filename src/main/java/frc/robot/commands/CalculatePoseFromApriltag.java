@@ -29,8 +29,6 @@ public class CalculatePoseFromApriltag extends CommandBase {
   public CalculatePoseFromApriltag(Vision subVision, Drivetrain subDrivetrain) {
     this.subVision = subVision;
     this.subDrivetrain = subDrivetrain;
-
-    addRequirements(subVision);
   }
 
   // Called when the command is initially scheduled.
