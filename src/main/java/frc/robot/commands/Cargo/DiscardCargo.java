@@ -57,9 +57,8 @@ public class DiscardCargo extends CommandBase {
 
       RobotContainer.cargoState = CargoState.DISCARDING;
 
-      if (subIntake.isDeployed()) {
-        subIntake.setRetracted();
-      }
+      subIntake.isDeployed();
+      subIntake.setRetracted();
 
       subTransfer.setTopBeltSpeed(prefTransfer.transferBeltReverseSpeed);
       subTransfer.setBottomBeltSpeed(prefTransfer.transferBeltReverseSpeed);

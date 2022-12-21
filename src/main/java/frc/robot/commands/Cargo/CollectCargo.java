@@ -68,9 +68,9 @@ public class CollectCargo extends CommandBase {
         outputEntrance = RobotPreferences.zeroDoublePref;
         outputBottom = RobotPreferences.zeroDoublePref;
 
-        if (subIntake.isDeployed()) {
-          subIntake.setRetracted();
-        }
+        subIntake.isDeployed();
+        subIntake.setRetracted();
+
       }
     }
 
